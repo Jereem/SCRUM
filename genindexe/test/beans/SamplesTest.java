@@ -2,7 +2,7 @@ package beans;
 
  
 
-import beans.Database;
+import ManagedBeans.Database;
 import beans.Date;
 import beans.Types_analysis;
 import beans.Analysis;

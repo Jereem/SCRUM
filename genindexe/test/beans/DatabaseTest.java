@@ -2,7 +2,7 @@ package beans;
 
  
 
-import beans.Database;
+import ManagedBeans.Database;
 import java.sql.SQLException;
 import junit.framework.TestCase;
 

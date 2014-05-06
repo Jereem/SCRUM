@@ -3,7 +3,7 @@ package beans;
 
  
 
-class Animals {
+public class Animals {
   /**
    * The animal belongs to a specie.
    */

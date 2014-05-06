@@ -1,4 +1,4 @@
-package beans;
+package ManagedBeans;
 
 /**
  * This class manage all the methods of the different classes which interact with the database.
@@ -6,12 +6,22 @@ package beans;
  
 
 import Tools.ConnectBDD;
+import beans.Adress;
+import beans.Analysis;
+import beans.Animals;
+import beans.Customers;
+import beans.Date;
+import beans.Orders;
+import beans.Samples;
+import beans.Storage;
+import beans.Types_analysis;
+import beans.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-class Database {
+public class Database {
   private Animals animal;
 
   private Samples sample;
@@ -39,19 +49,8 @@ class Database {
 
   public Database() {
     // Bouml preserved body begin 00043002
-	  d1 = new Date(23,12,10);
-	  d2 = new Date(23,12,11);
-	  customer =  new Customers("jean", "dupont", 86000,"Poitiers", "090909",991);
-	  order =  new Orders(1, d1,d2, 1, customer);
-	  animal = new Animals("cat","2010");
-	  sample = new Samples("1", "blood", d1, d2, animal);
-	  this.typeAna = new Types_analysis("PCR", 40);
-	  this.analysis = new Analysis(1, typeAna, d2);
-	  sample.addAnalysis(analysis);
-	  user = new Users("jean", "dupont", "@");
-	  order.addSample(sample);
-	  storage = new Storage("freezer", 60);
-	  adress = new Adress(86000,"Poitiers");
+	  ConnectBDD con = new ConnectBDD();
+	  
 
     // Bouml preserved body end 00043002
   }

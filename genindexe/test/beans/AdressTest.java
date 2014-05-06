@@ -1,3 +1,5 @@
+package beans;
+
  
 
 import beans.Adress;

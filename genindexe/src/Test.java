@@ -1,5 +1,8 @@
 
 import Tools.ConnectBDD;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /*
@@ -20,8 +23,32 @@ public class Test {
 
         try {
 
+         //---------------------------------------------------------------------------------   
+         // requete "en live"
          /* Exécution d'une requête de modification de la BD (INSERT, UPDATE, DELETE, CREATE, etc.). */
+         b.getMyStatement().executeUpdate("UPDATE CLIENT SET Actif=0 WHERE Identifiant=0"); 
+            
+          /* Exécution d'une requête d'affichage de la BD (SELECT). */   
          b.getMyStatement().executeQuery("SELECT * FROM ARC");
+         
+         //---------------------------------------------------------------------------------
+         //requete préparées
+         Connection con = b.getMyConnexion();
+         PreparedStatement ps = con.prepareStatement("SELECT * FROM CLIENT");
+         
+         
+         ResultSet result = ps.executeQuery();
+         
+         while (result.next()){
+             
+             String nom = result.getString("Nom");
+   
+         }
+         
+         
+         
+         
+         
          
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());

@@ -1,3 +1,5 @@
+package beans;
+
  
 
 import beans.Database;
@@ -17,7 +19,7 @@ public class UsersTest extends TestCase {
 	public void testGetId(){
 		Database b = new Database();
 		Users u = b.getUser();
-		assertTrue(u.getId()==1);
+		assertTrue(u.getId()==2);
 	}
 	/*
 	 * The id of the User is defined with a static variable. So if it is the first time we call the constructor Database the Id is 1 

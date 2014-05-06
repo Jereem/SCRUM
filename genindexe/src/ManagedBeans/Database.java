@@ -207,11 +207,18 @@ public class Database {
     // Bouml preserved body end 00023545
   }
 
-  public Customers searchCustomerID(int ID) {
+  public Customers searchCustomerID(int ID) throws SQLException {
     // Bouml preserved body begin 000235C5
-	  if(customer.getID()==ID)
+	  Customers client = new Customers();
+	  PreparedStatement ps= con.prepareStatement("Select * FROM Client where ID_Client="+ID);
+	  ResultSet result = ps.executeQuery();
+	  client.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
+	  client.setID(result.getInt("ID_Client"));
+	  client.setAdress(new Adress(result.getInt("Cdp"), result.getString("Ville")));
+	  client.setPhone(result.getString("Tel"));
+	  if(client.getID()==ID)
 	  {
-		  return customer;
+		  return client;
 	  }
 	  else
 	  {
@@ -221,14 +228,17 @@ public class Database {
     // Bouml preserved body end 000235C5
   }
 
-  public void saveCustomer(Customers cust) {
+  public void saveCustomer(Customers cust) throws SQLException {
     // Bouml preserved body begin 00023645
-	  if(cust.getID()==customer.getID())
+	  PreparedStatement ps= con.prepareStatement("Select ID_client From client where Id_Client ="+cust.getID());
+	  ResultSet result=ps.executeQuery();
+	  if(!result.wasNull())
 	  {
-		  customer=cust;
+		  b.getMyStatement().executeUpdate("Update Client Set Nom_Client="+cust.getFirstName()+", Prenom_client="+cust.getLastName()+", Cdp="+cust.getAdress().getZipCode()+", Ville="+cust.getAdress().getCity()+", Tel="+cust.getPhone()+" where id_client="+cust.getID());
 	  }
 	  else
 	  {
+		  b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Cdp, Ville, Tel) Values("+cust.getFirstName()+", "+cust.getLastName()+", "+cust.getAdress().getZipCode()+", "+cust.getAdress().getCity()+", "+cust.getPhone());
 		  System.out.println("new data record");
 	  }
     // Bouml preserved body end 00023645

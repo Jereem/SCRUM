@@ -60,9 +60,8 @@ public class ConnectBDDTest {
     public void testGetMyConnexion() {
         System.out.println("getMyConnexion");
         ConnectBDD instance = new ConnectBDD();
-        Connection expResult = null;
         Connection result = instance.getMyConnexion();
-        assertEquals(expResult, result);
+        assertNotNull(result);
     }
 
     /**
@@ -72,11 +71,8 @@ public class ConnectBDDTest {
     public void testGetMyStatement() {
         System.out.println("getMyStatement");
         ConnectBDD instance = new ConnectBDD();
-        Statement expResult = null;
         Statement result = instance.getMyStatement();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
     
 }

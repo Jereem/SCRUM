@@ -82,9 +82,13 @@ public class ConnectBDDTest {
     public void testClose() {
         System.out.println("close");
         ConnectBDD instance = new ConnectBDD();
+        System.out.println(instance);
         instance.close();
-        Connection resultS = instance.getMyConnexion();
+        System.out.println(instance);
+        Connection resultC = instance.getMyConnexion();
+        Statement resultS = instance.getMyStatement();
         assertNull(resultS);
+        assertNull(resultC);
     }
     
 }

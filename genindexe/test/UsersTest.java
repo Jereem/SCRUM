@@ -1,5 +1,8 @@
  
 
+import beans.Database;
+import beans.Types_analysis;
+import beans.Users;
 import junit.framework.TestCase;
 
 public class UsersTest extends TestCase {

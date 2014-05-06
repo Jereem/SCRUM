@@ -1,5 +1,8 @@
  
 
+import beans.Database;
+import beans.Orders;
+import beans.Samples;
 import junit.framework.TestCase;
 
 public class OrdersTest extends TestCase {

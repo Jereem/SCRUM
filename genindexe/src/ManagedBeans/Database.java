@@ -164,13 +164,18 @@ public class Database {
             throw new SQLException("Can't get database connection");
         }
         PreparedStatement ps;
-        ps = con.prepareStatement("select * from Client");
+        ps = con.prepareStatement("select * from Client natural join Adresse");
         //get customer data from database
         ResultSet result = ps.executeQuery();
         while (result.next()) {
             Customers pCustomers = new Customers();
             Adress pAdress = new Adress();
-            pCustomers.setAdress(result.getString("Adress"));
+            pAdress.setCity(result.getString("Ville"));
+            pAdress.setCountry(result.getString("Pays"));
+            pAdress.setNumber(result.getInt("Num_Rue"));
+            pAdress.setStreet(result.getString("Nom_Rue"));
+            pAdress.setZipCode(result.getInt("CP"));
+            pCustomers.setAdress(pAdress);
             pCustomers.setEmail(result.getString("Mail"));
             pCustomers.setID(result.getInt("ID_Client"));
             pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
@@ -202,11 +207,18 @@ public class Database {
     // Bouml preserved body end 00023545
   }
 
-  public Customers searchCustomerID(int ID) {
+  public Customers searchCustomerID(int ID) throws SQLException {
     // Bouml preserved body begin 000235C5
-	  if(customer.getID()==ID)
+	  Customers client = new Customers();
+	  PreparedStatement ps= con.prepareStatement("Select * FROM Client where ID_Client="+ID);
+	  ResultSet result = ps.executeQuery();
+	  client.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
+	  client.setID(result.getInt("ID_Client"));
+	  client.setAdress(new Adress(result.getInt("Cdp"), result.getString("Ville")));
+	  client.setPhone(result.getString("Tel"));
+	  if(client.getID()==ID)
 	  {
-		  return customer;
+		  return client;
 	  }
 	  else
 	  {
@@ -216,23 +228,38 @@ public class Database {
     // Bouml preserved body end 000235C5
   }
 
-  public void saveCustomer(Customers cust) {
+  public void saveCustomer(Customers cust) throws SQLException {
     // Bouml preserved body begin 00023645
-	  if(cust.getID()==customer.getID())
+	  PreparedStatement ps= con.prepareStatement("Select ID_client From client where Id_Client ="+cust.getID());
+	  ResultSet result=ps.executeQuery();
+	  if(!result.wasNull())
 	  {
-		  customer=cust;
+		  b.getMyStatement().executeUpdate("Update Client Set Nom_Client="+cust.getFirstName()+", Prenom_client="+cust.getLastName()+", Cdp="+cust.getAdress().getZipCode()+", Ville="+cust.getAdress().getCity()+", Tel="+cust.getPhone()+" where id_client="+cust.getID());
 	  }
 	  else
 	  {
+		  b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Cdp, Ville, Tel) Values("+cust.getFirstName()+", "+cust.getLastName()+", "+cust.getAdress().getZipCode()+", "+cust.getAdress().getCity()+", "+cust.getPhone());
 		  System.out.println("new data record");
 	  }
     // Bouml preserved body end 00023645
   }
 
-  public List<Types_analysis> getListAnalysisType() {
+  public List<Types_analysis> getListAnalysisType() throws SQLException {
     // Bouml preserved body begin 000236C5
-	  List<Types_analysis> listTA = new ArrayList<Types_analysis>();
-	  listTA.add(this.typeAna);
+	  List<Types_analysis> listTA = new ArrayList<>();
+	  if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from TypeAnalyse");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Types_analysis pTypes_analysis = new Types_analysis();
+            pTypes_analysis.setPrice(result.getInt("Prix_Unitaire"));
+            pTypes_analysis.setType(result.getString("Type_Analy"));
+	  listTA.add(pTypes_analysis);
+        }
 	  return(listTA);
     // Bouml preserved body end 000236C5
   }

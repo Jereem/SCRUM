@@ -164,13 +164,18 @@ public class Database {
             throw new SQLException("Can't get database connection");
         }
         PreparedStatement ps;
-        ps = con.prepareStatement("select * from Client");
+        ps = con.prepareStatement("select * from Client natural join Adresse");
         //get customer data from database
         ResultSet result = ps.executeQuery();
         while (result.next()) {
             Customers pCustomers = new Customers();
             Adress pAdress = new Adress();
-            pCustomers.setAdress(result.getString("Adress"));
+            pAdress.setCity(result.getString("Ville"));
+            pAdress.setCountry(result.getString("Pays"));
+            pAdress.setNumber(result.getInt("Num_Rue"));
+            pAdress.setStreet(result.getString("Nom_Rue"));
+            pAdress.setZipCode(result.getInt("CP"));
+            pCustomers.setAdress(pAdress);
             pCustomers.setEmail(result.getString("Mail"));
             pCustomers.setID(result.getInt("ID_Client"));
             pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));

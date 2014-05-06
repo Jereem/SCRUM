@@ -18,6 +18,7 @@ import beans.Types_analysis;
 import beans.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,22 +47,14 @@ public class Database {
   private Adress adress;
 
   public Storage storage;
+  
+  private ConnectBDD b;
+  private Connection con;
 
   public Database() {
     // Bouml preserved body begin 00043002
-	  d1 = new Date(23,12,10);
-	  d2 = new Date(23,12,11);
-	  customer =  new Customers("jean", "dupont", 86000,"Poitiers", "090909",991);
-	  order =  new Orders(1, d1,d2, 1, customer);
-	  animal = new Animals("cat","2010");
-	  sample = new Samples("1", "blood", d1, d2, animal);
-	  this.typeAna = new Types_analysis("PCR", 40);
-	  this.analysis = new Analysis(1, typeAna, d2);
-	  sample.addAnalysis(analysis);
-	  user = new Users("jean", "dupont", "@");
-	  order.addSample(sample);
-	  storage = new Storage("freezer", 60);
-	  adress = new Adress(86000,"Poitiers");
+	  b = new ConnectBDD();
+	  con = b.getMyConnexion();
 
     // Bouml preserved body end 00043002
   }
@@ -69,10 +62,22 @@ public class Database {
   /**
    * This function permits to list all the orders in the database.
    */
-  public List<Orders> getListOrder() {
+  public List<Orders> getListOrder() throws SQLException {
     // Bouml preserved body begin 0003D002
 	  List<Orders> list = new ArrayList<Orders>();
+          if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from ");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+//            projet.setNomProjet(result.getString("Nom_Projet"));
+            
+            Orders order = new Orders();
 	  list.add(this.order);
+        }
 	  return(list);
     // Bouml preserved body end 0003D002
   }

@@ -1,6 +1,6 @@
 package beans;
 
- 
+
 
 import ManagedBeans.Database;
 import beans.Types_analysis;

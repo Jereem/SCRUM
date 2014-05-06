@@ -43,6 +43,14 @@ public class Orders {
    */
   private boolean results_send;
 
+    public Orders() {
+        this.samples = new ArrayList<Samples>();
+        this.paid = false;
+        this.results_send = false;
+        this.idOrder = countId;
+        countId = countId + 1;
+    }
+
   public Orders(int num_samples, Date date_order, Date date_deadline, int priority, Customers customer) {
     // Bouml preserved body begin 0001F402
 	  this.samples = new ArrayList<Samples>();

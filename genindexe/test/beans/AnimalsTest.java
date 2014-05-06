@@ -1,7 +1,9 @@
-
+package beans;
 
  
 
+import beans.Database;
+import beans.Animals;
 import junit.framework.TestCase;
 
 public class AnimalsTest extends TestCase {

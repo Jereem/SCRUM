@@ -1,7 +1,9 @@
-
+package beans;
 
  
 
+import beans.Database;
+import beans.Samples;
 import junit.framework.TestCase;
 
 public class StorageTest extends TestCase {

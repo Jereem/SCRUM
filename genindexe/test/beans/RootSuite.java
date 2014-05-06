@@ -1,4 +1,4 @@
-
+package beans;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -6,7 +6,6 @@
  * and open the template in the editor.
  */
 
-import beans.UsersTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

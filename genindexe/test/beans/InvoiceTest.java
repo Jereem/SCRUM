@@ -1,7 +1,14 @@
-
+package beans;
 
  
 
+import beans.Database;
+import beans.Orders;
+import beans.Date;
+import beans.Types_analysis;
+import beans.Analysis;
+import beans.Animals;
+import beans.Samples;
 import junit.framework.TestCase;
 
 public class InvoiceTest extends TestCase {

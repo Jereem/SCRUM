@@ -1,7 +1,8 @@
-
+package beans;
 
  
 
+import beans.Date;
 import junit.framework.TestCase;
 
 public class DateTest extends TestCase {

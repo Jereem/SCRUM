@@ -1,7 +1,8 @@
-
+package beans;
 
  
 
+import beans.Database;
 import junit.framework.TestCase;
 
 public class DatabaseTest extends TestCase {

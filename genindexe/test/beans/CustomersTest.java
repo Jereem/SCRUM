@@ -1,7 +1,10 @@
-
+package beans;
 
  
 
+import beans.Database;
+import beans.Adress;
+import beans.Customers;
 import junit.framework.TestCase;
 
 public class CustomersTest extends TestCase {

@@ -1,7 +1,9 @@
-
+package beans;
 
  
 
+import beans.Database;
+import beans.Types_analysis;
 import junit.framework.TestCase;
 
 public class Types_analysisTest extends TestCase {

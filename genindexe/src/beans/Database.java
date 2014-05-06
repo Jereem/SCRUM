@@ -5,6 +5,10 @@ package beans;
  */
  
 
+import Tools.ConnectBDD;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 class Database {
@@ -37,7 +41,7 @@ class Database {
     // Bouml preserved body begin 00043002
 	  d1 = new Date(23,12,10);
 	  d2 = new Date(23,12,11);
-	  customer =  new Customers("jean", "dupont", 86000,"Poitiers", "090909",1);
+	  customer =  new Customers("jean", "dupont", 86000,"Poitiers", "090909",991);
 	  order =  new Orders(1, d1,d2, 1, customer);
 	  animal = new Animals("cat","2010");
 	  sample = new Samples("1", "blood", d1, d2, animal);
@@ -249,5 +253,70 @@ class Database {
 	  }
     // Bouml preserved body end 00023945
   }
+  
+  public String saveBddCustomer() throws SQLException {
+    ConnectBDD con = new ConnectBDD();
+        Connection b = con.getMyConnexion();
+        if (b == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        //etu.saveNewAdherent();
+        try {
+            /* Récupération des paramètres d'URL saisis par l'utilisateur */
+            String paramfirstName = this.customer.getFirstName();
+            String paramLastName = this.customer.getLastName();
+            String paramEmail = this.customer.getEmail();
+            String paramPhone = this.customer.getPhone();
+            int paramID = this.customer.getID();
+            
+            /* Création de l'objet gérant les requêtes préparées */
+            PreparedStatement ps = b.prepareStatement("INSERT INTO Client(ID_CLIENT, Nom_Client, Tel) VALUES (?,?,?)");
+            /*
+             * Remplissage des paramètres de la requête grâce aux méthodes
+             * setXXX() mises à disposition par l'objet PreparedStatement.
+             */
+            ps.setInt(1, paramID);
+            ps.setString(2, paramLastName);
+            ps.setString(3, paramPhone);
+            /* Exécution de la requête */
+            int statut = ps.executeUpdate();
+            return "success";
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            return "failed";
+        }
+  }
 
+  public String saveBddUser() throws SQLException {
+    ConnectBDD con = new ConnectBDD();
+        Connection b = con.getMyConnexion();
+        if (b == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        //etu.saveNewAdherent();
+        try {
+            /* Récupération des paramètres d'URL saisis par l'utilisateur */
+            String paramIdentifiant = this.user.getLogin();
+            String paramMotDePasse = this.user.getPassword();
+            /* Création de l'objet gérant les requêtes préparées */
+            PreparedStatement ps = b.prepareStatement("INSERT INTO Connexion(ID_CLIENT, MAIL, Login, Mdp) VALUES (1,'teddy@gmail.com',?,?)");
+            /*
+             * Remplissage des paramètres de la requête grâce aux méthodes
+             * setXXX() mises à disposition par l'objet PreparedStatement.
+             */
+            ps.setString(1, paramIdentifiant);
+            ps.setString(2, paramMotDePasse);
+            /* Exécution de la requête */
+            int statut = ps.executeUpdate();
+            return "success";
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            return "failed";
+        }
+  }
+  
 }

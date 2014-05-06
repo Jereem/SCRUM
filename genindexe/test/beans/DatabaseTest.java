@@ -3,6 +3,7 @@ package beans;
  
 
 import beans.Database;
+import java.sql.SQLException;
 import junit.framework.TestCase;
 
 public class DatabaseTest extends TestCase {
@@ -13,8 +14,14 @@ public class DatabaseTest extends TestCase {
 		Database b = new Database();
 		assertTrue(b.getListOrder().size()==1);
 	} 
-	//There is only one order in the database, and the size of the list is 1 so the test is successful.
-
+        
+        public void testSaveBddCustomer() throws SQLException{
+		Database b = new Database();
+                String expectedResult = "success";
+                String result = b.saveBddCustomer();
+		assertEquals(result, expectedResult);
+	} 
+        
 }
 
 

@@ -15,10 +15,17 @@ public class DatabaseTest extends TestCase {
 		assertTrue(b.getListOrder().size()==1);
 	} 
         
-        public void testSaveBddCustomer() throws SQLException{
+        /*public void testSaveBddCustomer() throws SQLException{
 		Database b = new Database();
                 String expectedResult = "success";
                 String result = b.saveBddCustomer();
+		assertEquals(result, expectedResult);
+	}*/
+        
+        public void testSearchOrder(){
+		Database b = new Database();
+		String expectedResult = "success";
+                String result = b.searchOrder();
 		assertEquals(result, expectedResult);
 	} 
         

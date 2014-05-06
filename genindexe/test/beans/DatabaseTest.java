@@ -27,7 +27,7 @@ public class DatabaseTest extends TestCase {
         
         public void testSearchOrder(){
             Database b = new Database();
-            Customers result = b.searchOrder();/*BDD pas peuplée*/
+            Orders result = b.searchOrder();/*BDD pas peuplée*/
             assertNotNull(result);
 	} 
         

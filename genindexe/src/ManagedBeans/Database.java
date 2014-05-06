@@ -128,9 +128,23 @@ public class Database {
     // Bouml preserved body end 00043202
   }
 
-  public Animals searchAnimal(String specie) {
-    // Bouml preserved body begin 00043282
-	  return this.animal;
+  public List<Animals> searchAnimal(String specie) throws SQLException {
+	  List<Animals> list = new ArrayList<>();
+          if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Animal natural join Espece where Nom_Espece = " + specie +"");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Animals pAnimal = new Animals();
+            pAnimal.setNumberBirthday(result.getString("Date_Naissance"));
+            pAnimal.setNom(result.getString("Nom_Animal"));
+            pAnimal.setSpecie(specie);
+	  list.add(pAnimal);
+        }
+	  return(list);
     // Bouml preserved body end 00043282
   }
 
@@ -143,10 +157,26 @@ public class Database {
     // Bouml preserved body end 00043502
   }
 
-  public List<Customers> getListCustomers() {
+  public List<Customers> getListCustomers() throws SQLException {
     // Bouml preserved body begin 000234C5
-	  List<Customers> listC = new ArrayList<Customers>();
-	  listC.add(this.customer);
+	  List<Customers> listC = new ArrayList<>();
+	  if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Client");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Customers pCustomers = new Customers();
+            Adress pAdress = new Adress();
+            pCustomers.setAdress(result.getString("Adress"));
+            pCustomers.setEmail(result.getString("Mail"));
+            pCustomers.setID(result.getInt("ID_Client"));
+            pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
+            pCustomers.setPhone(result.getString("Tel"));
+	  listC.add(pCustomers);
+        }
 	  return(listC);
     // Bouml preserved body end 000234C5
   }

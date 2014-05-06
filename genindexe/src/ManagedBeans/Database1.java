@@ -53,7 +53,7 @@ public class Database1 {
 	  d2 = new Date(23,12,11);
 	  customer =  new Customers("jean", "dupont", 86000,"Poitiers", "090909",991);
 	  order =  new Orders(1, d1,d2, 1, customer);
-	  animal = new Animals("cat","2010");
+	  animal = new Animals("cat","2010","bob");
 	  sample = new Samples("1", "blood", d1, d2, animal);
 	  this.typeAna = new Types_analysis("PCR", 40);
 	  this.analysis = new Analysis(1, typeAna, d2);

@@ -11,6 +11,9 @@ public class Animals {
   private String nom;
   private String numberBirthday;
 
+  public Animals(){
+      
+  }
   public Animals(String specie, String birthday, String nom) {
     // Bouml preserved body begin 00020D83
 	  this.specie = specie;

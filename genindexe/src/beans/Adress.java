@@ -29,6 +29,10 @@ public class Adress {
    */
   private String country;
 
+  public Adress(){
+      
+     
+  }
   public Adress(int zip, String city) {
     // Bouml preserved body begin 0001F502
 	  this.zipCode = zip;

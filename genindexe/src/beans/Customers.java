@@ -6,7 +6,7 @@ package beans;
 /**
  * This class manages the customers.
  */
-class Customers {
+public class Customers {
   private int ID;
 
   /**

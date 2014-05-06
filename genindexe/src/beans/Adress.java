@@ -3,7 +3,7 @@ package beans;
 
  
 
-class Adress {
+public class Adress {
   /**
    * The number is the number of the street.
    */

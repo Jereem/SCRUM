@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package tools;
+package Tools;
 
-import Tools.ConnectBDD;
 import java.sql.Connection;
 import java.sql.Statement;
 import org.junit.After;
@@ -18,7 +17,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author teddy
+ * @author yoyo
  */
 public class ConnectBDDTest {
     
@@ -48,9 +47,11 @@ public class ConnectBDDTest {
     public void testTestDriver() {
         System.out.println("testDriver");
         ConnectBDD instance = new ConnectBDD();
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.testDriver();
         assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -60,8 +61,11 @@ public class ConnectBDDTest {
     public void testGetMyConnexion() {
         System.out.println("getMyConnexion");
         ConnectBDD instance = new ConnectBDD();
+        Connection expResult = null;
         Connection result = instance.getMyConnexion();
-        assertNotNull(result);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -71,8 +75,11 @@ public class ConnectBDDTest {
     public void testGetMyStatement() {
         System.out.println("getMyStatement");
         ConnectBDD instance = new ConnectBDD();
+        Statement expResult = null;
         Statement result = instance.getMyStatement();
-        assertNotNull(result);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
     
 }

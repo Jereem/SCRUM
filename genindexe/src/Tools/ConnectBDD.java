@@ -73,7 +73,6 @@ public Connection getMyConnexion() {
         return myStatement;
     }
     
-    
      public void close() {
         try {
             this.myStatement.close();

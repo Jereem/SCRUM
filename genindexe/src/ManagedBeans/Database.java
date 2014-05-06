@@ -46,11 +46,14 @@ public class Database {
   private Adress adress;
 
   public Storage storage;
+  
+  private ConnectBDD b;
+  private Connection con;
 
   public Database() {
     // Bouml preserved body begin 00043002
-	  ConnectBDD con = new ConnectBDD();
-	  
+	  b = new ConnectBDD();
+	  con = b.getMyConnexion();
 
     // Bouml preserved body end 00043002
   }

@@ -29,7 +29,7 @@ public class ConnectBDD {
     private Connection myConnexion;
     private Statement myStatement;
     
-    private final String MYURL = "jdbc:oracle:thin://192.168.24.3:1521";
+    private final String MYURL = "jdbc:oracle:thin:@//192.168.24.3/pfpbs";
     private final String MYUSER= "gp1";
     private final String MYPASSWORD= "gp1";
     

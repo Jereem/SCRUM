@@ -49,19 +49,8 @@ public class Database {
 
   public Database() {
     // Bouml preserved body begin 00043002
-	  d1 = new Date(23,12,10);
-	  d2 = new Date(23,12,11);
-	  customer =  new Customers("jean", "dupont", 86000,"Poitiers", "090909",991);
-	  order =  new Orders(1, d1,d2, 1, customer);
-	  animal = new Animals("cat","2010");
-	  sample = new Samples("1", "blood", d1, d2, animal);
-	  this.typeAna = new Types_analysis("PCR", 40);
-	  this.analysis = new Analysis(1, typeAna, d2);
-	  sample.addAnalysis(analysis);
-	  user = new Users("jean", "dupont", "@");
-	  order.addSample(sample);
-	  storage = new Storage("freezer", 60);
-	  adress = new Adress(86000,"Poitiers");
+	  ConnectBDD con = new ConnectBDD();
+	  
 
     // Bouml preserved body end 00043002
   }

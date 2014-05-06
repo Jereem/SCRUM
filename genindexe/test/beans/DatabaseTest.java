@@ -22,13 +22,19 @@ public class DatabaseTest extends TestCase {
 		assertEquals(result, expectedResult);
 	}*/
         
+        
+        
         public void testSearchOrder(){
 		Database b = new Database();
-		String expectedResult = "success";
-                String result = b.searchOrder();
-		assertEquals(result, expectedResult);
+                Customers result = b.searchOrder("oiseau");
+		assertNotNull(result);
 	} 
         
+        public void testSearchAnimal(){
+                Database b = new Database();
+                String result = b.searchAnimal("oiseau");
+		assertNotNull(result);
+        }
 }
 
 

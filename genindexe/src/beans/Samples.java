@@ -46,6 +46,11 @@ public class Samples {
    * - the type of sample (string).
    * - the date of creation of this sample (date).
    * - the date of the storage of this sample (date).
+     * @param Identifier
+     * @param Type_sample
+     * @param D_sampling
+     * @param D_storage
+     * @param anim
    */
   public Samples(String Identifier, String Type_sample, Date D_sampling, Date D_storage, Animals anim) {
     // Bouml preserved body begin 0002A282
@@ -61,6 +66,7 @@ public class Samples {
 
   /**
    * This method permits to display a sample on the screen.
+     * @param sam
    */
   public void printSample(Samples sam) {
     // Bouml preserved body begin 0002A382
@@ -74,6 +80,7 @@ public class Samples {
 
   /**
    * This method has been created to modify the type of the sample.
+     * @param type
    */
   public void setType(String type) {
     // Bouml preserved body begin 0002A402
@@ -83,6 +90,7 @@ public class Samples {
 
   /**
    * This method has been created to modify the date of the creation of the sample.
+     * @param d
    */
   public void setDatesampling(Date d) {
     // Bouml preserved body begin 0002A482
@@ -92,6 +100,7 @@ public class Samples {
 
   /**
    * This method has been created to modify the date when the sample was storaged.
+     * @param d2
    */
   public void setDatestorage(Date d2) {
     // Bouml preserved body begin 0002A502
@@ -101,6 +110,7 @@ public class Samples {
 
   /**
    * This method has been created to modify the animal of the sample.
+     * @param anim
    */
   public void setAnimal(Animals anim) {
     // Bouml preserved body begin 0002A582
@@ -110,6 +120,7 @@ public class Samples {
 
   /**
    * This "get" permits to return the identifier of the animal.
+     * @return 
    */
   public String getId() {
     // Bouml preserved body begin 0002A602
@@ -119,6 +130,7 @@ public class Samples {
 
   /**
    * This method return the type of the sample.
+     * @return 
    */
   public String getType() {
     // Bouml preserved body begin 0002A682
@@ -128,6 +140,7 @@ public class Samples {
 
   /**
    * The method getDatesampling return the date when the sample was created.
+     * @return 
    */
   public Date getDatesampling() {
     // Bouml preserved body begin 0002A702
@@ -137,6 +150,7 @@ public class Samples {
 
   /**
    * This method return the date of the storage of the sample.
+     * @return 
    */
   public Date getDatestorage() {
     // Bouml preserved body begin 0002A782
@@ -182,6 +196,7 @@ public class Samples {
 
   /**
    * add an analysis to the sample, 1 to 3 if the analysis is not validate
+     * @param ana
    */
   public void addAnalysis(Analysis ana) {
     // Bouml preserved body begin 000233C5
@@ -199,6 +214,7 @@ public class Samples {
 
   /**
    * get the number of analysis for this sample
+     * @return 
    */
   public int getCount() {
     // Bouml preserved body begin 00023445

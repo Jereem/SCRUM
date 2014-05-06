@@ -28,6 +28,10 @@ public class Customers {
 
   private Adress adress;
 
+  public Customers(){
+      
+  }
+  
   public Customers(String first, String last, int num, String rue, String phone, int ID) {
     // Bouml preserved body begin 00040A82
 	  Adress ad = new Adress(num, rue);

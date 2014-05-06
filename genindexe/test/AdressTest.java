@@ -1,5 +1,6 @@
  
 
+import beans.Adress;
 import junit.framework.TestCase;
 
 public class AdressTest extends TestCase {

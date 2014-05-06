@@ -1,5 +1,11 @@
  
 
+import beans.Database;
+import beans.Date;
+import beans.Types_analysis;
+import beans.Analysis;
+import beans.Animals;
+import beans.Samples;
 import junit.framework.TestCase;
 public class SamplesTest extends TestCase {
 	// For each test, we search a sample on the database and we use this sample to do the tests.

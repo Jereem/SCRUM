@@ -1,3 +1,5 @@
+package beans;
+
 /**
  * This class manage all the methods of the different classes which interact with the database.
  */

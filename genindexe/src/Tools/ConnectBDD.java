@@ -1,14 +1,13 @@
 package Tools;
 
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import java.sql.*;                  
+import java.sql.*;
 //Packages JDBC standard
-import java.math.*;               
+import java.math.*;
 //BigDecimal et BigInteger classes.
-import oracle.jdbc.*; 
+import oracle.jdbc.*;
 //Extensions Oracle à JDBC. (optionnel)
 import oracle.jdbc.pool.*;
 //OracleDataSource
@@ -20,21 +19,20 @@ import oracle.sql.*;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author jeremygillet
  */
 public class ConnectBDD {
+
     private Connection myConnexion;
     private Statement myStatement;
-    
+
     private final String MYURL = "jdbc:oracle:thin://192.168.24.3:1521";
-    private final String MYUSER= "gp1";
-    private final String MYPASSWORD= "gp1";
-    
-    
-    public ConnectBDD(){
+    private final String MYUSER = "gp1";
+    private final String MYPASSWORD = "gp1";
+
+    public ConnectBDD() {
         if (testDriver()) {
             try {
                 myConnexion = DriverManager.getConnection(MYURL, MYUSER, MYPASSWORD);
@@ -45,14 +43,16 @@ public class ConnectBDD {
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
-        }
-        else
-        {
+        } else {
             System.out.println("testdriver false");
         }
 
     }
 
+    /**
+     * 
+     * @return  un boolean qui indique si le test de connexion est passé
+     */
     public boolean testDriver() {
         //   Chargement du driver JDBC pour MySQL */
         try {
@@ -62,15 +62,27 @@ public class ConnectBDD {
             System.out.println("Le driver n'a pas été chargé");
             return false;
         }
-    
+
     }
-    
-public Connection getMyConnexion() {
+
+    public Connection getMyConnexion() {
         return myConnexion;
     }
 
     public Statement getMyStatement() {
         return myStatement;
     }
-    
+
+    /**
+     * méthode qui ferme la connexion
+     */
+    public void close() {
+        try {
+            this.myStatement.close();
+            this.myConnexion.close();
+        } catch (SQLException ex) {
+            System.out.println("Mysql connection fermeture failed !!!");
+        }
+    }
+
 }

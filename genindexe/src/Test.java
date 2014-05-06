@@ -21,6 +21,8 @@ public class Test {
         try {
 
          /* Exécution d'une requête de modification de la BD (INSERT, UPDATE, DELETE, CREATE, etc.). */
+            
+            
          b.getMyStatement().executeQuery("SELECT * FROM ARC");
          
         } catch (SQLException ex) {

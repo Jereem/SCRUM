@@ -62,25 +62,24 @@ public class Database {
   /**
    * This function permits to list all the orders in the database.
    */
-  public List<Orders> getListOrder() throws SQLException {
-    // Bouml preserved body begin 0003D002
-	  List<Orders> list = new ArrayList<Orders>();
-          if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        PreparedStatement ps;
-        ps = con.prepareStatement("select * from ");
-        //get customer data from database
-        ResultSet result = ps.executeQuery();
-        while (result.next()) {
-//            projet.setNomProjet(result.getString("Nom_Projet"));
-            
-            Orders order = new Orders();
-	  list.add(this.order);
-        }
-	  return(list);
-    // Bouml preserved body end 0003D002
-  }
+//  public List<Orders> getListOrder() throws SQLException {
+//    // Bouml preserved body begin 0003D002
+//	  List<Orders> list = new ArrayList<Orders>();
+//          if (con == null) {
+//            throw new SQLException("Can't get database connection");
+//        }
+//        PreparedStatement ps;
+//        ps = con.prepareStatement("select * from ");
+//        //get customer data from database
+//        ResultSet result = ps.executeQuery();
+//        while (result.next()) {
+//            Orders pOrder = new Orders();
+//            pOrder.setPaid(result.getString("Nom_Projet"));
+//	  list.add(this.order);
+//        }
+//	  return(list);
+//    // Bouml preserved body end 0003D002
+//  }
 
   /**
    * This function permits to search the order in the database that have the customer in parameter.

@@ -1,12 +1,14 @@
 package beans;
 
+import ManagedBeans.Database;
+
 
  
 
 /**
  * This class manages the different fields of an invoice.
  */
-class Invoice {
+public class Invoice {
   private int id;
 
   private double price;

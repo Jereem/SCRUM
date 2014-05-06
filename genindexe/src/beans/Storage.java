@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * This class manages the storage of the different samples.
  */
-class Storage {
+public class Storage {
   /**
    * Each refrigerator or freezer has an unique identifier.
    * 

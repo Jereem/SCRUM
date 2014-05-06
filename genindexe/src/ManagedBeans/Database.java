@@ -1,4 +1,4 @@
-package beans;
+package ManagedBeans;
 
 /**
  * This class manage all the methods of the different classes which interact with the database.
@@ -6,12 +6,22 @@ package beans;
  
 
 import Tools.ConnectBDD;
+import beans.Adress;
+import beans.Analysis;
+import beans.Animals;
+import beans.Customers;
+import beans.Date;
+import beans.Orders;
+import beans.Samples;
+import beans.Storage;
+import beans.Types_analysis;
+import beans.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-class Database {
+public class Database {
   private Animals animal;
 
   private Samples sample;

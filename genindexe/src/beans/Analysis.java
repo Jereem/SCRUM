@@ -3,7 +3,7 @@ package beans;
 
  
 
-class Analysis {
+public class Analysis {
   /**
    * This attribute is TRUE if the analysis has been validated and FALSE if it has not.
    */

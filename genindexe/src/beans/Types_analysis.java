@@ -7,7 +7,7 @@ import java.util.HashMap;
 /**
  * This class has been created to manage the different types of analysis.
  */
-class Types_analysis {
+public class Types_analysis {
   private String type;
 
   /**

@@ -80,15 +80,10 @@ public class ConnectBDDTest {
      */
     @Test
     public void testClose() {
-        System.out.println("close");
-        ConnectBDD instance = new ConnectBDD();
-        System.out.println(instance);
-        instance.close();
-        System.out.println(instance);
-        Connection resultC = instance.getMyConnexion();
-        Statement resultS = instance.getMyStatement();
-        assertNull(resultS);
-        assertNull(resultC);
+        ConnectBDD b = new ConnectBDD();
+        b.getMyStatement().executeQuery("SELECT * FROM Client");
+        b.close();
+        b.getMyStatement().executeQuery("SELECT * FROM Client");
     }
     
 }

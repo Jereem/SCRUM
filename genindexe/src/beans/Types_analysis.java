@@ -15,6 +15,10 @@ public class Types_analysis {
    */
   private double price;
 
+  public  Types_analysis(){
+      
+  }
+  
   /**
    * constructor of types
    */

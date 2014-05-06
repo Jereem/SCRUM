@@ -234,10 +234,22 @@ public class Database {
     // Bouml preserved body end 00023645
   }
 
-  public List<Types_analysis> getListAnalysisType() {
+  public List<Types_analysis> getListAnalysisType() throws SQLException {
     // Bouml preserved body begin 000236C5
-	  List<Types_analysis> listTA = new ArrayList<Types_analysis>();
-	  listTA.add(this.typeAna);
+	  List<Types_analysis> listTA = new ArrayList<>();
+	  if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from TypeAnalyse");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Types_analysis pTypes_analysis = new Types_analysis();
+            pTypes_analysis.setPrice(result.getInt("Prix_Unitaire"));
+            pTypes_analysis.setType(result.getString("Type_Analy"));
+	  listTA.add(pTypes_analysis);
+        }
 	  return(listTA);
     // Bouml preserved body end 000236C5
   }

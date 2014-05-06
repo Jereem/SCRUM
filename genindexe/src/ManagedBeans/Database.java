@@ -186,11 +186,18 @@ public class Database {
     // Bouml preserved body end 000234C5
   }
 
-  public Customers searchCustomerName(String name) {
+  public Customers searchCustomerName(String name) throws SQLException {
     // Bouml preserved body begin 00023545
-	  if(name.equals(customer.getLastName()))
+	  Customers client = new Customers();
+	  PreparedStatement ps= con.prepareStatement("Select * FROM Client where nom_client="+name);
+	  ResultSet result = ps.executeQuery();
+	  client.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
+	  client.setID(result.getInt("ID_Client"));
+	  client.setAdress(new Adress(result.getInt("Cdp"), result.getString("Ville")));
+	  client.setPhone(result.getString("Tel"));
+	  if(name.equals(client.getLastName()))
 	  {
-		  return customer;
+		  return client;
 	  }
 	  else
 	  {

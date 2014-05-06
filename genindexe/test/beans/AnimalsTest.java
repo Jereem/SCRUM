@@ -2,7 +2,7 @@ package beans;
 
  
 
-import beans.Database;
+import ManagedBeans.Database;
 import beans.Animals;
 import junit.framework.TestCase;
 

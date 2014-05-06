@@ -8,7 +8,7 @@ import java.util.Iterator;
 /**
  * This class manages the different users.
  */
-class Users {
+public class Users {
   private static int countID = 1;
 
   private int id;

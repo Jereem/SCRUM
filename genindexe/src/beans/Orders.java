@@ -6,7 +6,7 @@ package beans;
 import java.util.List;
 import java.util.ArrayList;
 
-class Orders {
+public class Orders {
   private static int countId = 1;
 
   private int idOrder;

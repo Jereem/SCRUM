@@ -2,7 +2,7 @@ package beans;
 
  
 
-import beans.Database;
+import ManagedBeans.Database;
 import beans.Adress;
 import beans.Customers;
 import junit.framework.TestCase;

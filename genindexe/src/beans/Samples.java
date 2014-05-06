@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * We can manage the samples with the methods: modifySample(), printSample().
  * We have different accessors and we can return many informations with the methods "get...".
  */
-class Samples {
+public class Samples {
   /**
    * The identifiant of the sample. It is automatically incremented.
    * This identifiant is unique.
@@ -47,7 +47,7 @@ class Samples {
    * - the date of creation of this sample (date).
    * - the date of the storage of this sample (date).
    */
-  Samples(String Identifier, String Type_sample, Date D_sampling, Date D_storage, Animals anim) {
+  public Samples(String Identifier, String Type_sample, Date D_sampling, Date D_storage, Animals anim) {
     // Bouml preserved body begin 0002A282
 	  this.id = Identifier;
 	  this.type = Type_sample;

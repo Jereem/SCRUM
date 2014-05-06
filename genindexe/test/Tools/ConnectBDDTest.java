@@ -7,6 +7,8 @@
 package Tools;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -79,11 +81,12 @@ public class ConnectBDDTest {
      * Test of close method, of class ConnectBDD.
      */
     @Test
-    public void testClose() {
+    public void testClose() throws SQLException {
         ConnectBDD b = new ConnectBDD();
         b.getMyStatement().executeQuery("SELECT * FROM Client");
         b.close();
-        b.getMyStatement().executeQuery("SELECT * FROM Client");
+        ResultSet result = b.getMyStatement().executeQuery("SELECT * FROM Client");
+        fail("Connexion fermée");
     }
     
 }

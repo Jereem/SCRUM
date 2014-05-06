@@ -252,11 +252,15 @@ public class Database {
     // Bouml preserved body end 000236C5
   }
 
-  public Analysis searchAnalysis(Types_analysis type) {
+  public Analysis searchAnalysis(Types_analysis type) throws SQLException {
     // Bouml preserved body begin 00023745
-	  if(this.analysis.getTypeAnalysis()== type)
+	  PreparedStatement ps= con.prepareStatement("Select ID_Type From Type_Analyse where Type_Analy= "+type.getType());
+	  ResultSet result = ps.executeQuery();
+	  ps=con.prepareStatement("Select * From Analyse where ID_Type="+result.getInt("ID_Type"));
+	  result = ps.executeQuery();
+	  if(!result.wasNull())
 	  {
-		  return this.analysis;
+		  Analysis analyse = new Analysis()
 	  }
 	  else
 	  {

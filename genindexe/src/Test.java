@@ -34,14 +34,15 @@ public class Test {
          //---------------------------------------------------------------------------------
          //requete préparées
          Connection con = b.getMyConnexion();
-         PreparedStatement ps = con.prepareStatement("SELECT * FROM CLIENT");
+         PreparedStatement ps = con.prepareStatement("SELECT NOM_CLIENT FROM CLIENT");
          
          
          ResultSet result = ps.executeQuery();
          
          while (result.next()){
              
-             String nom = result.getString("Nom");
+             String nom = result.getString("NOM_CLIENT");
+             System.out.println(nom);
    
          }
          

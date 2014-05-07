@@ -215,6 +215,7 @@ public class Database {
 >>>>>>> branch 'develop' of https://github.com/Jereem/SCRUM
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	/**
 	 * This function permits to search the order in the database that has this id.
 	 */
@@ -225,8 +226,25 @@ public class Database {
 	}
 =======
     public Samples searchSample(String id) {
+=======
+    public Samples searchSample(String id) throws SQLException {
+>>>>>>> branch 'develop' of https://github.com/Jereem/SCRUM
         // Bouml preserved body begin 00043102
-        return this.sample;
+        int id_number = Integer.parseInt(id);
+
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("SELECT * FROM Echantillon NATURAL JOIN Type_Echantillon NATURAL JOIN Animal NATURAL JOIN Espece WHERE Id_Ech='" + id_number + "'");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        java.sql.Date date_sampling = result.getDate("Date_recep");
+        java.sql.Date date_storage = result.getDate("Date_stock");
+
+        Samples sa2 = new Samples(id, result.getString("Type_Ech"), dateSQLToJava(date_sampling), dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), result.getString("Date_naissance"), result.getString("Nom_Espece")));
+
+        return sa2;
         // Bouml preserved body end 00043102
     }
 >>>>>>> branch 'develop' of https://github.com/Jereem/SCRUM
@@ -248,6 +266,10 @@ public class Database {
         return (listS);
         // Bouml preserved body end 00043182
     }
+<<<<<<< HEAD
+>>>>>>> branch 'develop' of https://github.com/Jereem/SCRUM
+=======
+
 >>>>>>> branch 'develop' of https://github.com/Jereem/SCRUM
 
 <<<<<<< HEAD
@@ -836,7 +858,48 @@ public class Database {
             System.out.println("VendorError: " + ex.getErrorCode());
             return "failed";
         }
+
     }
 >>>>>>> branch 'develop' of https://github.com/Jereem/SCRUM
 
+  
+   /**
+     *prend une date au format java et la convertie au format SQL
+     * @param datejava (dd-mm-aaaa)
+     * @return dateSQl (aaaa-mm-dd)
+     */
+    public String dateJavaToSQL(java.util.Date datejava){
+        String convert = datejava.toString();
+         String dd =convert.substring(0,2);
+         String mm= convert.substring(3,5);
+         String aa= convert.substring(6,10);
+       
+         String dateSQL=aa+"-"+mm+"-"+dd;
+        
+         System.out.println(dateSQL);
+        return dateSQL;
+    }
+    
+    /**
+     * prend une date au format SQL et la convertie au format date de java
+     *
+     * @param dateSQL (aaaa-mm-dd)
+     * @return da
+     */
+    public beans.Date dateSQLToJava(java.sql.Date dateSQL){
+      
+        int dd = dateSQL.getDate();
+        int mm = (dateSQL.getMonth())+1;
+        int aaaa = dateSQL.getYear();
+
+        beans.Date da = new Date(dd,mm,aaaa);
+
+        return da;
+    }
+  
 }
+
+    
+
+
+

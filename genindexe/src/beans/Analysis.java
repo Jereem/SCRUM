@@ -34,6 +34,10 @@ public class Analysis {
 	  dateAnalysis=date;
     // Bouml preserved body end 00040602
   }
+  
+  public Analysis(){
+	  
+  }
 
   public void generateReport() {
     // Bouml preserved body begin 0002C102

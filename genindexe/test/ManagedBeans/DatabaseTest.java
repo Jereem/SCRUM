@@ -317,14 +317,12 @@ public class DatabaseTest {
     @Test
     public void testSaveSpecie() throws Exception {
         System.out.println("saveSpecie");
-        String specie = "";
-        int category = 0;
+        String specie = "tyrannosaure";
+        int category = 1;
         Database instance = new Database();
-        String expResult = "";
+        String expResult = "success";
         String result = instance.saveSpecie(specie, category);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

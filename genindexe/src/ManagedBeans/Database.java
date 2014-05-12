@@ -381,7 +381,7 @@ public class Database {
             throw new SQLException("Can't get database connection");
         }
         try {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Espece(Nom_Espece, ID_Espece) VALUES (?,?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Espece(Nom_Espece, ID_CATEGORIE) VALUES (?,?)");
             ps.setString(1, paramSpecie.getNameSpecie());
             ps.setInt(2, paramSpecie.getCategory().getID());
             /* Exécution de la requête */

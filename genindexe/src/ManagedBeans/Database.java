@@ -17,7 +17,6 @@ import beans.Species;
 import beans.Storage;
 import beans.Types_analysis;
 import beans.Users;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import javax.naming.spi.ResolveResult;
 
 public class Database {
 

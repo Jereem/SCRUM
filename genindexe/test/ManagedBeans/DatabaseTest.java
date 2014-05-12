@@ -2,6 +2,7 @@ package ManagedBeans;
 
 import beans.Analysis;
 import beans.Animals;
+import beans.Category;
 import beans.Customers;
 import beans.Orders;
 import beans.Samples;
@@ -324,6 +325,14 @@ public class DatabaseTest {
         String expResult = "success";
         String result = instance.saveSpecie(specie, category);
         assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testGetListCategory() throws Exception {
+        System.out.println("getListCategory");
+        Database instance = new Database();
+        List<Category> result = instance.getListCategory();
+        assertNotNull(result);
     }
 
     /**

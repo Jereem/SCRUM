@@ -6,6 +6,14 @@
 
 package Interface;
 
+import ManagedBeans.Database;
+import beans.Adress;
+import beans.Customers;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+import java.awt.FlowLayout;
+import java.sql.SQLException;
+import javax.swing.JFrame;
+
 /**
  *
  * @author auryane
@@ -165,6 +173,8 @@ public class US1 extends javax.swing.JPanel {
 
         jButton2.setText("Annuler");
 
+        jPanel1.setOpaque(false);
+
         jLabel3.setText("Nom de l'entreprise :");
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -306,7 +316,7 @@ public class US1 extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel16)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField11, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
+                                        .addComponent(jTextField11))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
@@ -373,13 +383,16 @@ public class US1 extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 130, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(166, 166, 166)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -455,7 +468,7 @@ public class US1 extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        if ()
+
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -491,20 +504,58 @@ public class US1 extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField12ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Database instance=new Database();
+        if IsDoublonCustomer(true){
+            try {
+                Customers myCusto= new Customers();
+                Adress myAdress = new Adress();
+                String nom = jTextField8.getText();
+                String prenom = jTextField9.getText();
+                myCusto.setName(nom, prenom);
+            
+                String numTel = jTextField14.getText();
+                String numPort = jTextField15.getText();
+                String numFax = jTextField16.getText();
+                String mail = jTextField19.getText();
+                myCusto.setPhone(numTel);
+                myCusto.setEmail(mail);
+            
+                String numVoieCs = jTextField10.getText();
+                int numVoieC=Integer.parseInt(numVoieCs);
+                String nomVoieC = jTextField11.getText();
+                String codepostalCs = jTextField12.getText();
+                int codepostalC = Integer.parseInt(codepostalCs);
+                String nomVilleC = jTextField13.getText();
+                myAdress.setCity(nomVilleC);
+                myAdress.setNumber(numVoieC);
+                myAdress.setStreet(nomVoieC);
+                myAdress.setZipCode(codepostalC);
+                myCusto.setAdress(myAdress);
+            
+            
+                instance.saveCustomer(myCusto);
+            }
+            catch  (SQLException ex){
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());        
+            }
+        }
+        else {
+            System.out.println("Le client existe déjà dans la base de donnée");
+        }
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        if (evt.getSource()== jRadioButton2){
+        if(jRadioButton2.isSelected()){
             jPanel1.setEnabled(false);
             jPanel1.setVisible(false);
-            System.out.println("Je suis dans le if");
         }
-        else System.out.println("Je suis dans le else");
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        if (evt.getSource() == jRadioButton1){
+        if(jRadioButton1.isSelected()){
             jPanel1.setEnabled(true);
             jPanel1.setVisible(true);
         }
@@ -563,4 +614,13 @@ public class US1 extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
+
+ public static void main(String[] args){
+     JFrame myframe = new JFrame("US1");
+     US1 IT = new US1();
+     myframe.setLayout(new FlowLayout());
+     myframe.add(IT);
+     myframe.pack();
+     myframe.setVisible(true);
+ }
 }

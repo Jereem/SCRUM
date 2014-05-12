@@ -63,6 +63,10 @@ public class Samples {
 	  this.analysis = new ArrayList<Analysis>();
     // Bouml preserved body end 0002A282
   }
+  
+  public Samples(){
+	  
+  }
 
   /**
    * This method permits to display a sample on the screen.

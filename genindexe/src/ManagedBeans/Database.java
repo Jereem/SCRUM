@@ -17,12 +17,15 @@ import beans.Species;
 import beans.Storage;
 import beans.Types_analysis;
 import beans.Users;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 public class Database {
 
@@ -140,7 +143,18 @@ public class Database {
         return (listS);
         // Bouml preserved body end 00043182
     }
-
+    
+    public List<String> GetListTypeSamples() throws SQLException {
+    	PreparedStatement ps;
+    	ps=con.prepareStatement("Select * From Type_Echantillon");
+    	ResultSet result = ps.executeQuery();
+    	List<String> LS = new ArrayList<>();
+    	while(result.next()){
+    		
+    		LS.add(result.getString("Type_Ech"));
+    	}
+    	return LS;
+    }
 
     public void saveSample(Samples sample) {
         // Bouml preserved body begin 00043202
@@ -395,7 +409,49 @@ public class Database {
         }
 
     }
-
+    
+    public List<Category> getListCategory() throws SQLException {
+        // Bouml preserved body begin 000236C5
+        List<Category> listC = new ArrayList<>();
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Categorie");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Category pCategory = new Category();
+            pCategory.setID(result.getInt("ID_CATEGORIE"));
+            pCategory.setNameCategory(result.getString("NOM_CATEGORIE"));
+            listC.add(pCategory);
+        }
+        return (listC);
+        // Bouml preserved body end 000236C5
+    }
+    
+    public JList getJListCategory() throws SQLException {
+        JList jList = new JList();
+        DefaultListModel dlm=new DefaultListModel();
+        // Bouml preserved body begin 000236C5
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Categorie");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Category pCategory = new Category();
+            pCategory.setID(result.getInt("ID_CATEGORIE"));
+            pCategory.setNameCategory(result.getString("NOM_CATEGORIE"));
+            dlm.addElement(pCategory.getNameCategory());
+            jList.setModel(dlm);
+        }
+        return (jList);
+        // Bouml preserved body end 000236C5
+    }
+ 
     public String saveBddUser() throws SQLException {
         ConnectBDD con = new ConnectBDD();
         Connection b = con.getMyConnexion();

@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+
 import ManagedBeans.Database;
 
 /**
@@ -47,7 +48,7 @@ public class Add_Categorie_Interface extends JPanel{
 	JScrollPane Scroll_list;
 	JButton B_new_type_echantillon = new JButton("Ok");
 	JButton B_submit = new JButton("Valider");
-	Database DB = new Database();
+	Database DB;
 	java.util.List<String> List_type_sample = new ArrayList<>();
 	
 	
@@ -118,6 +119,7 @@ public class Add_Categorie_Interface extends JPanel{
 			
 		}
 		List_type_echantillon = new JList<>(type);
+		
 	}
 	
 	
@@ -129,6 +131,9 @@ public class Add_Categorie_Interface extends JPanel{
 		
 	}
 	
+	public void close(){
+		DB.Close();
+	}
 	
 	
 //	 public static void main(String[] args) {

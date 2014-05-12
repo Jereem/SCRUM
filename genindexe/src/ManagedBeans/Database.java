@@ -66,6 +66,10 @@ public class Database {
 
         // Bouml preserved body end 00043002
     }
+    
+    public void Close(){
+    	b.close();
+    }
 
     /**
      * This function permits to list all the orders in the database.
@@ -481,10 +485,10 @@ public class Database {
         return (listC);
         // Bouml preserved body end 000236C5
     }
-    
+   
     public JList getJListCategory() throws SQLException {
         JList jList = new JList();
-        DefaultListModel dlm=new DefaultListModel();
+        DefaultListModel dlm = new DefaultListModel();
         // Bouml preserved body begin 000236C5
         if (con == null) {
             throw new SQLException("Can't get database connection");
@@ -498,8 +502,8 @@ public class Database {
             pCategory.setID(result.getInt("ID_CATEGORIE"));
             pCategory.setNameCategory(result.getString("NOM_CATEGORIE"));
             dlm.addElement(pCategory.getNameCategory());
-            jList.setModel(dlm);
         }
+        jList.setModel(dlm);
         return (jList);
         // Bouml preserved body end 000236C5
     }

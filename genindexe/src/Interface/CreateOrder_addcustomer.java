@@ -6,6 +6,9 @@
 
 package Interface;
 
+import ManagedBeans.Database;
+import java.sql.SQLException;
+
 /**
  *
  * @author jeremygillet
@@ -109,13 +112,22 @@ public class CreateOrder_addcustomer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-       int taille_chaine=0; 
-       String chaine = jTextField1.getText();
-       taille_chaine = chaine.length();
-       if (taille_chaine>3){
-           
-           
-       }
+        int taille_chaine = 0;
+        String chaine = jTextField1.getText();
+        taille_chaine = chaine.length();
+        if (taille_chaine > 3) {
+            Database instance = new Database();
+            try {
+                instance.getListCustomers(chaine);
+                
+                
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+
+        }
     }//GEN-LAST:event_jTextField1KeyTyped
 
     /**

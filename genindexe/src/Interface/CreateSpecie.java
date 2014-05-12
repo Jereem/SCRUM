@@ -20,7 +20,7 @@ import javax.swing.JList;
  * @author Teddy
  */
 public class CreateSpecie extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form CreateSpecie
      * @throws java.sql.SQLException
@@ -106,11 +106,18 @@ public class CreateSpecie extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Database instance = new Database();
+try {
+        instance.saveSpecie(jTextField1.getText(), listCategory.getName());
+} catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
 

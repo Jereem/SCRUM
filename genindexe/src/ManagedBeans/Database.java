@@ -391,8 +391,8 @@ public class Database {
     public String saveSpecie(String specie, String category) throws SQLException {
         Category paramCat = new Category(category);
         Species paramSpecie = new Species(specie, paramCat);
-        PreparedStatement ps = con.prepareStatement("select ID_CATEGORIE from CATEGORIE where NOM_CATEGORIE = " + category + "");
-        ResultSet result = ps.executeQuery();
+        PreparedStatement ps0 = con.prepareStatement("select ID_CATEGORIE from CATEGORIE where NOM_CATEGORIE = " + category + "");
+        ResultSet result = ps0.executeQuery();
         int idCat = 0;
         while (result.next()) {
             paramCat.setID(result.getInt("ID_CATEGORIE"));

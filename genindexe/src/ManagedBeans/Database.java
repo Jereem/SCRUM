@@ -66,6 +66,10 @@ public class Database {
 
         // Bouml preserved body end 00043002
     }
+    
+    public void Close(){
+    	b.close();
+    }
 
     /**
      * This function permits to list all the orders in the database.

@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+
 import ManagedBeans.Database;
 
 /**
@@ -47,12 +48,15 @@ public class Add_Categorie_Interface extends JPanel{
 	JScrollPane Scroll_list;
 	JButton B_new_type_echantillon = new JButton("Ok");
 	JButton B_submit = new JButton("Valider");
-	Database DB = new Database();
+	Database DB;
 	java.util.List<String> List_type_sample = new ArrayList<>();
 	
 	
 	
 	public Add_Categorie_Interface() {
+		
+		
+		DB= new Database();
 		/*
 		 * Definition des panels
 		 */
@@ -65,15 +69,8 @@ public class Add_Categorie_Interface extends JPanel{
 		Panel_autre.setLayout(new BoxLayout(Panel_autre, BoxLayout.X_AXIS));
 		Panel_Submit.setLayout(new BorderLayout());
 		
-		/*
-		 * On recupere la liste des type d'echantillons existant
-		 */
-		try {
-			List_type_sample=DB.GetListTypeSamples();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		
 		remplirListEchantillon();
 		List_type_echantillon.setVisibleRowCount(4);
 		List_type_echantillon.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -112,12 +109,23 @@ public class Add_Categorie_Interface extends JPanel{
 	 * Methode qui remplis la liste a choix multiples des echantillons
 	 */
 	public void remplirListEchantillon(){
+		
+		/*
+		 * On recupere la liste des type d'echantillons existant
+		 */
+		try {
+			List_type_sample=DB.GetListTypeSamples();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String type[] = new String[List_type_sample.size()];
 		for(int i=0; i<List_type_sample.size(); i++){
 			type[i]=List_type_sample.get(i);
 			
 		}
 		List_type_echantillon = new JList<>(type);
+		
 	}
 	
 	
@@ -127,6 +135,10 @@ public class Add_Categorie_Interface extends JPanel{
 	 */
 	public void IsNewOrNot(Boolean IsNew){
 		
+	}
+	
+	public void close(){
+		DB.Close();
 	}
 	
 	

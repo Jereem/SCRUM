@@ -6,6 +6,11 @@
 
 package Interface;
 
+import java.awt.GridLayout;
+import java.sql.SQLException;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
 /**
  *
  * @author jeremygillet
@@ -54,4 +59,16 @@ public class CreateOrder extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+    public static void main(String[] args) throws SQLException {
+        JFrame myFrame = new JFrame("Test interface");
+        CreateOrder test = new CreateOrder();
+        CreateOrder_addanimal testanimal = new CreateOrder_addanimal();
+        myFrame.setLayout(new GridLayout(1, 2));   
+        myFrame.add(test);
+        myFrame.add(testanimal);
+
+        myFrame.pack();
+        myFrame.setVisible(true);
+        myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
 }

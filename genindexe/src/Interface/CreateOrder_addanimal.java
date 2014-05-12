@@ -6,9 +6,14 @@
 
 package Interface;
 
+import java.awt.GridLayout;
+import java.sql.SQLException;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
 /**
  *
- * @author jeremygillet
+ * @author jeremygillet johannedelage
  */
 public class CreateOrder_addanimal extends javax.swing.JPanel {
 
@@ -30,16 +35,26 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        client_animal = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
 
         jLabel1.setText("Selection d'un animal");
 
         jLabel2.setText("ou");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        client_animal.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        client_animal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                client_animalActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Ajouter Animal");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -52,12 +67,12 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(client_animal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(48, 48, 48)
                         .addComponent(jLabel2)
                         .addGap(30, 30, 30)
                         .addComponent(jButton1)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,17 +82,38 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
                 .addGap(108, 108, 108)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(client_animal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addContainerGap(141, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void client_animalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_client_animalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_client_animalActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox client_animal;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
+   
+    
+    
+    public static void main(String[] args) throws SQLException {
+        JFrame myFrame = new JFrame("Test interface");
+        CreateOrder_addanimal ajouteranimal = new CreateOrder_addanimal();
+        myFrame.setLayout(new GridLayout(1, 2));
+        myFrame.add(ajouteranimal);
+        myFrame.pack();
+        myFrame.setVisible(true);
+        myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
 }
+

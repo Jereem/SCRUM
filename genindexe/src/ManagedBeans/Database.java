@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
@@ -432,15 +433,23 @@ public class Database {
      * @return "success" si l'espèce est sauvegardée, sinon "failed"
      * @throws java.sql.SQLException
      */
-    public String saveSpecie(String specie, String category) throws SQLException {
-        Category paramCat = new Category(category);
-        Species paramSpecie = new Species(specie, paramCat);
-        PreparedStatement ps0 = con.prepareStatement("select ID_CATEGORIE from CATEGORIE where NOM_CATEGORIE = " + category + "");
-        ResultSet result = ps0.executeQuery();
-        int idCat = 0;
-        while (result.next()) {
-            paramCat.setID(result.getInt("ID_CATEGORIE"));
+    public String saveSpecie(String specie, String pcat) throws SQLException {
+        System.out.println(specie);
+        System.out.println(pcat);
+        Category paramCat = new Category(pcat);
+        
+        PreparedStatement ps0 = con.prepareStatement("select * from CATEGORIE where NOM_CATEGORIE = '" + pcat + "'");
+        System.out.println("ps0 ok");
+        ResultSet result0 = ps0.executeQuery();
+        System.out.println("rslt0 ok");
+        while (result0.next()) {
+            paramCat.setID(result0.getInt("ID_CATEGORIE"));
         }
+        System.out.println("while ok");
+        Species paramSpecie = new Species(specie, paramCat);
+        
+        System.out.println(paramSpecie.getCategory().getID());
+        
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
@@ -479,10 +488,10 @@ public class Database {
         return (listC);
         // Bouml preserved body end 000236C5
     }
-    
+   
     public JList getJListCategory() throws SQLException {
         JList jList = new JList();
-        DefaultListModel dlm=new DefaultListModel();
+        DefaultListModel dlm = new DefaultListModel();
         // Bouml preserved body begin 000236C5
         if (con == null) {
             throw new SQLException("Can't get database connection");
@@ -496,8 +505,8 @@ public class Database {
             pCategory.setID(result.getInt("ID_CATEGORIE"));
             pCategory.setNameCategory(result.getString("NOM_CATEGORIE"));
             dlm.addElement(pCategory.getNameCategory());
-            jList.setModel(dlm);
         }
+        jList.setModel(dlm);
         return (jList);
         // Bouml preserved body end 000236C5
     }
@@ -583,6 +592,35 @@ public class Database {
     		LC.add(result.getString("Nom_categorie"));
     	}
     	return LC;
+    }
+    
+    /**
+     * Methode de verif doublons customer
+     * @throws SQLException 
+     * @return true si pas de doublon, false sinon.
+     */
+    
+    public Boolean IsDoublonCustomer(String nom, String prenom, Adress adresse) throws SQLException{
+    	
+    	PreparedStatement ps;
+    	ps=con.prepareStatement("Select Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville From Client");
+    	ResultSet result = ps.executeQuery();
+    	while(result.next()){
+    		if(nom==result.getString("Nom_Client")){
+    			if(prenom==result.getString("Prenom_Client")){
+    				if(adresse.getCity()==result.getString("Ville")){
+    					if(adresse.getZipCode()==Integer.parseInt(result.getString("CP"))){
+    						if(adress.getStreet()==result.getString("Nom_Rue")){
+    							if(adresse.getNumber()==Integer.parseInt(result.getString("Num_Rue"))){
+    		    					return false;	
+    		    				}
+        					}
+    					}
+    				}
+    			}
+    		}
+    	}
+    	return true; 	
     }
   
 }

@@ -38,14 +38,7 @@ public class CreateSpecie extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        samplePUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("samplePU").createEntityManager();
-        customerQuery = java.beans.Beans.isDesignTime() ? null : samplePUEntityManager.createQuery("SELECT c FROM Customer c");
-        customerList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : customerQuery.getResultList();
-        pfpbsPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("pfpbsPU").createEntityManager();
-        categorieQuery = java.beans.Beans.isDesignTime() ? null : pfpbsPUEntityManager.createQuery("SELECT c FROM Categorie c");
-        categorieList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : categorieQuery.getResultList();
-        categorieQuery1 = java.beans.Beans.isDesignTime() ? null : pfpbsPUEntityManager.createQuery("SELECT c FROM Categorie c");
-        categorieList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : categorieQuery1.getResultList();
+
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listCategory = new javax.swing.JList();
@@ -123,19 +116,12 @@ public class CreateSpecie extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.util.List<Interface.Categorie> categorieList;
-    private java.util.List<Interface.Categorie> categorieList1;
-    private javax.persistence.Query categorieQuery;
-    private javax.persistence.Query categorieQuery1;
-    private java.util.List<Interface.Customer> customerList;
-    private javax.persistence.Query customerQuery;
+
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JList listCategory;
-    private javax.persistence.EntityManager pfpbsPUEntityManager;
-    private javax.persistence.EntityManager samplePUEntityManager;
     // End of variables declaration//GEN-END:variables
 }

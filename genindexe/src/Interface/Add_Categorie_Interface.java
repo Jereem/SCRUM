@@ -20,7 +20,7 @@ import javax.swing.ListSelectionModel;
 import ManagedBeans.Database;
 
 /**
- ** Classe interface pour la fenêtre de création de nouvelle catégorie.
+ ** Classe interface pour la fenetre de creation de nouvelle categorie.
  **/
 
 public class Add_Categorie_Interface extends JPanel{
@@ -45,7 +45,7 @@ public class Add_Categorie_Interface extends JPanel{
 		
 		
 		/*
-		 * On récupére la liste des type d'échantillons existant
+		 * On recupere la liste des type d'echantillons existant
 		 */
 		try {
 			List_type_sample=DB.GetListTypeSamples();
@@ -75,7 +75,7 @@ public class Add_Categorie_Interface extends JPanel{
 	
 	
 	/**
-	 * Méthode qui remplis la liste à choix multiples des échantillons
+	 * Methode qui remplis la liste a choix multiples des echantillons
 	 */
 	public void remplirListEchantillon(){
 		String type[] = new String[List_type_sample.size()];
@@ -86,6 +86,14 @@ public class Add_Categorie_Interface extends JPanel{
 		List_type_echantillon = new JList<>(type);
 	}
 	
+	
+	/**
+	 * Methode qui change l'affichage du textField en fonction de si il est correcte ou non
+	 * @param Boolean
+	 */
+	public void IsNewOrNot(Boolean IsNew){
+		
+	}
 	
 	
 	

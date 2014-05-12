@@ -7,11 +7,13 @@
 package Interface;
 
 import ManagedBeans.Database;
-import beans.Category;
+import java.awt.GridLayout;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JList;
 
 /**
  *
@@ -36,19 +38,13 @@ public class CreateSpecie extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents() throws SQLException {
 
-        samplePUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("samplePU").createEntityManager();
-        customerQuery = java.beans.Beans.isDesignTime() ? null : samplePUEntityManager.createQuery("SELECT c FROM Customer c");
-        customerList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : customerQuery.getResultList();
-        pfpbsPUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("pfpbsPU").createEntityManager();
-        categorieQuery = java.beans.Beans.isDesignTime() ? null : pfpbsPUEntityManager.createQuery("SELECT c FROM Categorie c");
-        categorieList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : categorieQuery.getResultList();
-        categorieQuery1 = java.beans.Beans.isDesignTime() ? null : pfpbsPUEntityManager.createQuery("SELECT c FROM Categorie c");
-        categorieList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : categorieQuery1.getResultList();
+
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        listCategory = new javax.swing.JList();
+        Database instance = new Database();
+        listCategory = instance.getJListCategory();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -78,18 +74,14 @@ public class CreateSpecie extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 12, Short.MAX_VALUE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTextField1)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 12, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField1))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(75, 75, 75)
@@ -123,11 +115,8 @@ public class CreateSpecie extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.util.List<Interface.Categorie> categorieList;
-    private java.util.List<Interface.Categorie> categorieList1;
     private javax.persistence.Query categorieQuery;
     private javax.persistence.Query categorieQuery1;
-    private java.util.List<Interface.Customer> customerList;
     private javax.persistence.Query customerQuery;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -138,4 +127,14 @@ public class CreateSpecie extends javax.swing.JPanel {
     private javax.persistence.EntityManager pfpbsPUEntityManager;
     private javax.persistence.EntityManager samplePUEntityManager;
     // End of variables declaration//GEN-END:variables
+
+    public static void main(String[] args) throws SQLException {
+        JFrame myFrame = new JFrame("Test interface");
+        CreateSpecie test = new CreateSpecie();
+        myFrame.setLayout(new GridLayout(1, 2));
+        myFrame.add(test);
+        myFrame.pack();
+        myFrame.setVisible(true);
+        myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
 }

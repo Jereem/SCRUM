@@ -87,6 +87,14 @@ public class Add_Categorie_Interface extends JPanel{
 	}
 	
 	
+	/**
+	 * Methode qui change l'affichage du textField en fonction de si il est correcte ou non
+	 * @param Boolean
+	 */
+	public void IsNewOrNot(Boolean IsNew){
+		
+	}
+	
 	
 //	
 //	 public static void main(String[] args) {

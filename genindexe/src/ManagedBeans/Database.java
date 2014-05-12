@@ -554,6 +554,23 @@ public class Database {
 
         return da;
     }
+    
+    
+    /**
+     * Retourne une liste de string contenant les nom de categorie dans la BDD
+     * @return
+     * @throws SQLException 
+     */
+    public List<String> getListCategorie() throws SQLException{
+    	List<String> LC = new ArrayList<>();
+    	PreparedStatement ps;
+    	ps=con.prepareStatement("Select * from Categorie");
+    	ResultSet result = ps.executeQuery();
+    	while(result.next()){
+    		LC.add(result.getString("Nom_categorie"));
+    	}
+    	return LC;
+    }
   
 }
 

@@ -20,14 +20,14 @@ import javax.swing.ListSelectionModel;
 import ManagedBeans.Database;
 
 /**
- ** Classe interface pour la fenêtre de création de nouvelle catégorie.
+ ** Classe interface pour la fenetre de creation de nouvelle categorie.
  **/
 
 public class Add_Categorie_Interface extends JPanel{
 	
-	JLabel L_titre = new JLabel("Créer Interface");
-	JLabel L_nom_new_cat = new JLabel("Nom de la nouvelle catégorie : \n");
-	JLabel L_type_echantillon = new JLabel("Type d'échantillons prélevables : \n");
+	JLabel L_titre = new JLabel("Crï¿½er Interface");
+	JLabel L_nom_new_cat = new JLabel("Nom de la nouvelle catï¿½gorie : \n");
+	JLabel L_type_echantillon = new JLabel("Type d'ï¿½chantillons prï¿½levables : \n");
 	JLabel L_autre = new JLabel("Autre type : ");
 	JTextField TF_nom_new_cat = new JTextField();
 	JTextField TF_new_type_echantillon = new JTextField();
@@ -45,7 +45,7 @@ public class Add_Categorie_Interface extends JPanel{
 		
 		
 		/*
-		 * On récupére la liste des type d'échantillons existant
+		 * On recupere la liste des type d'echantillons existant
 		 */
 		try {
 			List_type_sample=DB.GetListTypeSamples();
@@ -75,7 +75,7 @@ public class Add_Categorie_Interface extends JPanel{
 	
 	
 	/**
-	 * Méthode qui remplis la liste à choix multiples des échantillons
+	 * Methode qui remplis la liste a choix multiples des echantillons
 	 */
 	public void remplirListEchantillon(){
 		String type[] = new String[List_type_sample.size()];
@@ -88,14 +88,14 @@ public class Add_Categorie_Interface extends JPanel{
 	
 	
 	
-	
-	 public static void main(String[] args) {
-		 Add_Categorie_Interface IT = new Add_Categorie_Interface();
-		 JFrame myFrame = new JFrame("Test interface");
-		 myFrame.setLayout(new GridLayout(1, 2));
-		 myFrame.add(IT);
-		 myFrame.pack();
-			myFrame.setVisible(true);
-		 
-	 }
+//	
+//	 public static void main(String[] args) {
+//		 Add_Categorie_Interface IT = new Add_Categorie_Interface();
+//		 JFrame myFrame = new JFrame("Test interface");
+//		 myFrame.setLayout(new GridLayout(1, 2));
+//		 myFrame.add(IT);
+//		 myFrame.pack();
+//			myFrame.setVisible(true);
+//		 
+//	 }
 }

@@ -6,25 +6,23 @@
 
 package Interface;
 
+import java.awt.GridLayout;
 import java.sql.SQLException;
 import javax.swing.JFrame;
-import org.junit.After;
-import org.junit.AfterClass;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  *
  * @author Teddy
  */
 public class CreateSpecieTest {
-    
-    public static void main(String[] args) throws SQLException{
-        JFrame frame = new JFrame();
+
+    public static void main(String[] args) throws SQLException {
+        JFrame myFrame = new JFrame("Test interface");
         CreateSpecie test = new CreateSpecie();
-        frame.add(test);
+        myFrame.setLayout(new GridLayout(1, 2));
+        myFrame.add(test);
+        myFrame.pack();
+        myFrame.setVisible(true);
     }
-    
+
 }

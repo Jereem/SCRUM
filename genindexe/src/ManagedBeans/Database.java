@@ -155,19 +155,6 @@ public class Database {
     	}
     	return LS;
     }
-    
-    public List<String> GetListTypeSamples() throws SQLException {
-    	PreparedStatement ps;
-    	ps=con.prepareStatement("Select * From Type_Echantillon");
-    	ResultSet result = ps.executeQuery();
-    	List<String> LS = new ArrayList<>();
-    	while(result.next()){
-    		
-    		LS.add(result.getString("Type_Ech"));
-    	}
-    	return LS;
-    }
-
 
     public void saveSample(Samples sample) {
         // Bouml preserved body begin 00043202

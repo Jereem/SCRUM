@@ -219,6 +219,43 @@ public class Database {
         return (listC);
         // Bouml preserved body end 000234C5
     }
+    
+    /**
+     * Surcharge de la methode precedente avec le nom du client
+     * @param name
+     * @return liste 
+     * @throws SQLException
+     */
+    public List<Customers> getListCustomers(String name) throws SQLException {
+        // Bouml preserved body begin 000234C5
+        List<Customers> listC = new ArrayList<>();
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        name+="%";
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Client natural join Adresse WHERE nom_client=" + name);
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Customers pCustomers = new Customers();
+            Adress pAdress = new Adress();
+            pAdress.setCity(result.getString("Ville"));
+            pAdress.setCountry(result.getString("Pays"));
+            pAdress.setNumber(result.getInt("Num_Rue"));
+            pAdress.setStreet(result.getString("Nom_Rue"));
+            pAdress.setZipCode(result.getInt("CP"));
+            pCustomers.setAdress(pAdress);
+            pCustomers.setEmail(result.getString("Mail"));
+            pCustomers.setID(result.getInt("ID_Client"));
+            pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
+            pCustomers.setPhone(result.getString("Tel"));
+            listC.add(pCustomers);
+        }
+        return (listC);
+        // Bouml preserved body end 000234C5
+    }
+    
 
     public Customers searchCustomerName(String name) throws SQLException {
         // Bouml preserved body begin 00023545

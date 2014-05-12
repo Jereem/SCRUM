@@ -8,14 +8,16 @@ import beans.Orders;
 import beans.Samples;
 import beans.Types_analysis;
 import beans.Users;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JList;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -334,6 +336,7 @@ public class DatabaseTest {
         List<Category> result = instance.getListCategory();
         assertNotNull(result);
     }
+    
 
     /**
      * Test of saveBddUser method, of class Database.

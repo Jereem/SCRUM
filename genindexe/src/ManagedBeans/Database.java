@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
@@ -219,6 +220,43 @@ public class Database {
         return (listC);
         // Bouml preserved body end 000234C5
     }
+    
+    /**
+     * Surcharge de la methode precedente avec le nom du client
+     * @param name
+     * @return liste 
+     * @throws SQLException
+     */
+    public List<Customers> getListCustomers(String name) throws SQLException {
+        // Bouml preserved body begin 000234C5
+        List<Customers> listC = new ArrayList<>();
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        name+="%";
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Client natural join Adresse WHERE nom_client=" + name);
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Customers pCustomers = new Customers();
+            Adress pAdress = new Adress();
+            pAdress.setCity(result.getString("Ville"));
+            pAdress.setCountry(result.getString("Pays"));
+            pAdress.setNumber(result.getInt("Num_Rue"));
+            pAdress.setStreet(result.getString("Nom_Rue"));
+            pAdress.setZipCode(result.getInt("CP"));
+            pCustomers.setAdress(pAdress);
+            pCustomers.setEmail(result.getString("Mail"));
+            pCustomers.setID(result.getInt("ID_Client"));
+            pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
+            pCustomers.setPhone(result.getString("Tel"));
+            listC.add(pCustomers);
+        }
+        return (listC);
+        // Bouml preserved body end 000234C5
+    }
+    
 
     public Customers searchCustomerName(String name) throws SQLException {
         // Bouml preserved body begin 00023545
@@ -388,9 +426,23 @@ public class Database {
      * @return "success" si l'espèce est sauvegardée, sinon "failed"
      * @throws java.sql.SQLException
      */
-    public String saveSpecie(String specie, int category) throws SQLException {
-        Category paramCat = new Category(category);
+    public String saveSpecie(String specie, String pcat) throws SQLException {
+        System.out.println(specie);
+        System.out.println(pcat);
+        Category paramCat = new Category(pcat);
+        
+        PreparedStatement ps0 = con.prepareStatement("select * from CATEGORIE where NOM_CATEGORIE = '" + pcat + "'");
+        System.out.println("ps0 ok");
+        ResultSet result0 = ps0.executeQuery();
+        System.out.println("rslt0 ok");
+        while (result0.next()) {
+            paramCat.setID(result0.getInt("ID_CATEGORIE"));
+        }
+        System.out.println("while ok");
         Species paramSpecie = new Species(specie, paramCat);
+        
+        System.out.println(paramSpecie.getCategory().getID());
+        
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
@@ -533,6 +585,35 @@ public class Database {
     		LC.add(result.getString("Nom_categorie"));
     	}
     	return LC;
+    }
+    
+    /**
+     * Methode de verif doublons customer
+     * @throws SQLException 
+     * @return true si pas de doublon, false sinon.
+     */
+    
+    public Boolean IsDoublonCustomer(String nom, String prenom, Adress adresse) throws SQLException{
+    	
+    	PreparedStatement ps;
+    	ps=con.prepareStatement("Select Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville From Client");
+    	ResultSet result = ps.executeQuery();
+    	while(result.next()){
+    		if(nom==result.getString("Nom_Client")){
+    			if(prenom==result.getString("Prenom_Client")){
+    				if(adresse.getCity()==result.getString("Ville")){
+    					if(adresse.getZipCode()==Integer.parseInt(result.getString("CP"))){
+    						if(adress.getStreet()==result.getString("Nom_Rue")){
+    							if(adresse.getNumber()==Integer.parseInt(result.getString("Num_Rue"))){
+    		    					return false;	
+    		    				}
+        					}
+    					}
+    				}
+    			}
+    		}
+    	}
+    	return true; 	
     }
   
 }

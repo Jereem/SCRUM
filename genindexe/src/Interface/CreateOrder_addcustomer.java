@@ -6,6 +6,13 @@
 
 package Interface;
 
+import ManagedBeans.Database;
+import beans.Customers;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+
 /**
  *
  * @author jeremygillet
@@ -17,6 +24,7 @@ public class CreateOrder_addcustomer extends javax.swing.JFrame {
      */
     public CreateOrder_addcustomer() {
         initComponents();
+        
     }
 
     /**
@@ -35,6 +43,8 @@ public class CreateOrder_addcustomer extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,6 +58,9 @@ public class CreateOrder_addcustomer extends javax.swing.JFrame {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField1KeyTyped(evt);
             }
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
         });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -55,6 +68,13 @@ public class CreateOrder_addcustomer extends javax.swing.JFrame {
         jButton1.setText("Valider");
 
         jLabel3.setText("Client existant");
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,7 +88,9 @@ public class CreateOrder_addcustomer extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jButton1)))
+                                .addComponent(jButton1)
+                                .addGap(68, 68, 68)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
@@ -99,24 +121,41 @@ public class CreateOrder_addcustomer extends javax.swing.JFrame {
                     .addComponent(jToggleButton2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(28, 28, 28))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(28, 28, 28))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(8, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-       int taille_chaine=0; 
-       String chaine = jTextField1.getText();
-       taille_chaine = chaine.length();
-       if (taille_chaine>3){
-           
-           
-       }
+         int taille_chaine = 0;
+        String chaine = jTextField1.getText();
+        taille_chaine = chaine.length();
+        if (taille_chaine > 3) {
+            Database instance = new Database();
+            try {               
+                jList1 = instance.getListCustomers(chaine);
+                //jComboBox1 = instance.getListCustomers(chaine);
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+
+        }
     }//GEN-LAST:event_jTextField1KeyTyped
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+       
+    }//GEN-LAST:event_jTextField1KeyPressed
 
     /**
      * @param args the command line arguments
@@ -159,6 +198,8 @@ public class CreateOrder_addcustomer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JList jList1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables

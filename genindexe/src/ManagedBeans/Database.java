@@ -24,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
@@ -584,6 +585,35 @@ public class Database {
     		LC.add(result.getString("Nom_categorie"));
     	}
     	return LC;
+    }
+    
+    /**
+     * Methode de verif doublons customer
+     * @throws SQLException 
+     * @return true si pas de doublon, false sinon.
+     */
+    
+    public Boolean IsDoublonCustomer(String nom, String prenom, Adress adresse) throws SQLException{
+    	
+    	PreparedStatement ps;
+    	ps=con.prepareStatement("Select Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville From Client");
+    	ResultSet result = ps.executeQuery();
+    	while(result.next()){
+    		if(nom==result.getString("Nom_Client")){
+    			if(prenom==result.getString("Prenom_Client")){
+    				if(adresse.getCity()==result.getString("Ville")){
+    					if(adresse.getZipCode()==Integer.parseInt(result.getString("CP"))){
+    						if(adress.getStreet()==result.getString("Nom_Rue")){
+    							if(adresse.getNumber()==Integer.parseInt(result.getString("Num_Rue"))){
+    		    					return false;	
+    		    				}
+        					}
+    					}
+    				}
+    			}
+    		}
+    	}
+    	return true; 	
     }
   
 }

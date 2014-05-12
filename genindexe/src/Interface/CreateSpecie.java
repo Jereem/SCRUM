@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Interface;
 
 import ManagedBeans.Database;
-import beans.Category;
 import java.awt.GridLayout;
 import java.sql.SQLException;
-import java.util.List;
-import javax.swing.DefaultListModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JList;
@@ -20,14 +20,15 @@ import javax.swing.JList;
  * @author Teddy
  */
 public class CreateSpecie extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form CreateSpecie
-     *
      * @throws java.sql.SQLException
      */
     public CreateSpecie() throws SQLException {
         initComponents();
+        Database instance = new Database();
+        listCategory = instance.getJListCategory();
     }
 
     /**
@@ -39,15 +40,15 @@ public class CreateSpecie extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() throws SQLException {
 
-		Database DB = new Database();
 
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();        		
-		listCategory = DB.getJListCategory();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Database instance = new Database();
+        listCategory = instance.getJListCategory();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-		
+
         jButton1.setText("Valider");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,17 +107,17 @@ public class CreateSpecie extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Database instance = new Database();
-        try {
-            instance.saveSpecie(jTextField1.getText(), (String) listCategory.getSelectedValue());
-        } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
+try {
+        instance.saveSpecie(jTextField1.getText(), (String)listCategory.getSelectedValue());
+} catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-
+        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
 

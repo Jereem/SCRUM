@@ -66,6 +66,10 @@ public class Database {
 
         // Bouml preserved body end 00043002
     }
+    
+    public void Close(){
+    	b.close();
+    }
 
     /**
      * This function permits to list all the orders in the database.
@@ -227,12 +231,8 @@ public class Database {
      * @return liste 
      * @throws SQLException
      */
-    public JList getListCustomers(String name) throws SQLException {
+    public List<Customers> getListCustomers(String name) throws SQLException {
         // Bouml preserved body begin 000234C5
-        
-        JList jList = new JList();
-        DefaultListModel dlm=new DefaultListModel();
-
         List<Customers> listC = new ArrayList<>();
         if (con == null) {
             throw new SQLException("Can't get database connection");
@@ -255,12 +255,9 @@ public class Database {
             pCustomers.setID(result.getInt("ID_Client"));
             pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
             pCustomers.setPhone(result.getString("Tel"));
-            String Name=pCustomers.getLastName();
-            Name+=pCustomers.getFirstName();
-            dlm.addElement(Name);
-            jList.setModel(dlm);
+            listC.add(pCustomers);
         }
-        return (jList);
+        return (listC);
         // Bouml preserved body end 000234C5
     }
     

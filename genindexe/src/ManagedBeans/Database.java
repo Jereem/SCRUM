@@ -17,6 +17,7 @@ import beans.Species;
 import beans.Storage;
 import beans.Types_analysis;
 import beans.Users;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -141,6 +142,18 @@ public class Database {
         listS.add(this.sample);
         return (listS);
         // Bouml preserved body end 00043182
+    }
+    
+    public List<String> GetListTypeSamples() throws SQLException {
+    	PreparedStatement ps;
+    	ps=con.prepareStatement("Select * From Type_Echantillon");
+    	ResultSet result = ps.executeQuery();
+    	List<String> LS = new ArrayList<>();
+    	while(result.next()){
+    		
+    		LS.add(result.getString("Type_Ech"));
+    	}
+    	return LS;
     }
     
     public List<String> GetListTypeSamples() throws SQLException {

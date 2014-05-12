@@ -367,22 +367,21 @@ public class Database {
         }
     }
     
+    /**
+     * Méthode permettant d'enregistrer une nouvelle espèce
+     * @param specie
+     * @param category
+     * @return "success" si l'espèce est sauvegardée, sinon "failed"
+     * @throws java.sql.SQLException
+     */
     public String saveSpecie(String specie, int category) throws SQLException {
         Category paramCat = new Category(category);
         Species paramSpecie = new Species(specie, paramCat);
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
-        //etu.saveNewAdherent();
-        
         try {
-            /* Récupération des paramètres d'URL saisis par l'utilisateur */
-            /* Création de l'objet gérant les requêtes préparées */
             PreparedStatement ps = con.prepareStatement("INSERT INTO Espece(Nom_Espece, ID_Espece) VALUES (?,?)");
-            /*
-             * Remplissage des paramètres de la requête grâce aux méthodes
-             * setXXX() mises à disposition par l'objet PreparedStatement.
-             */
             ps.setString(1, paramSpecie.getNameSpecie());
             ps.setInt(2, paramSpecie.getCategory().getID());
             /* Exécution de la requête */

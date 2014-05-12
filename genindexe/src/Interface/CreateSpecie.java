@@ -108,7 +108,7 @@ public class CreateSpecie extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Database instance = new Database();
 try {
-        instance.saveSpecie(jTextField1.getText(), listCategory.getName());
+        instance.saveSpecie(jTextField1.getText(), (String)listCategory.getSelectedValue());
 } catch (SQLException ex) {
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
@@ -122,17 +122,12 @@ try {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.persistence.Query categorieQuery;
-    private javax.persistence.Query categorieQuery1;
-    private javax.persistence.Query customerQuery;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JList listCategory;
-    private javax.persistence.EntityManager pfpbsPUEntityManager;
-    private javax.persistence.EntityManager samplePUEntityManager;
     // End of variables declaration//GEN-END:variables
 
     public static void main(String[] args) throws SQLException {

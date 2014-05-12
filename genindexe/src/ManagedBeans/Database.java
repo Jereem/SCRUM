@@ -425,15 +425,23 @@ public class Database {
      * @return "success" si l'espèce est sauvegardée, sinon "failed"
      * @throws java.sql.SQLException
      */
-    public String saveSpecie(String specie, String category) throws SQLException {
-        Category paramCat = new Category(category);
-        Species paramSpecie = new Species(specie, paramCat);
-        PreparedStatement ps0 = con.prepareStatement("select ID_CATEGORIE from CATEGORIE where NOM_CATEGORIE = " + category + "");
-        ResultSet result = ps0.executeQuery();
-        int idCat = 0;
-        while (result.next()) {
-            paramCat.setID(result.getInt("ID_CATEGORIE"));
+    public String saveSpecie(String specie, String pcat) throws SQLException {
+        System.out.println(specie);
+        System.out.println(pcat);
+        Category paramCat = new Category(pcat);
+        
+        PreparedStatement ps0 = con.prepareStatement("select * from CATEGORIE where NOM_CATEGORIE = '" + pcat + "'");
+        System.out.println("ps0 ok");
+        ResultSet result0 = ps0.executeQuery();
+        System.out.println("rslt0 ok");
+        while (result0.next()) {
+            paramCat.setID(result0.getInt("ID_CATEGORIE"));
         }
+        System.out.println("while ok");
+        Species paramSpecie = new Species(specie, paramCat);
+        
+        System.out.println(paramSpecie.getCategory().getID());
+        
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }

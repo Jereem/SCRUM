@@ -313,6 +313,7 @@ public class DatabaseTest {
 
     /**
      * Test of saveSpecie method, of class Database.
+     * @throws java.lang.Exception
      */
     @Test
     public void testSaveSpecie() throws Exception {

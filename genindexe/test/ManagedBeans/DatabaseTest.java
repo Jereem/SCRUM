@@ -319,6 +319,20 @@ public class DatabaseTest {
      * @throws java.lang.Exception
      */
     @Test
+    public void testCheckSpecie() throws Exception {
+        System.out.println("checkSpecie");
+        String specie = "Poulet";
+        Database instance = new Database();
+        boolean expResult = false;
+        boolean result = instance.checkSpecie(specie);
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of saveSpecie method, of class Database.
+     * @throws java.lang.Exception
+     */
+    @Test
     public void testSaveSpecie() throws Exception {
         System.out.println("saveSpecie");
         String specie = "tyrannosaure";

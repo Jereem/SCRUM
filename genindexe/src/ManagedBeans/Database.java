@@ -420,13 +420,34 @@ public class Database {
     }
     
     /**
+     * Méthode renvoyant false si l'espece existe deja dans la BDD et true sinon
+     * @param specie
+     * @return 
+     * @throws java.sql.SQLException
+     */
+    public Boolean checkSpecie (String specie) throws SQLException{
+        Boolean result = true;
+        int paramNb = 0;
+        PreparedStatement ps0 = con.prepareStatement("select count(*) as nb from ESPECE where NOM_ESPECE = '" + specie + "'");
+        ResultSet result0 = ps0.executeQuery();
+        while (result0.next()) {
+            paramNb = (result0.getInt("nb"));
+        }
+        if (paramNb > 0) {
+            result = false;
+        }
+        return result;
+    }
+    
+    /**
      * Méthode permettant d'enregistrer une nouvelle espèce
      * @param specie
-     * @param category
+     * @param pcat
      * @return "success" si l'espèce est sauvegardée, sinon "failed"
      * @throws java.sql.SQLException
      */
     public String saveSpecie(String specie, String pcat) throws SQLException {
+        if(checkSpecie(specie)){
         System.out.println(specie);
         System.out.println(pcat);
         Category paramCat = new Category(pcat);
@@ -459,7 +480,10 @@ public class Database {
             System.out.println("VendorError: " + ex.getErrorCode());
             return "failed";
         }
-
+        }
+        else {
+            return "failed";
+        }
     }
     
     public List<Category> getListCategory() throws SQLException {

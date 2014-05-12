@@ -21,9 +21,12 @@ public class CreateSpecie extends javax.swing.JPanel {
 
     /**
      * Creates new form CreateSpecie
+     * @throws java.sql.SQLException
      */
-    public CreateSpecie() {
+    public CreateSpecie() throws SQLException {
         initComponents();
+        Database instance = new Database();
+        listCategory = instance.getJListCategory();
     }
 
     /**
@@ -34,7 +37,6 @@ public class CreateSpecie extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         samplePUEntityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("samplePU").createEntityManager();
         customerQuery = java.beans.Beans.isDesignTime() ? null : samplePUEntityManager.createQuery("SELECT c FROM Customer c");
@@ -58,21 +60,18 @@ public class CreateSpecie extends javax.swing.JPanel {
             }
         });
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("NOM_CATEGORIE");
-        org.jdesktop.swingbinding.JListBinding jListBinding = org.jdesktop.swingbinding.SwingBindings.createJListBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ, categorieList1, eLProperty, listCategory);
-        bindingGroup.addBinding(jListBinding);
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, categorieList, org.jdesktop.beansbinding.ELProperty.create("${}"), listCategory, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"), "selectedCategory");
-        bindingGroup.addBinding(binding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, categorieList, org.jdesktop.beansbinding.ObjectProperty.create(), listCategory, org.jdesktop.beansbinding.BeanProperty.create("selectedElements"));
-        bindingGroup.addBinding(binding);
-
         jScrollPane1.setViewportView(listCategory);
 
         jLabel1.setText("Nom de sa catégorie :");
 
         jLabel2.setText("Nom de l'espèce :");
 
-        jTextField1.setText("jTextField1");
+        jTextField1.setText("NomEspèce");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -112,13 +111,15 @@ public class CreateSpecie extends javax.swing.JPanel {
                 .addComponent(jButton1)
                 .addGap(5, 5, 5))
         );
-
-        bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -136,6 +137,5 @@ public class CreateSpecie extends javax.swing.JPanel {
     private javax.swing.JList listCategory;
     private javax.persistence.EntityManager pfpbsPUEntityManager;
     private javax.persistence.EntityManager samplePUEntityManager;
-    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

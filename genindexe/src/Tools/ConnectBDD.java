@@ -6,13 +6,9 @@ import java.util.logging.Logger;
 
 import java.sql.*;                  
 //Packages JDBC standard
-import java.math.*;               
 //BigDecimal et BigInteger classes.
-import oracle.jdbc.*; 
 //Extensions Oracle à JDBC. (optionnel)
-import oracle.jdbc.pool.*;
 //OracleDataSource
-import oracle.sql.*;
 
 
 /*

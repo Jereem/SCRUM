@@ -33,11 +33,11 @@ public class Samples {
 
   private Animals animal;
 
-  private Date dateSampling;
+  private java.util.Date dateSampling;
 
   private ArrayList<Analysis> analysis;
 
-  private Date dateStorage;
+  private java.util.Date dateStorage;
 
   /**
    * Sample is a constructor.
@@ -52,7 +52,7 @@ public class Samples {
      * @param D_storage
      * @param anim
    */
-  public Samples(String Identifier, String Type_sample, Date D_sampling, Date D_storage, Animals anim) {
+  public Samples(String Identifier, String Type_sample, java.util.Date D_sampling, java.util.Date D_storage, Animals anim) {
     // Bouml preserved body begin 0002A282
 	  this.id = Identifier;
 	  this.type = Type_sample;
@@ -96,7 +96,7 @@ public class Samples {
    * This method has been created to modify the date of the creation of the sample.
      * @param d
    */
-  public void setDatesampling(Date d) {
+  public void setDatesampling(java.util.Date d) {
     // Bouml preserved body begin 0002A482
 	  this.dateSampling = d;
     // Bouml preserved body end 0002A482
@@ -106,7 +106,7 @@ public class Samples {
    * This method has been created to modify the date when the sample was storaged.
      * @param d2
    */
-  public void setDatestorage(Date d2) {
+  public void setDatestorage(java.util.Date d2) {
     // Bouml preserved body begin 0002A502
 	  this.dateStorage = d2;
     // Bouml preserved body end 0002A502
@@ -146,7 +146,7 @@ public class Samples {
    * The method getDatesampling return the date when the sample was created.
      * @return 
    */
-  public Date getDatesampling() {
+  public java.util.Date getDatesampling() {
     // Bouml preserved body begin 0002A702
 	  return this.dateSampling;
     // Bouml preserved body end 0002A702
@@ -156,7 +156,7 @@ public class Samples {
    * This method return the date of the storage of the sample.
      * @return 
    */
-  public Date getDatestorage() {
+  public java.util.Date getDatestorage() {
     // Bouml preserved body begin 0002A782
 	  return this.dateStorage;
     // Bouml preserved body end 0002A782

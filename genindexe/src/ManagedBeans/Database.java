@@ -56,7 +56,7 @@ public class Database {
 
     public Storage storage;
 
-    public ConnectBDD b;
+    private ConnectBDD b;
     private Connection con;
 
     public Database() {
@@ -305,17 +305,43 @@ public class Database {
         // Bouml preserved body end 000235C5
     }
 
-    public void saveCustomer(Customers cust) throws SQLException {
+    public String saveCustomer(Customers cust) throws SQLException {
         // Bouml preserved body begin 00023645
-//        PreparedStatement ps = con.prepareStatement("Select ID_client From client where Id_Client =" + cust.getID());
-//        ResultSet result = ps.executeQuery();
-//        if (!result.wasNull()) {
-//            b.getMyStatement().executeUpdate("Update Client Set Nom_Client=" + cust.getFirstName() + ", Prenom_client=" + cust.getLastName() + ", Cdp=" + cust.getAdress().getZipCode() + ", Ville=" + cust.getAdress().getCity() + ", Tel=" + cust.getPhone() + " where id_client=" + cust.getID());
-//        } else {
-            b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Cdp, Ville, Tel) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone());
-            System.out.println("new data record");
-//        }
+        PreparedStatement ps = con.prepareStatement("Select ID_client From client where Id_Client =" + cust.getID());
+        ResultSet result = ps.executeQuery();
+        if (!result.wasNull()) {
+           try{
+            b.getMyStatement().executeUpdate("Update Client Set Nom_Client=" + cust.getFirstName() + ", Prenom_client=" + cust.getLastName() + ", Cdp=" + cust.getAdress().getZipCode() + ", Ville=" + cust.getAdress().getCity() + ", Tel=" + cust.getPhone() + " where id_client=" + cust.getID());
+            return "success";
+           }
+           catch(SQLException e){
+               return "failed";
+           }
+        } else {
+            try{
+            b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", "+Integer.toString(cust.getAdress().getNumber())+", "+cust.getAdress().getStreet()+", "+ cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone()+", "+cust.getCellular()+", "+cust.getFax()+", "+cust.getEmail()+", "+cust.getAdress().getCountry(), b.getMyStatement().RETURN_GENERATED_KEYS);
+            ResultSet clefs = b.getMyStatement().getGeneratedKeys();
+            System.out.println(clefs.getObject(1));
+            return "success";
+            }
+            catch(SQLException e){
+                return "failed";
+            }
+            
+        }
         // Bouml preserved body end 00023645
+    }
+    
+    public String saveCustomer(Customers cust, Adress entreprise, String nom_ent, String nom_contact, String nom_dept) throws SQLException {
+        try{
+        b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", "+Integer.toString(cust.getAdress().getNumber())+", "+cust.getAdress().getStreet()+", "+ cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone()+", "+cust.getCellular()+", "+cust.getFax()+", "+cust.getEmail()+", "+cust.getAdress().getCountry(), b.getMyStatement().RETURN_GENERATED_KEYS);
+            
+            System.out.println(b.getMyStatement().RETURN_GENERATED_KEYS);
+            return "success";
+        }
+        catch(SQLException e){
+            return "failed";
+        }
     }
 
     public List<Types_analysis> getListAnalysisType() throws SQLException {

@@ -56,7 +56,7 @@ public class Database {
 
     public Storage storage;
 
-    private ConnectBDD b;
+    public ConnectBDD b;
     private Connection con;
 
     public Database() {

@@ -175,16 +175,26 @@ public class US1 extends javax.swing.JPanel {
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
-        jPanel1.setVisible(false);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1)
-                .addGap(210, 210, 210))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel6)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -206,18 +216,6 @@ public class US1 extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField5)))))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,33 +419,26 @@ public class US1 extends javax.swing.JPanel {
                 
                 Customers myCusto= new Customers();
                 Adress myAdress = new Adress();
-                String nom = jTextField8.getText();
-                String prenom = jTextField9.getText();
-                myCusto.setName(nom, prenom);
+                myCusto.setName(jTextField8.getText(), jTextField9.getText());
             
-                String numTel = jTextField14.getText();
                 String numPort = jTextField15.getText();
                 String numFax = jTextField16.getText();
-                String mail = jTextField19.getText();
-                myCusto.setPhone(numTel);
-                myCusto.setEmail(mail);
+                myCusto.setPhone(jTextField14.getText());
+                myCusto.setEmail(jTextField19.getText());
             
-                String numVoieCs = jTextField10.getText();
-                int numVoieC=Integer.parseInt(numVoieCs);
-                String nomVoieC = jTextField11.getText();
-                String codepostalCs = jTextField12.getText();
-                int codepostalC = Integer.parseInt(codepostalCs);
-                String nomVilleC = jTextField13.getText();
-                myAdress.setCity(nomVilleC);
-                myAdress.setNumber(numVoieC);
-                myAdress.setStreet(nomVoieC);
-                myAdress.setZipCode(codepostalC);
+                myAdress.setCity( jTextField13.getText());
+                myAdress.setNumber(Integer.parseInt(jTextField10.getText()));
+                myAdress.setStreet(jTextField11.getText());
+                myAdress.setZipCode(Integer.parseInt(jTextField12.getText()));
                 myCusto.setAdress(myAdress);
             
-                if (instance.IsDoublonCustomer(nom, prenom, myAdress)== true) {
+                if (instance.IsDoublonCustomer(jTextField8.getText(), jTextField9.getText(), myAdress)== true) {
                 instance.saveCustomer(myCusto);
+                instance.b.close();
+                
                 }
                 else {
+                    //création dialogue
                 System.out.println("Le client existe déjà dans la base de donnée");
                 }
             }
@@ -475,7 +466,7 @@ public class US1 extends javax.swing.JPanel {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

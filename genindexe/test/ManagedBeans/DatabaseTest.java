@@ -383,6 +383,7 @@ public class DatabaseTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
+    
 
     /**
      * Test of dateJavaToSQL method, of class Database.
@@ -399,16 +400,33 @@ public class DatabaseTest {
         fail("The test case is a prototype.");
     }
 
+//    /**
+//     * Test of dateSQLToJava method, of class Database.
+//     */
+//    @Test
+//    public void testDateSQLToJava() {
+//        System.out.println("dateSQLToJava");
+//        java.sql.Date dateSQL = null;
+//        Database instance = new Database();
+//        beans.Date expResult = null;
+//        beans.Date result = instance.dateSQLToJava(dateSQL);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+    
     /**
-     * Test of dateSQLToJava method, of class Database.
+     * Test of dateStringToJava method, of class Database.
      */
     @Test
-    public void testDateSQLToJava() {
-        System.out.println("dateSQLToJava");
-        java.sql.Date dateSQL = null;
+    public void testDateStringToJava() {
+        System.out.println("dateStringToJava");
         Database instance = new Database();
-        beans.Date expResult = null;
-        beans.Date result = instance.dateSQLToJava(dateSQL);
+        Date expResult = new Date();
+        expResult.setDate(22);
+        expResult.setMonth(11);
+        expResult.setYear(1988);
+        Date result = instance.dateStringToJava("22-11-1988");
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

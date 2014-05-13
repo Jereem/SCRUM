@@ -1,5 +1,7 @@
 package beans;
 
+import Tools.Date;
+
 
  
 
@@ -26,6 +28,7 @@ public class Analysis {
 
   /**
    * constructor of analysis
+     * @param ID
    */
   public Analysis(int ID, Types_analysis ta, Date date) {
     // Bouml preserved body begin 00040602

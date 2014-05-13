@@ -7,8 +7,9 @@
 package Interface;
 
 import ManagedBeans.Database;
+import ManagedBeans.ManagedAnimal;
+import static Tools.Date.stringToDate;
 import beans.Animals;
-import beans.Date;
 import java.awt.GridLayout;
 import java.sql.SQLException;
 import javax.swing.JFrame;
@@ -21,13 +22,14 @@ import javax.swing.JOptionPane;
  */
 public class CreateAnimal extends javax.swing.JPanel {
 
-    private Database DB;
+    private ManagedAnimal ani;
     /**
      * Creates new form CreateAnimal
      */
     public CreateAnimal() {
+        ani = new ManagedAnimal();
         initComponents();
-        DB = new Database();
+        
     }
 
     /**
@@ -46,7 +48,7 @@ public class CreateAnimal extends javax.swing.JPanel {
         jTextFieldBirth = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListEspeces = new javax.swing.JList();
+        jListEspeces = ani.getJListEspeces();
         jButtonAdd = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
         jComboBoxSexe = new javax.swing.JComboBox();
@@ -64,12 +66,6 @@ public class CreateAnimal extends javax.swing.JPanel {
         });
 
         jLabel4.setText("Espèce :");
-
-        jListEspeces.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jListEspeces);
 
         jButtonAdd.setText("Ajouter");
@@ -152,11 +148,14 @@ public class CreateAnimal extends javax.swing.JPanel {
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         
-        Animals animal = new Animals(DB.dateStringToJava(jTextFieldBirth.getName()), jTextFieldNom.getText());
+        Animals animal = new Animals();
+        System.out.println(jTextFieldBirth.getText());
+        animal.setNumberBirthday(stringToDate(jTextFieldBirth.getText(), "dd-MM-yyyy"));
+        animal.setNom(jTextFieldNom.getText());
         String sexe = (String)jComboBoxSexe.getSelectedItem();
         if ("Femelle".equals(sexe)){animal.setSexe(false);}
         else {animal.setSexe(true);}
-        if ("success".equals(DB.saveAnimal(animal,16, (String)jListEspeces.getSelectedValue()))){
+        if ("success".equals(ani.saveAnimal(animal,16, (String)jListEspeces.getSelectedValue()))){
             JOptionPane.showMessageDialog(this,"Enregistrement reussi !");
         }
         else {

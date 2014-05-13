@@ -241,17 +241,22 @@ public class Database {
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
-        System.out.println("connexion");
         name+='%';
         PreparedStatement ps;
-        ps = con.prepareStatement("SELECT * FROM CLIENT WHERE NOM_CLIENT LIKE '"+ name+ "'");
-        System.out.println("requete passé");
+        ps = con.prepareStatement("SELECT * FROM CLIENT WHERE NOM_CLIENT LIKE '"+name+"'");    
         //get customer data from database
         ResultSet result = ps.executeQuery();
         while (result.next()) {
-            System.out.println("ligne resultat requete");
-            String Name=result.getString("Nom_Client");
+            String Name=result.getString("id_client");
+            Name+=": ";
+            Name+=result.getString("Nom_Client");
+            Name+=' ';
             Name+=result.getString("Prenom_Client");
+            Name+=' ';
+            Name+=result.getString("CP");
+            Name+=' ';
+            Name+=result.getString("Ville"); 
+            Name+=' ';
             dlm.addElement(Name);
             jList.setModel(dlm);
         }

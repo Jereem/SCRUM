@@ -597,5 +597,6 @@ public class US1 extends javax.swing.JPanel {
      myframe.add(IT);
      myframe.pack();
      myframe.setVisible(true);
+     
  }
 }

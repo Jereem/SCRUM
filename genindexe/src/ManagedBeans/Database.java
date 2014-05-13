@@ -389,12 +389,24 @@ public class Database {
             ResultSet ID = ps.executeQuery();
             ID.next();
             /*
-            insertion du client avvec l'id d'entreprise.
+            insertion du client avec l'id d'entreprise.
             */
-            String queryInsertCustomer = "Insert Into Client(ID_ENTR, Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays, Login, Mdp) Values('"+ID.getString("MAX(ID_ENTR)")+"', '" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"', '"+cust.getLogin()+"', '"+cust.getMotDePasse()+"')";
+            String queryInsertCustomer = "Insert Into Client(ID_ENTR, Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values('"+ID.getString("MAX(ID_ENTR)")+"', '" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"')";
             state.executeUpdate(queryInsertCustomer);
             
+              if(cust.getEmail()==null){    
             
+            /*
+            Recuperation de l'id du client ainsi insere
+            */
+            queryGetId = ("select MAX(ID_CLIENT) from CLIENT ");
+            ps=con.prepareStatement(queryGetId);
+            ID = ps.executeQuery();
+            ID.next();
+            
+            String queryInssertConnexion = "Insert into connexion(Login, Mdp, Id_Client) Values('"+cust.getLogin()+"', '"+cust.getMotDePasse()+"', '"+ID.getString("MAX(ID_CLIENT)")+"')";
+            state.executeQuery(queryInssertConnexion);
+              }
             
             return "success";
         }

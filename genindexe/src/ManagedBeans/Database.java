@@ -317,7 +317,7 @@ public class Database {
         // Bouml preserved body end 00023645
     }
     
-    public String saveCustomer(Customers cust, Adress entreprise, String nom_ent, String nom_contact, String nom_dept) throws SQLException {
+    public String saveCustomer(Customers cust, Adress entreprise, String nom_ent, String nom_contact, String nom_dept) {
         try{
         b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", "+Integer.toString(cust.getAdress().getNumber())+", "+cust.getAdress().getStreet()+", "+ cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone()+", "+cust.getCellular()+", "+cust.getFax()+", "+cust.getEmail()+", "+cust.getAdress().getCountry(), b.getMyStatement().RETURN_GENERATED_KEYS);
             

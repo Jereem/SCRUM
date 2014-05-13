@@ -26,6 +26,9 @@ public class Customers {
   private String cellularNumber;
   private String faxNumber;
   private String email;
+  
+  private String login;
+  private String motDePasse;
 
   private Adress adress;
 
@@ -33,7 +36,7 @@ public class Customers {
       
   }
   
-  public Customers(String first, String last, int num, String rue, String phone, String cellular, String fax, int ID) {
+  public Customers(String first, String last, int num, String rue, String phone, String cellular, String fax, String log, String mdp, int ID) {
     // Bouml preserved body begin 00040A82
 	  Adress ad = new Adress(num, rue);
 	  this.adress = ad;
@@ -42,6 +45,8 @@ public class Customers {
 	  phoneNumber = phone;
           cellularNumber= cellular;
           faxNumber = fax;
+          login = log;
+          motDePasse = mdp;
 	  this.ID = ID;
     // Bouml preserved body end 00040A82
   }
@@ -119,7 +124,32 @@ public class Customers {
 	  return faxNumber;
     // Bouml preserved body end 00040C82
   }
+  
+  
+  public void setLogin(String log) {
+    // Bouml preserved body begin 00041002
+	  this.login = log;
+    // Bouml preserved body end 00041002
+  }
+  
+  public void setMotDePasse(String mdp) {
+    // Bouml preserved body begin 00041002
+	  this.motDePasse = mdp;
+    // Bouml preserved body end 00041002
+  }
 
+   public String getLogin() {
+    // Bouml preserved body begin 00040C82
+	  return login;
+    // Bouml preserved body end 00040C82
+  }
+   
+    public String getMotDePasse() {
+    // Bouml preserved body begin 00040C82
+	  return motDePasse;
+    // Bouml preserved body end 00040C82
+  }
+    
   /**
    * accessor to attribute ID
    */

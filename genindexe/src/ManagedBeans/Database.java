@@ -5,7 +5,7 @@ package ManagedBeans;
  * with the database.
  */
 import Tools.ConnectBDD;
-import Tools.Date;
+import Tools.DateTools;
 import beans.Adress;
 import beans.Analysis;
 import beans.Animals;
@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -133,7 +134,7 @@ public class Database {
         ResultSet result = ps.executeQuery();
         java.sql.Date date_sampling = result.getDate("Date_recep");
         java.sql.Date date_storage = result.getDate("Date_stock");
-        Date d = new Date();
+        DateTools d = new DateTools();
         Samples sa2 = new Samples(id, result.getString("Type_Ech"), d.dateSQLToJava(date_sampling), d.dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), d.dateSQLToJava(result.getDate("Date_Naissance")), result.getString("Nom_Espece")));
 
         return sa2;
@@ -177,7 +178,7 @@ public class Database {
         ResultSet result = ps.executeQuery();
         while (result.next()) {
             Animals pAnimal = new Animals();
-            Date d = new Date();
+            DateTools d = new DateTools();
             pAnimal.setNumberBirthday(d.dateSQLToJava(result.getDate("Date_Naissance")));
             pAnimal.setNom(result.getString("Nom_Animal"));
             pAnimal.setSpecie(specie);

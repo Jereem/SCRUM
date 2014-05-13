@@ -3,6 +3,7 @@ package Tools;
 import ManagedBeans.Database;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,11 +11,11 @@ import java.util.logging.Logger;
  *
  * @author Teddy
  */
-public class Date {
+public class DateTools {
     
     private Date maDate;
     
-    public Date(){
+    public DateTools(){
         maDate = new Date();
     }
 
@@ -22,11 +23,11 @@ public class Date {
         return maDate;
     }
 
-    public void setMaDate(Date maDate) {
+    public void setMaDate(java.util.Date maDate) {
         this.maDate = maDate;
     }
     
-    public String dateJavaToSQL(java.util.Date datejava){
+    public String dateJavaToSQL(Date datejava){
         String convert = datejava.toString();
          String dd =convert.substring(0,2);
          String mm= convert.substring(3,5);

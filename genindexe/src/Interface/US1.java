@@ -464,15 +464,14 @@ public class US1 extends javax.swing.JPanel {
                 myAdress.setZipCode(Integer.parseInt(jTextField12.getText()));
                 myCusto.setAdress(myAdress);
                 
-                EntAdress.setCity( jTextField7.getText());
-                EntAdress.setNumber(Integer.parseInt(jTextField4.getText()));
-                EntAdress.setStreet(jTextField5.getText());
-                EntAdress.setZipCode(Integer.parseInt(jTextField6.getText()));
-
-            
+                
+           
                 if (instance.IsDoublonCustomer(jTextField8.getText(), jTextField9.getText(), myAdress)== true) {
                     if (jRadioButton1.isSelected()){
-                        
+                        EntAdress.setCity( jTextField7.getText());
+                        EntAdress.setNumber(Integer.parseInt(jTextField4.getText()));
+                        EntAdress.setStreet(jTextField5.getText());
+                        EntAdress.setZipCode(Integer.parseInt(jTextField6.getText()));
                         if ("success".equals(instance.saveCustomer(myCusto, EntAdress, jTextField1.getText(), jTextField3.getText(), jTextField2.getText(), jTextField20.getText()))){
                             JOptionPane.showMessageDialog(this,"Enregistrement reussi");
                         }

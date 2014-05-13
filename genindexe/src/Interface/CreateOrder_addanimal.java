@@ -193,7 +193,10 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
     private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) { 
         
         System.out.println(listAnimal.getSelectedValue());
-        
+        //int id_added_animal;
+        //String id_select;
+        //id_select=tolistAnimal.getSelectedValue();
+        //id_select.substring(0,listAnimal.getSelectedValue().indexOf(": "));
         //add()
         // TODO add your handling code here:
     }                                              

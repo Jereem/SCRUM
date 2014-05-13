@@ -232,6 +232,7 @@ public class Database {
      * @throws SQLException
      */
     public JList getListCustomers(String name) throws SQLException {
+        System.out.println("methode getListCustomers");
         // Bouml preserved body begin 000234C5
         
         JList jList = new JList();
@@ -240,24 +241,15 @@ public class Database {
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
-        name+="%";
+        System.out.println("connexion");
+        name+='%';
         PreparedStatement ps;
         ps = con.prepareStatement("SELECT * FROM CLIENT WHERE NOM_CLIENT LIKE '"+ name+ "'");
+        System.out.println("requete passé");
         //get customer data from database
         ResultSet result = ps.executeQuery();
         while (result.next()) {
-            Customers pCustomers = new Customers();
-          //  Adress pAdress = new Adress();
-           // pAdress.setCity(result.getString("Ville"));
-          //  pAdress.setCountry(result.getString("Pays"));
-          //  pAdress.setNumber(result.getInt("Num_Rue"));
-           // pAdress.setStreet(result.getString("Nom_Rue"));
-          //  pAdress.setZipCode(result.getInt("CP"));
-           // pCustomers.setAdress(pAdress);
-           // pCustomers.setEmail(result.getString("Mail"));
-            //pCustomers.setID(result.getInt("ID_Client"));
-         //   pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
-           // pCustomers.setPhone(result.getString("Tel"));
+            System.out.println("ligne resultat requete");
             String Name=result.getString("Nom_Client");
             Name+=result.getString("Prenom_Client");
             dlm.addElement(Name);

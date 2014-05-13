@@ -296,7 +296,6 @@ public class Database {
     }
 
     public String saveCustomer(Customers cust) {
-        // Bouml preserved body begin 00023645
         try {
             Statement state = b.getMyStatement();
             String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")";
@@ -304,8 +303,6 @@ public class Database {
                 ResultSet clefs = state.getGeneratedKeys();
                 System.out.println(clefs.getObject(1));
                 return "success";
-
-//            }
         } catch (SQLException ex) {
             System.out.println("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")");
             System.out.println("SQLException saveCustomer: " + ex.getMessage());
@@ -313,7 +310,6 @@ public class Database {
             System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
             return "failed";
         }
-        // Bouml preserved body end 00023645
     }
     
     public String saveCustomer(Customers cust, Adress entreprise, String nom_ent, String nom_contact, String nom_dept) throws SQLException {
@@ -328,6 +324,29 @@ public class Database {
         }
     }
 
+    public String saveAnimal(Animals animal, int idClient, String pSpe) {
+        Species paramSpe = new Species(pSpe);
+        try {
+        PreparedStatement ps0 = con.prepareStatement("select * from ESPECE where NOM_CATEGORIE = '" + pSpe + "'");
+        ResultSet result0 = ps0.executeQuery();
+        while (result0.next()) {
+            paramSpe.setID(result0.getInt("ID_ESPECE"));
+        }
+            Statement state = b.getMyStatement();
+            String query = "Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")";
+                state.executeUpdate(query, state.RETURN_GENERATED_KEYS);
+                ResultSet clefs = state.getGeneratedKeys();
+                System.out.println(clefs.getObject(1));
+                return "success";
+        } catch (SQLException ex) {
+            System.out.println("Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")");
+            System.out.println("SQLException saveCustomer: " + ex.getMessage());
+            System.out.println("SQLState saveCustomer: " + ex.getSQLState());
+            System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
+            return "failed";
+        }
+    }
+    
     public List<Types_analysis> getListAnalysisType() throws SQLException {
         // Bouml preserved body begin 000236C5
         List<Types_analysis> listTA = new ArrayList<>();
@@ -474,13 +493,10 @@ public class Database {
         Category paramCat = new Category(pcat);
         
         PreparedStatement ps0 = con.prepareStatement("select * from CATEGORIE where NOM_CATEGORIE = '" + pcat + "'");
-        System.out.println("ps0 ok");
         ResultSet result0 = ps0.executeQuery();
-        System.out.println("rslt0 ok");
         while (result0.next()) {
             paramCat.setID(result0.getInt("ID_CATEGORIE"));
         }
-        System.out.println("while ok");
         Species paramSpecie = new Species(specie, paramCat);
         
         System.out.println(paramSpecie.getCategory().getID());
@@ -596,7 +612,7 @@ public class Database {
      * @param datejava (dd-mm-aaaa)
      * @return dateSQl (aaaa-mm-dd)
      */
-    public String dateJavaToSQL(java.util.Date datejava){
+    public String dateJavaToSQL(Date datejava){
         String convert = datejava.toString();
          String dd =convert.substring(0,2);
          String mm= convert.substring(3,5);
@@ -614,7 +630,7 @@ public class Database {
      * @param dateSQL (aaaa-mm-dd)
      * @return da
      */
-    public beans.Date dateSQLToJava(java.sql.Date dateSQL){
+    public beans.Date dateSQLToJava(Date dateSQL){
       
         int dd = dateSQL.getDate();
         int mm = (dateSQL.getMonth())+1;

@@ -9,12 +9,13 @@ public class Animals {
    */
   private String specie;
   private String nom;
-  private String numberBirthday;
+  private Boolean sexe;
+  private Date numberBirthday;
 
   public Animals(){
       
   }
-  public Animals(String specie, String birthday, String nom) {
+  public Animals(String specie, Date birthday, String nom) {
     // Bouml preserved body begin 00020D83
 	  this.specie = specie;
 	  this.numberBirthday = birthday;
@@ -22,13 +23,21 @@ public class Animals {
     // Bouml preserved body end 00020D83
   }
 
+    public Boolean getSexe() {
+        return sexe;
+    }
+
+    public void setSexe(Boolean sexe) {
+        this.sexe = sexe;
+    }
+
   public String getSpecie() {
     // Bouml preserved body begin 00022C83
 	  return this.specie;
     // Bouml preserved body end 00022C83
   }
 
-  public String getNumberBirthday() {
+  public Date getNumberBirthday() {
     // Bouml preserved body begin 00022D03
 	  return this.numberBirthday;
     // Bouml preserved body end 00022D03
@@ -45,7 +54,7 @@ public class Animals {
     // Bouml preserved body end 00022D83
   }
 
-  public void setNumberBirthday(String new_NumberBirthday) {
+  public void setNumberBirthday(Date new_NumberBirthday) {
     // Bouml preserved body begin 00022E03
 	  this.numberBirthday = new_NumberBirthday;
     // Bouml preserved body end 00022E03

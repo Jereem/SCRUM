@@ -14,14 +14,15 @@ import javax.swing.JOptionPane;
  * This class manages the interface of the creation of a new specie.
  */
 public class CreateSpecie extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form CreateSpecie
-     *
      * @throws java.sql.SQLException
      */
     public CreateSpecie() throws SQLException {
         initComponents();
+        Database instance = new Database();
+        listCategory = instance.getJListCategory();
     }
 
     /**
@@ -33,7 +34,6 @@ public class CreateSpecie extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() throws SQLException {
 
-		Database DB = new Database();
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -42,7 +42,7 @@ public class CreateSpecie extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-		
+
         jButton1.setText("Valider");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,23 +101,10 @@ public class CreateSpecie extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Database instance = new Database();
-        try {
-            if ("success".equals(instance.saveSpecie(jTextField1.getText(), (String) listCategory.getSelectedValue()))){
-                JOptionPane.showMessageDialog(this, "La nouvelle espèce a bien été ajoutée");
-            }
-            else{
-                JOptionPane.showMessageDialog(this, "La nouvelle espèce existe déjà, veuillez recommencer");
-            }
-        } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
-        instance.b.close();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-
+        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
 

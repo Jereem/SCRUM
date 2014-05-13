@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ManagedBeans.Database;
+
 /**
  * Classe des Listener pour l'interface ajout de nouvelle categorie.
  * @author Akoma
@@ -27,6 +29,7 @@ public class Add_Categorie_Listener implements ActionListener{
 			 */
 			Boolean IsNew = false;
 			List<String> L_categorie = new ArrayList<>();
+			
 			try {
 				L_categorie = myPanel.DB.getListCategorie();
 			} catch (SQLException e1) {

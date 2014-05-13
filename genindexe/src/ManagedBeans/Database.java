@@ -200,7 +200,7 @@ public class Database {
         while (result.next()) {
             Animals pAnimals= new Animals();
             pAnimals.setNom(result.getString("NOM_ANIMAL"));
-            pAnimals.setID(result.getInt("ID_ANIMAL"));
+            pAnimals.setNom(result.getString("NOM_ANIMAL"));
             
             listA.add(pAnimals);
         }
@@ -230,8 +230,7 @@ public class Database {
         while (result.next()) {
             Animals pAnimals = new Animals();
             pAnimals.setNom(result.getString("NOM_ANIMAL"));
-            pAnimals.setID(result.getInt("ID_ANIMAL"));
-            dlm.addElement(pAnimals.getID()+": "+pAnimals.getNom());
+            dlm.addElement(pAnimals.getNom());
         }
         jList.setModel(dlm);
         return (jList);
@@ -363,7 +362,6 @@ public class Database {
 
 //            }
         } catch (SQLException ex) {
-            System.out.println("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")");
             System.out.println("SQLException saveCustomer: " + ex.getMessage());
             System.out.println("SQLState saveCustomer: " + ex.getSQLState());
             System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
@@ -389,7 +387,7 @@ public class Database {
             String queryGetId = ("select MAX(ID_ENTR) from entreprise ");
             PreparedStatement ps=con.prepareStatement(queryGetId);
             ResultSet ID = ps.executeQuery();
-            
+            ID.next();
             /*
             insertion du client avvec l'id d'entreprise.
             */
@@ -401,7 +399,6 @@ public class Database {
             return "success";
         }
         catch (SQLException ex) {
-            System.out.println("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")");
             System.out.println("SQLException saveCustomer: " + ex.getMessage());
             System.out.println("SQLState saveCustomer: " + ex.getSQLState());
             System.out.println("VendorError saveCustomer: " + ex.getErrorCode());

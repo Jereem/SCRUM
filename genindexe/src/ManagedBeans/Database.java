@@ -235,7 +235,41 @@ public class Database {
         jList.setModel(dlm);
         return (jList);
         // Bouml preserved body end 000236C5
-    }    
+    }  
+        
+    /**
+     *
+     * @param id_animal id de l'animal selectione
+     * @return liste d'animal du même propriétaire et de la même espece
+     * @throws SQLException
+     */
+    public JList getJListAnimalCustomer(Integer id_animal) throws SQLException {
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+        // Bouml preserved body begin 000236C5
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps,ps1;
+        ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM Animal WHERE ID_ANIMAL="+id_animal);
+        ResultSet result = ps.executeQuery();
+        String id_client = result.getString("ID_CLIENT");
+        String id_espece = result.getString("ID_ESPECE");
+        
+        
+        
+        ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT="+id_client+" AND ID_ESPECE="+id_espece+" AND ID_ANIMAL !="+id_animal);
+        //get animal data from database
+        ResultSet result1 = ps1.executeQuery();
+        while (result1.next()) {
+            Animals pAnimals = new Animals();
+            pAnimals.setNom(result1.getString("NOM_ANIMAL"));
+            dlm.addElement(pAnimals.getNom());
+        }
+        jList.setModel(dlm);
+        return (jList);
+        // Bouml preserved body end 000236C5
+    } 
 
     /**
      * This function permits to get the user that use this session.

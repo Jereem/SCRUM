@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 public class CreateOrder_addcustomer extends javax.swing.JPanel {
     
 private Database instance;
-
+public int id_client;
     /**
      * Creates new form CreateOrder_addcustomer
      */
@@ -128,9 +128,17 @@ private Database instance;
         if (jList1.getSelectedValue()!=null){
             //enregistrement du client
             JOptionPane.showMessageDialog(this,"Selection du client réussi");
+            id_client=1;
+            String id_client_select=(String) jList1.getSelectedValue();
+            
+            int fin_id = id_client_select.indexOf(": ");
+            id_client=Integer.parseInt(id_client_select.substring(0,(fin_id)));
+            System.out.println("id_client");
+            System.out.println(id_client);
         }
         else{
-            JOptionPane.showMessageDialog(this,"Veuillez selectionner un client");        
+            JOptionPane.showMessageDialog(this,"Veuillez selectionner un client");
+            id_client=0;
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -143,7 +151,6 @@ private Database instance;
                    jList1= instance.getListCustomers(chaine);
                    jScrollPane1.setViewportView(jList1);
             } catch (SQLException ex) {
-                System.out.println("dans le listener");
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());

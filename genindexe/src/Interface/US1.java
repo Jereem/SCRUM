@@ -425,6 +425,7 @@ public class US1 extends javax.swing.JPanel {
                 myCusto.setEmail(jTextField19.getText());
                 myCusto.setCellular(jTextField15.getText());
                 myCusto.setFax(jTextField16.getText());
+                myCusto.setID(0);
             
                 myAdress.setCity( jTextField13.getText());
                 myAdress.setNumber(Integer.parseInt(jTextField10.getText()));

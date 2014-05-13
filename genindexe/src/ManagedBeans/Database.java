@@ -56,7 +56,7 @@ public class Database {
 
     public Storage storage;
 
-    private ConnectBDD b;
+    public ConnectBDD b;
     private Connection con;
 
     public Database() {
@@ -493,6 +493,11 @@ public class Database {
         }
     }
     
+    /**
+     * Methode qui renvoie une liste de catégories contenant les catégories existante dans la BDD
+     * @return 
+     * @throws java.sql.SQLException
+     */
     public List<Category> getListCategory() throws SQLException {
         // Bouml preserved body begin 000236C5
         List<Category> listC = new ArrayList<>();
@@ -513,6 +518,11 @@ public class Database {
         // Bouml preserved body end 000236C5
     }
    
+    /**
+     * Methode qui renvoie une Jlist contenant les catégories existante dans la BDD
+     * @return 
+     * @throws java.sql.SQLException
+     */
     public JList getJListCategory() throws SQLException {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();

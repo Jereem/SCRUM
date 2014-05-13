@@ -1,23 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Interface;
 
 import ManagedBeans.Database;
-import beans.Category;
 import java.awt.GridLayout;
 import java.sql.SQLException;
-import java.util.List;
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Teddy
+ * This class manages the interface of the creation of a new specie.
  */
 public class CreateSpecie extends javax.swing.JPanel {
 
@@ -42,8 +36,9 @@ public class CreateSpecie extends javax.swing.JPanel {
 		Database DB = new Database();
 
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();        		
-		listCategory = DB.getJListCategory();
+	listCategory = DB.getJListCategory();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -107,12 +102,18 @@ public class CreateSpecie extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Database instance = new Database();
         try {
-            instance.saveSpecie(jTextField1.getText(), (String) listCategory.getSelectedValue());
+            if ("success".equals(instance.saveSpecie(jTextField1.getText(), (String) listCategory.getSelectedValue()))){
+                JOptionPane.showMessageDialog(this, "La nouvelle espèce a bien été ajoutée");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "La nouvelle espèce existe déjà, veuillez recommencer");
+            }
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+        instance.b.close();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -122,6 +123,7 @@ public class CreateSpecie extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

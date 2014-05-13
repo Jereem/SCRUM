@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe des Listener pour l'interface ajout de nouvelle catégorie.
+ * Classe des Listener pour l'interface ajout de nouvelle categorie.
  * @author Akoma
  *
  */

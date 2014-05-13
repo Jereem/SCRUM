@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 public class CreateOrder_addcustomer extends javax.swing.JPanel {
     
 private Database instance;
-
+public int id_client;
     /**
      * Creates new form CreateOrder_addcustomer
      */
@@ -47,6 +47,7 @@ private Database instance;
         jList1 = new javax.swing.JList();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         jLabel1.setText("Selection d'un client");
 
@@ -76,6 +77,8 @@ private Database instance;
 
         jLabel3.setText("Nom client");
 
+        jButton3.setText("Annuler");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,8 +100,11 @@ private Database instance;
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)
-                        .addGap(223, 223, 223))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addGap(182, 182, 182))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
@@ -119,7 +125,9 @@ private Database instance;
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
                 .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -128,9 +136,17 @@ private Database instance;
         if (jList1.getSelectedValue()!=null){
             //enregistrement du client
             JOptionPane.showMessageDialog(this,"Selection du client réussi");
+            id_client=1;
+            String id_client_select=(String) jList1.getSelectedValue();
+            
+            int fin_id = id_client_select.indexOf(": ");
+            id_client=Integer.parseInt(id_client_select.substring(0,(fin_id)));
+            System.out.println("id_client");
+            System.out.println(id_client);
         }
         else{
-            JOptionPane.showMessageDialog(this,"Veuillez selectionner un client");        
+            JOptionPane.showMessageDialog(this,"Veuillez selectionner un client");
+            id_client=0;
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -143,7 +159,6 @@ private Database instance;
                    jList1= instance.getListCustomers(chaine);
                    jScrollPane1.setViewportView(jList1);
             } catch (SQLException ex) {
-                System.out.println("dans le listener");
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
@@ -156,6 +171,7 @@ private Database instance;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

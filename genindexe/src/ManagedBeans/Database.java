@@ -10,7 +10,6 @@ import beans.Analysis;
 import beans.Animals;
 import beans.Category;
 import beans.Customers;
-import beans.Date;
 import beans.Orders;
 import beans.Samples;
 import beans.Species;

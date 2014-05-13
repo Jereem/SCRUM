@@ -97,6 +97,7 @@ public class US1 extends javax.swing.JPanel {
         jLabel2.setText("Choix du statut du client");
 
         buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Professionnel");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +106,7 @@ public class US1 extends javax.swing.JPanel {
         });
 
         buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Personnel");
+        jRadioButton2.setText("Particulier");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton2ActionPerformed(evt);
@@ -492,11 +493,7 @@ public class US1 extends javax.swing.JPanel {
                 else{
                     JOptionPane.showMessageDialog(this,"Le client existe déjà","Erreur",JOptionPane.ERROR_MESSAGE);
                 }
-                
-            
-               
-       
-       
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed

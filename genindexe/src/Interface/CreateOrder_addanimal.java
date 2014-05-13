@@ -111,7 +111,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(search_animal, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -193,7 +193,10 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
     private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) { 
         
         System.out.println(listAnimal.getSelectedValue());
-        
+        //int id_added_animal;
+        //String id_select;
+        //id_select=tolistAnimal.getSelectedValue();
+        //id_select.substring(0,listAnimal.getSelectedValue().indexOf(": "));
         //add()
         // TODO add your handling code here:
     }                                              

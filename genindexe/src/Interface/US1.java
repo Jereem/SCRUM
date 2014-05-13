@@ -531,6 +531,7 @@ public class US1 extends javax.swing.JPanel {
         jTextField17.setText("");
         jTextField18.setText("");
         jTextField19.setText("");
+        jTextField20.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -597,5 +598,6 @@ public class US1 extends javax.swing.JPanel {
      myframe.add(IT);
      myframe.pack();
      myframe.setVisible(true);
+     
  }
 }

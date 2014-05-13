@@ -135,6 +135,7 @@ public class Customers {
   public void setMotDePasse(String mdp) {
     // Bouml preserved body begin 00041002
 	  this.motDePasse = mdp;
+          
     // Bouml preserved body end 00041002
   }
 

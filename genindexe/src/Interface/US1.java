@@ -471,6 +471,7 @@ public class US1 extends javax.swing.JPanel {
             
                 if (instance.IsDoublonCustomer(jTextField8.getText(), jTextField9.getText(), myAdress)== true) {
                     if (jRadioButton1.isSelected()){
+                        
                         if ("success".equals(instance.saveCustomer(myCusto, EntAdress, jTextField1.getText(), jTextField3.getText(), jTextField2.getText(), jTextField20.getText()))){
                             JOptionPane.showMessageDialog(this,"Enregistrement reussi");
                         }

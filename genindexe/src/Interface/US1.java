@@ -416,16 +416,22 @@ public class US1 extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Database instance=new Database();
-            try {
+           
                 
                 Customers myCusto= new Customers();
                 Adress myAdress = new Adress();
                 myCusto.setName(jTextField8.getText(), jTextField9.getText());
 
+                
                 myCusto.setPhone(jTextField14.getText());
+                if(myCusto.getPhone().equals("")){ myCusto.setPhone(null);}
                 myCusto.setEmail(jTextField19.getText());
+                if(myCusto.getEmail().equals("")){ 
+                    myCusto.setEmail(null);}
                 myCusto.setCellular(jTextField15.getText());
+                if(myCusto.getCellular().equals("")){ myCusto.setCellular(null);}
                 myCusto.setFax(jTextField16.getText());
+                if(myCusto.getFax().equals("")){ myCusto.setFax(null);}
                 myCusto.setID(0);
             
                 myAdress.setCity( jTextField13.getText());
@@ -435,22 +441,21 @@ public class US1 extends javax.swing.JPanel {
                 myCusto.setAdress(myAdress);
             
                 if (instance.IsDoublonCustomer(jTextField8.getText(), jTextField9.getText(), myAdress)== true) {
-                instance.saveCustomer(myCusto);
+                
                     if ("success".equals(instance.saveCustomer(myCusto))){
                         JOptionPane.showMessageDialog(this,"Enregistrement reussi");
                     }
                     else {
-                        JOptionPane.showMessageDialog(this,"L'espèce existe déjà","Erreur",JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this,"Echec de l'enregistrement","Erreur",JOptionPane.ERROR_MESSAGE);
                     }
-                instance.b.close();
+                instance.Close();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this,"Le client existe déjà","Erreur",JOptionPane.ERROR_MESSAGE);
                 }
                 
-            }
-            catch  (SQLException ex){
-                System.out.println("SQLException: " + ex.getMessage());
-                System.out.println("SQLState: " + ex.getSQLState());
-                System.out.println("VendorError: " + ex.getErrorCode());        
-            }     
+            
+               
        
        
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -529,6 +534,7 @@ public class US1 extends javax.swing.JPanel {
 
  public static void main(String[] args){
      JFrame myframe = new JFrame("US1");
+     myframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      US1 IT = new US1();
      myframe.setLayout(new FlowLayout());
      myframe.add(IT);

@@ -200,7 +200,7 @@ public class Database {
         while (result.next()) {
             Animals pAnimals= new Animals();
             pAnimals.setNom(result.getString("NOM_ANIMAL"));
-            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            pAnimals.setID(result.getInt("ID_ANIMAL"));
             
             listA.add(pAnimals);
         }
@@ -230,7 +230,8 @@ public class Database {
         while (result.next()) {
             Animals pAnimals = new Animals();
             pAnimals.setNom(result.getString("NOM_ANIMAL"));
-            dlm.addElement(pAnimals.getNom());
+            pAnimals.setID(result.getInt("ID_ANIMAL"));
+            dlm.addElement(pAnimals.getID()+": "+pAnimals.getNom());
         }
         jList.setModel(dlm);
         return (jList);

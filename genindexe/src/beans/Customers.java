@@ -23,7 +23,8 @@ public class Customers {
    * The phone number of the customer.
    */
   private String phoneNumber;
-
+  private String cellularNumber;
+  private String faxNumber;
   private String email;
 
   private Adress adress;
@@ -32,13 +33,15 @@ public class Customers {
       
   }
   
-  public Customers(String first, String last, int num, String rue, String phone, int ID) {
+  public Customers(String first, String last, int num, String rue, String phone, String cellular, String fax, int ID) {
     // Bouml preserved body begin 00040A82
 	  Adress ad = new Adress(num, rue);
 	  this.adress = ad;
 	  firstName = first;
 	  lastName = last;
 	  phoneNumber = phone;
+          cellularNumber= cellular;
+          faxNumber = fax;
 	  this.ID = ID;
     // Bouml preserved body end 00040A82
   }
@@ -82,6 +85,19 @@ public class Customers {
 	  this.phoneNumber = phone;
     // Bouml preserved body end 00041002
   }
+  
+ public void setCellular(String phone) {
+    // Bouml preserved body begin 00041002
+	  this.cellularNumber = phone;
+    // Bouml preserved body end 00041002
+  }
+ 
+ 
+ public void setFax(String phone) {
+    // Bouml preserved body begin 00041002
+	  this.faxNumber = phone;
+    // Bouml preserved body end 00041002
+  }
 
   /**
    * accessor to attribute phone
@@ -89,6 +105,18 @@ public class Customers {
   public String getPhone() {
     // Bouml preserved body begin 00040C82
 	  return phoneNumber;
+    // Bouml preserved body end 00040C82
+  }
+  
+  public String getCellular() {
+    // Bouml preserved body begin 00040C82
+	  return cellularNumber;
+    // Bouml preserved body end 00040C82
+  }
+  
+  public String getFax() {
+    // Bouml preserved body begin 00040C82
+	  return faxNumber;
     // Bouml preserved body end 00040C82
   }
 

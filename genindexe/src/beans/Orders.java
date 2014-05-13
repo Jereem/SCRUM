@@ -3,8 +3,9 @@ package beans;
 
  
 
-import Tools.Date;
+import Tools.DateTools;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Orders {
@@ -154,7 +155,9 @@ public class Orders {
 	  System.out.println(this.customer.getLastName());
 	  
 	  System.out.print("DeadLine : ");
-	  this.dateDeadline.printDate();
+          DateTools d = new DateTools();
+          d.setMaDate(dateDeadline);
+	  d.printDate();
 	  
 	  System.out.print("Number of samples : ");
 	  System.out.println(this.numberSamples);

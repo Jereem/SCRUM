@@ -186,7 +186,22 @@ public class DatabaseTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
+    
+    /**
+     * methode precedente avec le nom du client en paramètre 
+     * @param name nom 
+     * @return liste des clients qui correspondent au critere de recherche
+     * @throws SQLException
+     */
+    /*
+    @Test
+    public void testGetListCustomers1() throws Exception {
+        Database instance = new Database();
+        JList result = instance.getListCustomers("fernazz");
+        JList expResult= null;
+        assertEquals(expResult, result);
+    }
+*/
     /**
      * Test of searchCustomerID method, of class Database.
      */
@@ -328,10 +343,12 @@ public class DatabaseTest {
         assertEquals(expResult, result);
     }
     
+    
     /**
      * Test of saveSpecie method, of class Database.
      * @throws java.lang.Exception
      */
+    /*
     @Test
     public void testSaveSpecie() throws Exception {
         System.out.println("saveSpecie");
@@ -342,6 +359,7 @@ public class DatabaseTest {
         String result = instance.saveSpecie(specie, category);
         assertEquals(expResult, result);
     }
+    */
     
     @Test
     public void testGetListCategory() throws Exception {

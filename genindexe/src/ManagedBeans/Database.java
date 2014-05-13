@@ -308,14 +308,6 @@ public class Database {
     public String saveCustomer(Customers cust) {
         // Bouml preserved body begin 00023645
         try {
-//            PreparedStatement ps = con.prepareStatement("Select ID_client From client where Id_Client =" + cust.getID());
-//            ResultSet result = ps.executeQuery();
-//            if (!result.wasNull()) {
-//
-//                b.getMyStatement().executeUpdate("Update Client Set Nom_Client=" + cust.getFirstName() + ", Prenom_client=" + cust.getLastName() + ", Cdp=" + cust.getAdress().getZipCode() + ", Ville=" + cust.getAdress().getCity() + ", Tel=" + cust.getPhone() + " where id_client=" + cust.getID());
-//                return "success";
-//
-//            } else {
             Statement state = b.getMyStatement();
             String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")";
                 state.executeUpdate(query, state.RETURN_GENERATED_KEYS);

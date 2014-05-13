@@ -51,7 +51,7 @@ public class Database1 {
     // Bouml preserved body begin 00043002
 	  d1 = new Date(23,12,10);
 	  d2 = new Date(23,12,11);
-	  customer =  new Customers("jean", "dupont", 86000,"Poitiers", "090909",991);
+	 // customer =  new Customers("jean", "dupont", 86000,"Poitiers", "090909",991);
 	  order =  new Orders(1, d1,d2, 1, customer);
 	  animal = new Animals("cat","2010","bob");
 	  sample = new Samples("1", "blood", d1, d2, animal);
@@ -159,7 +159,7 @@ public class Database1 {
 	  }
 	  else
 	  {
-		  Customers cust = new Customers("jean", "dupond", 86000,"Poitiers", "090909",1);
+	//	  Customers cust = new Customers("jean", "dupond", 86000,"Poitiers", "090909",1);
 		  return cust;
 	  }
     // Bouml preserved body end 00023545
@@ -173,7 +173,7 @@ public class Database1 {
 	  }
 	  else
 	  {
-		  Customers cust = new Customers("jean", "dupond", 86000,"Poitiers", "090909",1);
+		//  Customers cust = new Customers("jean", "dupond", 86000,"Poitiers", "090909",1);
 		  return cust;
 	  }
     // Bouml preserved body end 000235C5

@@ -669,14 +669,30 @@ public class Database {
         }
 
     }
-
+/**
+     * prend une date au format String et la convertie au format date de java
+     * @param date
+     * @return dateJava (dd-mm-aaaa)
+     */
+    public java.util.Date dateStringToJava(String date){
+         String aaaa= date.substring(6,10);
+         String mm= date.substring(3,5);
+         String dd= date.substring(0,2);
+       
+         java.util.Date dateJava = null;
+         dateJava.setYear(Integer.parseInt(aaaa));
+         dateJava.setMonth(Integer.parseInt(mm));
+         dateJava.setDate(Integer.parseInt(dd));
+     
+        return dateJava;
+    }
   
    /**
      *prend une date au format java et la convertie au format SQL
      * @param datejava (dd-mm-aaaa)
      * @return dateSQl (aaaa-mm-dd)
      */
-    public String dateJavaToSQL(Date datejava){
+    public String dateJavaToSQL(java.util.Date datejava){
         String convert = datejava.toString();
          String dd =convert.substring(0,2);
          String mm= convert.substring(3,5);
@@ -694,13 +710,13 @@ public class Database {
      * @param dateSQL (aaaa-mm-dd)
      * @return da
      */
-    public beans.Date dateSQLToJava(java.sql.Date dateSQL){
+    public java.util.Date dateSQLToJava(java.sql.Date dateSQL){
       
         int dd = dateSQL.getDate();
         int mm = (dateSQL.getMonth())+1;
         int aaaa = dateSQL.getYear();
 
-        beans.Date da = new Date(dd,mm,aaaa);
+        java.util.Date da = new java.util.Date(dd,mm,aaaa);
 
         return da;
     }

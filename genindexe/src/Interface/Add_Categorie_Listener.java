@@ -10,7 +10,7 @@ import java.util.List;
 import ManagedBeans.Database;
 
 /**
- * Classe des Listener pour l'interface ajout de nouvelle catégorie.
+ * Classe des Listener pour l'interface ajout de nouvelle categorie.
  * @author Akoma
  *
  */

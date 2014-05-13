@@ -420,11 +420,12 @@ public class US1 extends javax.swing.JPanel {
                 Customers myCusto= new Customers();
                 Adress myAdress = new Adress();
                 myCusto.setName(jTextField8.getText(), jTextField9.getText());
-            
-                String numPort = jTextField15.getText();
-                String numFax = jTextField16.getText();
+
                 myCusto.setPhone(jTextField14.getText());
                 myCusto.setEmail(jTextField19.getText());
+                myCusto.setCellular(jTextField15.getText());
+                myCusto.setFax(jTextField16.getText());
+                myCusto.setID(0);
             
                 myAdress.setCity( jTextField13.getText());
                 myAdress.setNumber(Integer.parseInt(jTextField10.getText()));

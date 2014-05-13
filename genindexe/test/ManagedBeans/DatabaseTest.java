@@ -8,8 +8,10 @@ import beans.Orders;
 import beans.Samples;
 import beans.Types_analysis;
 import beans.Users;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JList;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -313,7 +315,7 @@ public class DatabaseTest {
     }
 
     /**
-     * Test of checkSpecie method, of class Database.
+     * Test of saveSpecie method, of class Database.
      * @throws java.lang.Exception
      */
     @Test
@@ -337,14 +339,10 @@ public class DatabaseTest {
         int category = 1;
         Database instance = new Database();
         String expResult = "success";
-        String result = instance.saveSpecie(specie, "Oiseau");
+        String result = instance.saveSpecie(specie, category);
         assertEquals(expResult, result);
     }
     
-    /**
-     * Test of getListCategory method, of class Database.
-     * @throws java.lang.Exception
-     */
     @Test
     public void testGetListCategory() throws Exception {
         System.out.println("getListCategory");

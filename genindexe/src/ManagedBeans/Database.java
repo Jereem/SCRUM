@@ -5,6 +5,7 @@ package ManagedBeans;
  * with the database.
  */
 import Tools.ConnectBDD;
+import Tools.DateTools;
 import beans.Adress;
 import beans.Analysis;
 import beans.Animals;
@@ -22,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -132,8 +134,8 @@ public class Database {
         ResultSet result = ps.executeQuery();
         java.sql.Date date_sampling = result.getDate("Date_recep");
         java.sql.Date date_storage = result.getDate("Date_stock");
-
-        Samples sa2 = new Samples(id, result.getString("Type_Ech"), dateSQLToJava(date_sampling), dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), dateSQLToJava(result.getDate("Date_Naissance")), result.getString("Nom_Espece")));
+        DateTools d = new DateTools();
+        Samples sa2 = new Samples(id, result.getString("Type_Ech"), d.dateSQLToJava(date_sampling), d.dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), d.dateSQLToJava(result.getDate("Date_Naissance")), result.getString("Nom_Espece")));
 
         return sa2;
         // Bouml preserved body end 00043102
@@ -176,7 +178,8 @@ public class Database {
         ResultSet result = ps.executeQuery();
         while (result.next()) {
             Animals pAnimal = new Animals();
-            pAnimal.setNumberBirthday(dateSQLToJava(result.getDate("Date_Naissance")));
+            DateTools d = new DateTools();
+            pAnimal.setNumberBirthday(d.dateSQLToJava(result.getDate("Date_Naissance")));
             pAnimal.setNom(result.getString("Nom_Animal"));
             pAnimal.setSpecie(specie);
             list.add(pAnimal);
@@ -681,29 +684,6 @@ public class Database {
         return (jList);
         // Bouml preserved body end 000236C5
     }
-    
-     public String saveAnimal(Animals animal, int idClient, String pSpe) {
-        Species paramSpe = new Species(pSpe);
-        try {
-        PreparedStatement ps0 = con.prepareStatement("select * from ESPECE where NOM_CATEGORIE = '" + pSpe + "'");
-        ResultSet result0 = ps0.executeQuery();
-        while (result0.next()) {
-            paramSpe.setID(result0.getInt("ID_ESPECE"));
-        }
-            Statement state = b.getMyStatement();
-            String query = "Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")";
-                state.executeUpdate(query, state.RETURN_GENERATED_KEYS);
-                ResultSet clefs = state.getGeneratedKeys();
-                System.out.println(clefs.getObject(1));
-                return "success";
-        } catch (SQLException ex) {
-            System.out.println("Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")");
-            System.out.println("SQLException saveCustomer: " + ex.getMessage());
-            System.out.println("SQLState saveCustomer: " + ex.getSQLState());
-            System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
-            return "failed";
-        }
-    }
      
  
     public String saveBddUser() throws SQLException {
@@ -736,57 +716,7 @@ public class Database {
         }
 
     }
-/**
-     * prend une date au format String et la convertie au format date de java
-     * @param date
-     * @return dateJava (dd-mm-aaaa)
-     */
-    public java.util.Date dateStringToJava(String date){
-         String aaaa= date.substring(6,10);
-         String mm= date.substring(3,5);
-         String dd= date.substring(0,2);
-       
-         java.util.Date dateJava = null;
-         dateJava.setYear(Integer.parseInt(aaaa));
-         dateJava.setMonth(Integer.parseInt(mm));
-         dateJava.setDate(Integer.parseInt(dd));
-     
-        return dateJava;
-    }
-  
-   /**
-     *prend une date au format java et la convertie au format SQL
-     * @param datejava (dd-mm-aaaa)
-     * @return dateSQl (aaaa-mm-dd)
-     */
-    public String dateJavaToSQL(java.util.Date datejava){
-        String convert = datejava.toString();
-         String dd =convert.substring(0,2);
-         String mm= convert.substring(3,5);
-         String aa= convert.substring(6,10);
-       
-         String dateSQL=aa+"-"+mm+"-"+dd;
-        
-         System.out.println(dateSQL);
-        return dateSQL;
-    }
-    
-    /**
-     * prend une date au format SQL et la convertie au format date de java
-     *
-     * @param dateSQL (aaaa-mm-dd)
-     * @return da
-     */
-    public java.util.Date dateSQLToJava(java.sql.Date dateSQL){
-      
-        int dd = dateSQL.getDate();
-        int mm = (dateSQL.getMonth())+1;
-        int aaaa = dateSQL.getYear();
 
-        java.util.Date da = new java.util.Date(dd,mm,aaaa);
-
-        return da;
-    }
     
     
     /**

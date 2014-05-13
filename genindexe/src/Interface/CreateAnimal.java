@@ -8,7 +8,7 @@ package Interface;
 
 import ManagedBeans.Database;
 import ManagedBeans.ManagedAnimal;
-import static Tools.Date.stringToDate;
+import Tools.DateTools;
 import beans.Animals;
 import java.awt.GridLayout;
 import java.sql.SQLException;
@@ -150,7 +150,8 @@ public class CreateAnimal extends javax.swing.JPanel {
         
         Animals animal = new Animals();
         System.out.println(jTextFieldBirth.getText());
-        animal.setNumberBirthday(stringToDate(jTextFieldBirth.getText(), "dd-MM-yyyy"));
+        DateTools d = new DateTools();
+        animal.setNumberBirthday(DateTools.stringToDate(jTextFieldBirth.getText(), "dd-MM-yyyy"));
         animal.setNom(jTextFieldNom.getText());
         String sexe = (String)jComboBoxSexe.getSelectedItem();
         if ("Femelle".equals(sexe)){animal.setSexe(false);}

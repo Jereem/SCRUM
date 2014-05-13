@@ -7,7 +7,7 @@
 package ManagedBeans;
 
 import Tools.ConnectBDD;
-import Tools.Date;
+import Tools.DateTools;
 import beans.Animals;
 import beans.Species;
 import java.sql.Connection;
@@ -38,7 +38,7 @@ public class ManagedAnimal {
     
     public String saveAnimal(Animals animal, int idClient, String pSpe) {
         Species paramSpe = new Species(pSpe);
-        Date d = new Date();
+        DateTools d = new DateTools();
         try {
         PreparedStatement ps0 = con.prepareStatement("select * from ESPECE where NOM_CATEGORIE = '" + pSpe + "'");
         ResultSet result0 = ps0.executeQuery();
@@ -54,9 +54,9 @@ public class ManagedAnimal {
                 return "success";
         } catch (SQLException ex) {
             System.out.println("Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + d.dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")");
-            System.out.println("SQLException saveCustomer: " + ex.getMessage());
-            System.out.println("SQLState saveCustomer: " + ex.getSQLState());
-            System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
+            System.out.println("SQLException saveAnimal: " + ex.getMessage());
+            System.out.println("SQLState saveAnimal: " + ex.getSQLState());
+            System.out.println("VendorError saveAnimal: " + ex.getErrorCode());
             return "failed";
         }
     }

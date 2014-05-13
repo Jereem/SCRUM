@@ -22,6 +22,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +48,6 @@ public class Database {
     private Customers customer;
 
     private Orders order;
-    
 
     /**
      * The adress of a customer.
@@ -66,8 +66,8 @@ public class Database {
 
         // Bouml preserved body end 00043002
     }
-    
-    public void Close(){
+
+    public void Close() {
         b.close();
     }
 
@@ -148,17 +148,17 @@ public class Database {
         return (listS);
         // Bouml preserved body end 00043182
     }
-    
+
     public List<String> GetListTypeSamples() throws SQLException {
-    	PreparedStatement ps;
-    	ps=con.prepareStatement("Select * From Type_Echantillon");
-    	ResultSet result = ps.executeQuery();
-    	List<String> LS = new ArrayList<>();
-    	while(result.next()){
-    		
-    		LS.add(result.getString("Type_Ech"));
-    	}
-    	return LS;
+        PreparedStatement ps;
+        ps = con.prepareStatement("Select * From Type_Echantillon");
+        ResultSet result = ps.executeQuery();
+        List<String> LS = new ArrayList<>();
+        while (result.next()) {
+
+            LS.add(result.getString("Type_Ech"));
+        }
+        return LS;
     }
 
     public void saveSample(Samples sample) {
@@ -224,24 +224,25 @@ public class Database {
         return (listC);
         // Bouml preserved body end 000234C5
     }
-    
+
     /**
      * Surcharge de la methode precedente avec le nom du client
+     *
      * @param name
-     * @return liste 
+     * @return liste
      * @throws SQLException
      */
     public JList getListCustomers(String name) throws SQLException {
         // Bouml preserved body begin 000234C5
-        
+
         JList jList = new JList();
-        DefaultListModel dlm=new DefaultListModel();
+        DefaultListModel dlm = new DefaultListModel();
 
         List<Customers> listC = new ArrayList<>();
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
-        name+="%";
+        name += "%";
         PreparedStatement ps;
         ps = con.prepareStatement("select * from Client natural join Adresse WHERE nom_client=" + name);
         //get customer data from database
@@ -259,15 +260,14 @@ public class Database {
             pCustomers.setID(result.getInt("ID_Client"));
             pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
             pCustomers.setPhone(result.getString("Tel"));
-            String Name=pCustomers.getLastName();
-            Name+=pCustomers.getFirstName();
+            String Name = pCustomers.getLastName();
+            Name += pCustomers.getFirstName();
             dlm.addElement(Name);
             jList.setModel(dlm);
         }
         return (jList);
         // Bouml preserved body end 000234C5
     }
-    
 
     public Customers searchCustomerName(String name) throws SQLException {
         // Bouml preserved body begin 00023545
@@ -305,41 +305,42 @@ public class Database {
         // Bouml preserved body end 000235C5
     }
 
-    public String saveCustomer(Customers cust) throws SQLException {
+    public String saveCustomer(Customers cust) {
         // Bouml preserved body begin 00023645
-        PreparedStatement ps = con.prepareStatement("Select ID_client From client where Id_Client =" + cust.getID());
-        ResultSet result = ps.executeQuery();
-        if (!result.wasNull()) {
-           try{
-            b.getMyStatement().executeUpdate("Update Client Set Nom_Client=" + cust.getFirstName() + ", Prenom_client=" + cust.getLastName() + ", Cdp=" + cust.getAdress().getZipCode() + ", Ville=" + cust.getAdress().getCity() + ", Tel=" + cust.getPhone() + " where id_client=" + cust.getID());
-            return "success";
-           }
-           catch(SQLException e){
-               return "failed";
-           }
-        } else {
-            try{
-            b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", "+Integer.toString(cust.getAdress().getNumber())+", "+cust.getAdress().getStreet()+", "+ cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone()+", "+cust.getCellular()+", "+cust.getFax()+", "+cust.getEmail()+", "+cust.getAdress().getCountry(), b.getMyStatement().RETURN_GENERATED_KEYS);
-            ResultSet clefs = b.getMyStatement().getGeneratedKeys();
-            System.out.println(clefs.getObject(1));
-            return "success";
-            }
-            catch(SQLException e){
-                return "failed";
-            }
-            
+        try {
+//            PreparedStatement ps = con.prepareStatement("Select ID_client From client where Id_Client =" + cust.getID());
+//            ResultSet result = ps.executeQuery();
+//            if (!result.wasNull()) {
+//
+//                b.getMyStatement().executeUpdate("Update Client Set Nom_Client=" + cust.getFirstName() + ", Prenom_client=" + cust.getLastName() + ", Cdp=" + cust.getAdress().getZipCode() + ", Ville=" + cust.getAdress().getCity() + ", Tel=" + cust.getPhone() + " where id_client=" + cust.getID());
+//                return "success";
+//
+//            } else {
+            Statement state = b.getMyStatement();
+            String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")";
+                state.executeUpdate(query, state.RETURN_GENERATED_KEYS);
+                ResultSet clefs = state.getGeneratedKeys();
+                System.out.println(clefs.getObject(1));
+                return "success";
+
+//            }
+        } catch (SQLException ex) {
+            System.out.println("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")");
+            System.out.println("SQLException saveCustomer: " + ex.getMessage());
+            System.out.println("SQLState saveCustomer: " + ex.getSQLState());
+            System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
+            return "failed";
         }
         // Bouml preserved body end 00023645
     }
-    
+
     public String saveCustomer(Customers cust, Adress entreprise, String nom_ent, String nom_contact, String nom_dept) throws SQLException {
-        try{
-        b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", "+Integer.toString(cust.getAdress().getNumber())+", "+cust.getAdress().getStreet()+", "+ cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone()+", "+cust.getCellular()+", "+cust.getFax()+", "+cust.getEmail()+", "+cust.getAdress().getCountry(), b.getMyStatement().RETURN_GENERATED_KEYS);
-            
+        try {
+            b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry(), b.getMyStatement().RETURN_GENERATED_KEYS);
+
             System.out.println(b.getMyStatement().RETURN_GENERATED_KEYS);
             return "success";
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             return "failed";
         }
     }
@@ -402,11 +403,11 @@ public class Database {
             throw new SQLException("Can't get database connection");
         }
         PreparedStatement ps;
-        ps = con.prepareStatement("select * from TypeAnalyse where Type_Analy = " + name +"");
+        ps = con.prepareStatement("select * from TypeAnalyse where Type_Analy = " + name + "");
         //get customer data from database
         ResultSet result = ps.executeQuery();
         while (result.next()) {
-            
+
             pTypes_analysis.setPrice(result.getInt("Prix_Unitaire"));
             pTypes_analysis.setType(result.getString("Type_Analy"));
         }
@@ -455,14 +456,15 @@ public class Database {
             return "failed";
         }
     }
-    
+
     /**
      * Méthode renvoyant false si l'espece existe deja dans la BDD et true sinon
+     *
      * @param specie
-     * @return 
+     * @return
      * @throws java.sql.SQLException
      */
-    public Boolean checkSpecie (String specie) throws SQLException{
+    public Boolean checkSpecie(String specie) throws SQLException {
         Boolean result = true;
         int paramNb = 0;
         PreparedStatement ps0 = con.prepareStatement("select count(*) as nb from ESPECE where NOM_ESPECE = '" + specie + "'");
@@ -475,57 +477,59 @@ public class Database {
         }
         return result;
     }
-    
+
     /**
      * Méthode permettant d'enregistrer une nouvelle espèce
+     *
      * @param specie
      * @param pcat
      * @return "success" si l'espèce est sauvegardée, sinon "failed"
      * @throws java.sql.SQLException
      */
     public String saveSpecie(String specie, String pcat) throws SQLException {
-        if(checkSpecie(specie)){
-        System.out.println(specie);
-        System.out.println(pcat);
-        Category paramCat = new Category(pcat);
-        
-        PreparedStatement ps0 = con.prepareStatement("select * from CATEGORIE where NOM_CATEGORIE = '" + pcat + "'");
-        System.out.println("ps0 ok");
-        ResultSet result0 = ps0.executeQuery();
-        System.out.println("rslt0 ok");
-        while (result0.next()) {
-            paramCat.setID(result0.getInt("ID_CATEGORIE"));
-        }
-        System.out.println("while ok");
-        Species paramSpecie = new Species(specie, paramCat);
-        
-        System.out.println(paramSpecie.getCategory().getID());
-        
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        try {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Espece(Nom_Espece, ID_CATEGORIE) VALUES (?,?)");
-            ps.setString(1, paramSpecie.getNameSpecie());
-            ps.setInt(2, paramSpecie.getCategory().getID());
-            /* Exécution de la requête */
-            int statut = ps.executeUpdate();
-            return "success";
-        } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            return "failed";
-        }
-        }
-        else {
+        if (checkSpecie(specie)) {
+            System.out.println(specie);
+            System.out.println(pcat);
+            Category paramCat = new Category(pcat);
+
+            PreparedStatement ps0 = con.prepareStatement("select * from CATEGORIE where NOM_CATEGORIE = '" + pcat + "'");
+            System.out.println("ps0 ok");
+            ResultSet result0 = ps0.executeQuery();
+            System.out.println("rslt0 ok");
+            while (result0.next()) {
+                paramCat.setID(result0.getInt("ID_CATEGORIE"));
+            }
+            System.out.println("while ok");
+            Species paramSpecie = new Species(specie, paramCat);
+
+            System.out.println(paramSpecie.getCategory().getID());
+
+            if (con == null) {
+                throw new SQLException("Can't get database connection");
+            }
+            try {
+                PreparedStatement ps = con.prepareStatement("INSERT INTO Espece(Nom_Espece, ID_CATEGORIE) VALUES (?,?)");
+                ps.setString(1, paramSpecie.getNameSpecie());
+                ps.setInt(2, paramSpecie.getCategory().getID());
+                /* Exécution de la requête */
+                int statut = ps.executeUpdate();
+                return "success";
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+                return "failed";
+            }
+        } else {
             return "failed";
         }
     }
-    
+
     /**
-     * Methode qui renvoie une liste de catégories contenant les catégories existante dans la BDD
-     * @return 
+     * Methode qui renvoie une liste de catégories contenant les catégories
+     * existante dans la BDD
+     *
+     * @return
      * @throws java.sql.SQLException
      */
     public List<Category> getListCategory() throws SQLException {
@@ -547,10 +551,12 @@ public class Database {
         return (listC);
         // Bouml preserved body end 000236C5
     }
-   
+
     /**
-     * Methode qui renvoie une Jlist contenant les catégories existante dans la BDD
-     * @return 
+     * Methode qui renvoie une Jlist contenant les catégories existante dans la
+     * BDD
+     *
+     * @return
      * @throws java.sql.SQLException
      */
     public JList getJListCategory() throws SQLException {
@@ -574,7 +580,7 @@ public class Database {
         return (jList);
         // Bouml preserved body end 000236C5
     }
- 
+
     public String saveBddUser() throws SQLException {
         ConnectBDD con = new ConnectBDD();
         Connection b = con.getMyConnexion();
@@ -606,90 +612,91 @@ public class Database {
 
     }
 
-  
-   /**
-     *prend une date au format java et la convertie au format SQL
+    /**
+     * prend une date au format java et la convertie au format SQL
+     *
      * @param datejava (dd-mm-aaaa)
      * @return dateSQl (aaaa-mm-dd)
      */
-    public String dateJavaToSQL(java.util.Date datejava){
+    public String dateJavaToSQL(java.util.Date datejava) {
         String convert = datejava.toString();
-         String dd =convert.substring(0,2);
-         String mm= convert.substring(3,5);
-         String aa= convert.substring(6,10);
-       
-         String dateSQL=aa+"-"+mm+"-"+dd;
-        
-         System.out.println(dateSQL);
+        String dd = convert.substring(0, 2);
+        String mm = convert.substring(3, 5);
+        String aa = convert.substring(6, 10);
+
+        String dateSQL = aa + "-" + mm + "-" + dd;
+
+        System.out.println(dateSQL);
         return dateSQL;
     }
-    
+
     /**
      * prend une date au format SQL et la convertie au format date de java
      *
      * @param dateSQL (aaaa-mm-dd)
      * @return da
      */
-    public beans.Date dateSQLToJava(java.sql.Date dateSQL){
-      
+    public beans.Date dateSQLToJava(java.sql.Date dateSQL) {
+
         int dd = dateSQL.getDate();
-        int mm = (dateSQL.getMonth())+1;
+        int mm = (dateSQL.getMonth()) + 1;
         int aaaa = dateSQL.getYear();
 
-        beans.Date da = new Date(dd,mm,aaaa);
+        beans.Date da = new Date(dd, mm, aaaa);
 
         return da;
     }
-    
-    
+
     /**
      * Retourne une liste de string contenant les nom de categorie dans la BDD
+     *
      * @return
-     * @throws SQLException 
+     * @throws SQLException
      */
-    public List<String> getListCategorie() throws SQLException{
-    	List<String> LC = new ArrayList<>();
-    	PreparedStatement ps;
-    	ps=con.prepareStatement("Select * from Categorie");
-    	ResultSet result = ps.executeQuery();
-    	while(result.next()){
-    		LC.add(result.getString("Nom_categorie"));
-    	}
-    	return LC;
+    public List<String> getListCategorie() throws SQLException {
+        List<String> LC = new ArrayList<>();
+        PreparedStatement ps;
+        ps = con.prepareStatement("Select * from Categorie");
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            LC.add(result.getString("Nom_categorie"));
+        }
+        return LC;
     }
-    
+
     /**
      * Methode de verif doublons customer
-     * @throws SQLException 
+     *
+     * @throws SQLException
      * @return true si pas de doublon, false sinon.
      */
-    
-    public Boolean IsDoublonCustomer(String nom, String prenom, Adress adresse) throws SQLException{
-    	
-    	PreparedStatement ps;
-    	ps=con.prepareStatement("Select Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville From Client");
-    	ResultSet result = ps.executeQuery();
-    	while(result.next()){
-    		if(nom==result.getString("Nom_Client")){
-    			if(prenom==result.getString("Prenom_Client")){
-    				if(adresse.getCity()==result.getString("Ville")){
-    					if(adresse.getZipCode()==Integer.parseInt(result.getString("CP"))){
-    						if(adress.getStreet()==result.getString("Nom_Rue")){
-    							if(adresse.getNumber()==Integer.parseInt(result.getString("Num_Rue"))){
-    		    					return false;	
-    		    				}
-        					}
-    					}
-    				}
-    			}
-    		}
-    	}
-    	return true; 	
+    public Boolean IsDoublonCustomer(String nom, String prenom, Adress adresse) {
+        try {
+            PreparedStatement ps;
+            ps = con.prepareStatement("Select Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville From Client");
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                if (nom.equals(result.getString("Nom_Client"))) {
+                    if (prenom.equals(result.getString("Prenom_Client"))) {
+                        if (adresse.getCity().equals(result.getString("Ville"))) {
+                            if (adresse.getZipCode() == Integer.parseInt(result.getString("CP"))) {
+                                if (adress.getStreet().equals(result.getString("Nom_Rue"))) {
+                                    if (adresse.getNumber() == Integer.parseInt(result.getString("Num_Rue"))) {
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("SQLException IsDoublon: " + ex.getMessage());
+            System.out.println("SQLState IsDoublon: " + ex.getSQLState());
+            System.out.println("VendorError IsDoublon: " + ex.getErrorCode());
+            return false;
+        }
     }
-  
+
 }
-
-    
-
-
-

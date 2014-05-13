@@ -10,6 +10,7 @@ public class Animals {
   private String specie;
   private String nom;
   private Boolean sexe;
+  private Integer id_animal;
   private java.util.Date numberBirthday;
 
   public Animals(){
@@ -70,5 +71,7 @@ public class Animals {
   public void setNom(String nom){
 	  this.nom = nom;
   }
-
+  public Integer getID() {
+        return id_animal;
+    }
 }

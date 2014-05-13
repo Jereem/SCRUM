@@ -7,6 +7,10 @@
 package Interface;
 
 import ManagedBeans.Database;
+import java.awt.GridLayout;
+import java.sql.SQLException;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JList;
 
 /**
@@ -129,10 +133,9 @@ public class CreateOrder_addcustomer extends javax.swing.JPanel {
         if (taille_chaine > 3) {
             Database instance = new Database();
             try {      
-              JList JList_inter= new JList();
-              jList1= JList_inter;
                 //jList1 = instance.getListCustomers(chaine);
-              jList1 = instance.getListCustomers(chaine);
+             // jList1
+                   jList1= instance.getListCustomers(chaine);
             } catch (SQLException ex) {
                 System.out.println("dans le listener");
                 System.out.println("SQLException: " + ex.getMessage());
@@ -154,4 +157,21 @@ public class CreateOrder_addcustomer extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+public static void main(String[] args) throws SQLException {
+        JFrame myFrame = new JFrame("ajout client");
+        CreateOrder_addcustomer ajouterclient = new CreateOrder_addcustomer();
+        myFrame.setLayout(new GridLayout(1, 2));
+        myFrame.add(ajouterclient);
+        myFrame.pack();
+        myFrame.setVisible(true);
+        myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+
+
+
+
+
+
+
 }

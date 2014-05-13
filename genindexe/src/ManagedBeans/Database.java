@@ -222,9 +222,9 @@ public class Database {
     }
     
     /**
-     * Surcharge de la methode precedente avec le nom du client
-     * @param name
-     * @return liste 
+     * methode precedente avec le nom du client en paramètre 
+     * @param name nom 
+     * @return liste des clients qui correspondent au critere de recherche
      * @throws SQLException
      */
     public JList getListCustomers(String name) throws SQLException {
@@ -233,30 +233,29 @@ public class Database {
         JList jList = new JList();
         DefaultListModel dlm=new DefaultListModel();
 
-        List<Customers> listC = new ArrayList<>();
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
         name+="%";
         PreparedStatement ps;
-        ps = con.prepareStatement("select * from Client natural join Adresse WHERE nom_client=" + name);
+        ps = con.prepareStatement("SELECT * FROM CLIENT WHERE NOM_CLIENT LIKE '"+ name+ "'");
         //get customer data from database
         ResultSet result = ps.executeQuery();
         while (result.next()) {
             Customers pCustomers = new Customers();
-            Adress pAdress = new Adress();
-            pAdress.setCity(result.getString("Ville"));
-            pAdress.setCountry(result.getString("Pays"));
-            pAdress.setNumber(result.getInt("Num_Rue"));
-            pAdress.setStreet(result.getString("Nom_Rue"));
-            pAdress.setZipCode(result.getInt("CP"));
-            pCustomers.setAdress(pAdress);
-            pCustomers.setEmail(result.getString("Mail"));
-            pCustomers.setID(result.getInt("ID_Client"));
-            pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
-            pCustomers.setPhone(result.getString("Tel"));
-            String Name=pCustomers.getLastName();
-            Name+=pCustomers.getFirstName();
+          //  Adress pAdress = new Adress();
+           // pAdress.setCity(result.getString("Ville"));
+          //  pAdress.setCountry(result.getString("Pays"));
+          //  pAdress.setNumber(result.getInt("Num_Rue"));
+           // pAdress.setStreet(result.getString("Nom_Rue"));
+          //  pAdress.setZipCode(result.getInt("CP"));
+           // pCustomers.setAdress(pAdress);
+           // pCustomers.setEmail(result.getString("Mail"));
+            //pCustomers.setID(result.getInt("ID_Client"));
+         //   pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
+           // pCustomers.setPhone(result.getString("Tel"));
+            String Name=result.getString("Nom_Client");
+            Name+=result.getString("Prenom_Client");
             dlm.addElement(Name);
             jList.setModel(dlm);
         }

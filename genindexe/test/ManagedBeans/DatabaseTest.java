@@ -10,6 +10,7 @@ import beans.Types_analysis;
 import beans.Users;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JList;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -183,6 +184,20 @@ public class DatabaseTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+    
+    /**
+     * methode precedente avec le nom du client en paramètre 
+     * @param name nom 
+     * @return liste des clients qui correspondent au critere de recherche
+     * @throws SQLException
+     */
+    @Test
+    public void testGetListCustomers(String name) throws Exception {
+        Database instance = new Database();
+        JList result = instance.getListCustomers("fernazz");
+        JList expResult= new JList();
+        assertEquals(expResult, result);
     }
 
     /**

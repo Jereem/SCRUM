@@ -66,10 +66,6 @@ public class Database {
 
         // Bouml preserved body end 00043002
     }
-    
-    public void Close(){
-    	b.close();
-    }
 
     /**
      * This function permits to list all the orders in the database.
@@ -231,8 +227,12 @@ public class Database {
      * @return liste 
      * @throws SQLException
      */
-    public List<Customers> getListCustomers(String name) throws SQLException {
+    public JList getListCustomers(String name) throws SQLException {
         // Bouml preserved body begin 000234C5
+        
+        JList jList = new JList();
+        DefaultListModel dlm=new DefaultListModel();
+
         List<Customers> listC = new ArrayList<>();
         if (con == null) {
             throw new SQLException("Can't get database connection");
@@ -255,9 +255,12 @@ public class Database {
             pCustomers.setID(result.getInt("ID_Client"));
             pCustomers.setName(result.getString("Nom_Client"), result.getString("Prenom_Client"));
             pCustomers.setPhone(result.getString("Tel"));
-            listC.add(pCustomers);
+            String Name=pCustomers.getLastName();
+            Name+=pCustomers.getFirstName();
+            dlm.addElement(Name);
+            jList.setModel(dlm);
         }
-        return (listC);
+        return (jList);
         // Bouml preserved body end 000234C5
     }
     
@@ -424,13 +427,34 @@ public class Database {
     }
     
     /**
+     * Méthode renvoyant false si l'espece existe deja dans la BDD et true sinon
+     * @param specie
+     * @return 
+     * @throws java.sql.SQLException
+     */
+    public Boolean checkSpecie (String specie) throws SQLException{
+        Boolean result = true;
+        int paramNb = 0;
+        PreparedStatement ps0 = con.prepareStatement("select count(*) as nb from ESPECE where NOM_ESPECE = '" + specie + "'");
+        ResultSet result0 = ps0.executeQuery();
+        while (result0.next()) {
+            paramNb = (result0.getInt("nb"));
+        }
+        if (paramNb > 0) {
+            result = false;
+        }
+        return result;
+    }
+    
+    /**
      * Méthode permettant d'enregistrer une nouvelle espèce
      * @param specie
-     * @param category
+     * @param pcat
      * @return "success" si l'espèce est sauvegardée, sinon "failed"
      * @throws java.sql.SQLException
      */
     public String saveSpecie(String specie, String pcat) throws SQLException {
+        if(checkSpecie(specie)){
         System.out.println(specie);
         System.out.println(pcat);
         Category paramCat = new Category(pcat);
@@ -463,9 +487,17 @@ public class Database {
             System.out.println("VendorError: " + ex.getErrorCode());
             return "failed";
         }
-
+        }
+        else {
+            return "failed";
+        }
     }
     
+    /**
+     * Methode qui renvoie une liste de catégories contenant les catégories existante dans la BDD
+     * @return 
+     * @throws java.sql.SQLException
+     */
     public List<Category> getListCategory() throws SQLException {
         // Bouml preserved body begin 000236C5
         List<Category> listC = new ArrayList<>();
@@ -486,6 +518,11 @@ public class Database {
         // Bouml preserved body end 000236C5
     }
    
+    /**
+     * Methode qui renvoie une Jlist contenant les catégories existante dans la BDD
+     * @return 
+     * @throws java.sql.SQLException
+     */
     public JList getJListCategory() throws SQLException {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();

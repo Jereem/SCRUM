@@ -185,6 +185,55 @@ public class Database {
         return (list);
         // Bouml preserved body end 00043282
     }
+    
+//rechercher selon un id_client de tout ces animaux
+        public List<Animals> getListAnimalCustomer(Integer id_customer,String chaine) throws SQLException {
+        List<Animals> listA = new ArrayList<>();
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        chaine+="%";
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Animal WHERE nom_animal=" + chaine +" and ID_CLIENT="+id_customer);
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Animals pAnimals= new Animals();
+            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            listA.add(pAnimals);
+        }
+        return (listA);
+        // Bouml preserved body end 000236C5
+    }
+        
+        public JList getJListAnimalCustomer(Integer id_customer, String chaine) throws SQLException {
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+        // Bouml preserved body begin 000236C5
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        
+        if (chaine.length()==0){
+            chaine="";
+                    }
+        else{
+            chaine="nom_animal like '"+chaine+"%' and ";
+        }
+        
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer);
+        //get animal data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Animals pAnimals = new Animals();
+            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            dlm.addElement(pAnimals.getNom());
+        }
+        jList.setModel(dlm);
+        return (jList);
+        // Bouml preserved body end 000236C5
+    }    
 
     /**
      * This function permits to get the user that use this session.
@@ -588,6 +637,7 @@ public class Database {
             return "failed";
         }
     }
+     
  
     public String saveBddUser() throws SQLException {
         ConnectBDD con = new ConnectBDD();

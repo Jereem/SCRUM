@@ -200,6 +200,8 @@ public class Database {
         while (result.next()) {
             Animals pAnimals= new Animals();
             pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            
             listA.add(pAnimals);
         }
         return (listA);

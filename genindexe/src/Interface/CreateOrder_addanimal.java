@@ -9,6 +9,7 @@ package Interface;
 import ManagedBeans.Database;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JList;
@@ -23,6 +24,7 @@ import javax.swing.JPanel;
 public class CreateOrder_addanimal extends javax.swing.JPanel{
 
     public Integer id_client = 16;
+    public ArrayList listAnimauxChoisi;
     /**
      * Creates new form CreateOrder_addanimal
      * @throws java.sql.SQLException
@@ -182,12 +184,16 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
         // ajouter panel de teddy
     }                                                 
 
-    private void cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) {                                              
-      //  this.setVisible(true);
+    private ArrayList cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         this.setVisible(false);
+        return listAnimauxChoisi;
+        
     }                                             
 
-    private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) {                                               
+    private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) { 
+        
+        System.out.println(listAnimal.getSelectedValue());
+        //add()
         // TODO add your handling code here:
     }                                              
 

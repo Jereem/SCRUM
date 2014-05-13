@@ -17,14 +17,13 @@ import beans.Species;
 import beans.Storage;
 import beans.Types_analysis;
 import beans.Users;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
@@ -296,29 +295,23 @@ public class Database {
         // Bouml preserved body end 000235C5
     }
 
-    public String saveCustomer(Customers cust) throws SQLException {
+    public String saveCustomer(Customers cust) {
         // Bouml preserved body begin 00023645
-        PreparedStatement ps = con.prepareStatement("Select ID_client From client where Id_Client =" + cust.getID());
-        ResultSet result = ps.executeQuery();
-        if (!result.wasNull()) {
-           try{
-            b.getMyStatement().executeUpdate("Update Client Set Nom_Client=" + cust.getFirstName() + ", Prenom_client=" + cust.getLastName() + ", Cdp=" + cust.getAdress().getZipCode() + ", Ville=" + cust.getAdress().getCity() + ", Tel=" + cust.getPhone() + " where id_client=" + cust.getID());
-            return "success";
-           }
-           catch(SQLException e){
-               return "failed";
-           }
-        } else {
-            try{
-            b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", "+Integer.toString(cust.getAdress().getNumber())+", "+cust.getAdress().getStreet()+", "+ cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone()+", "+cust.getCellular()+", "+cust.getFax()+", "+cust.getEmail()+", "+cust.getAdress().getCountry(), b.getMyStatement().RETURN_GENERATED_KEYS);
-            ResultSet clefs = b.getMyStatement().getGeneratedKeys();
-            System.out.println(clefs.getObject(1));
-            return "success";
-            }
-            catch(SQLException e){
-                return "failed";
-            }
-            
+        try {
+            Statement state = b.getMyStatement();
+            String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")";
+                state.executeUpdate(query, state.RETURN_GENERATED_KEYS);
+                ResultSet clefs = state.getGeneratedKeys();
+                System.out.println(clefs.getObject(1));
+                return "success";
+
+//            }
+        } catch (SQLException ex) {
+            System.out.println("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")");
+            System.out.println("SQLException saveCustomer: " + ex.getMessage());
+            System.out.println("SQLState saveCustomer: " + ex.getSQLState());
+            System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
+            return "failed";
         }
         // Bouml preserved body end 00023645
     }
@@ -655,27 +648,39 @@ public class Database {
      * @return true si pas de doublon, false sinon.
      */
     
-    public Boolean IsDoublonCustomer(String nom, String prenom, Adress adresse) throws SQLException{
-    	
-    	PreparedStatement ps;
-    	ps=con.prepareStatement("Select Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville From Client");
-    	ResultSet result = ps.executeQuery();
-    	while(result.next()){
-    		if(nom==result.getString("Nom_Client")){
-    			if(prenom==result.getString("Prenom_Client")){
-    				if(adresse.getCity()==result.getString("Ville")){
-    					if(adresse.getZipCode()==Integer.parseInt(result.getString("CP"))){
-    						if(adress.getStreet()==result.getString("Nom_Rue")){
-    							if(adresse.getNumber()==Integer.parseInt(result.getString("Num_Rue"))){
-    		    					return false;	
-    		    				}
-        					}
-    					}
-    				}
-    			}
-    		}
-    	}
-    	return true; 	
+    /**
+     * Methode de verif doublons customer
+     *
+     * @throws SQLException
+     * @return true si pas de doublon, false sinon.
+     */
+    public Boolean IsDoublonCustomer(String nom, String prenom, Adress adresse) {
+        try {
+            PreparedStatement ps;
+            ps = con.prepareStatement("Select Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville From Client");
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                if (nom.equals(result.getString("Nom_Client"))) {
+                    if (prenom.equals(result.getString("Prenom_Client"))) {
+                        if (adresse.getCity().equals(result.getString("Ville"))) {
+                            if (adresse.getZipCode() == Integer.parseInt(result.getString("CP"))) {
+                                if (adress.getStreet().equals(result.getString("Nom_Rue"))) {
+                                    if (adresse.getNumber() == Integer.parseInt(result.getString("Num_Rue"))) {
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("SQLException IsDoublon: " + ex.getMessage());
+            System.out.println("SQLState IsDoublon: " + ex.getSQLState());
+            System.out.println("VendorError IsDoublon: " + ex.getErrorCode());
+            return false;
+        }
     }
   
 }

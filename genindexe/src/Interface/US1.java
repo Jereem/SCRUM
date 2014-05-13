@@ -13,6 +13,7 @@ import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.awt.FlowLayout;
 import java.sql.SQLException;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -435,13 +436,15 @@ public class US1 extends javax.swing.JPanel {
             
                 if (instance.IsDoublonCustomer(jTextField8.getText(), jTextField9.getText(), myAdress)== true) {
                 instance.saveCustomer(myCusto);
+                    if ("success".equals(instance.saveCustomer(myCusto))){
+                        JOptionPane.showMessageDialog(this,"Enregistrement reussi");
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(this,"L'espèce existe déjà","Erreur",JOptionPane.ERROR_MESSAGE);
+                    }
                 instance.b.close();
+                }
                 
-                }
-                else {
-                    //création dialogue
-                System.out.println("Le client existe déjà dans la base de donnée");
-                }
             }
             catch  (SQLException ex){
                 System.out.println("SQLException: " + ex.getMessage());

@@ -66,6 +66,10 @@ public class Database {
 
         // Bouml preserved body end 00043002
     }
+    
+    public void Close(){
+        b.close();
+    }
 
     /**
      * This function permits to list all the orders in the database.
@@ -277,7 +281,7 @@ public class Database {
         if (name.equals(client.getLastName())) {
             return client;
         } else {
-            Customers cust = new Customers("jean", "dupond", 86000, "Poitiers", "090909", 1);
+            Customers cust = new Customers("jean", "dupond", 86000, "Poitiers", "090909", "090909", "090909", 1);
             return cust;
         }
         // Bouml preserved body end 00023545
@@ -295,7 +299,7 @@ public class Database {
         if (client.getID() == ID) {
             return client;
         } else {
-            Customers cust = new Customers("jean", "dupond", 86000, "Poitiers", "090909", 1);
+            Customers cust = new Customers("jean", "dupond", 86000, "Poitiers", "090909", "090909", "090909", 1);
             return cust;
         }
         // Bouml preserved body end 000235C5
@@ -303,14 +307,14 @@ public class Database {
 
     public void saveCustomer(Customers cust) throws SQLException {
         // Bouml preserved body begin 00023645
-        PreparedStatement ps = con.prepareStatement("Select ID_client From client where Id_Client =" + cust.getID());
-        ResultSet result = ps.executeQuery();
-        if (!result.wasNull()) {
-            b.getMyStatement().executeUpdate("Update Client Set Nom_Client=" + cust.getFirstName() + ", Prenom_client=" + cust.getLastName() + ", Cdp=" + cust.getAdress().getZipCode() + ", Ville=" + cust.getAdress().getCity() + ", Tel=" + cust.getPhone() + " where id_client=" + cust.getID());
-        } else {
+//        PreparedStatement ps = con.prepareStatement("Select ID_client From client where Id_Client =" + cust.getID());
+//        ResultSet result = ps.executeQuery();
+//        if (!result.wasNull()) {
+//            b.getMyStatement().executeUpdate("Update Client Set Nom_Client=" + cust.getFirstName() + ", Prenom_client=" + cust.getLastName() + ", Cdp=" + cust.getAdress().getZipCode() + ", Ville=" + cust.getAdress().getCity() + ", Tel=" + cust.getPhone() + " where id_client=" + cust.getID());
+//        } else {
             b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Cdp, Ville, Tel) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone());
             System.out.println("new data record");
-        }
+//        }
         // Bouml preserved body end 00023645
     }
 

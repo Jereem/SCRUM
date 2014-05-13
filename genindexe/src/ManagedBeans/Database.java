@@ -134,7 +134,7 @@ public class Database {
         java.sql.Date date_sampling = result.getDate("Date_recep");
         java.sql.Date date_storage = result.getDate("Date_stock");
 
-        Samples sa2 = new Samples(id, result.getString("Type_Ech"), dateSQLToJava(date_sampling), dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), result.getString("Date_naissance"), result.getString("Nom_Espece")));
+        Samples sa2 = new Samples(id, result.getString("Type_Ech"), dateSQLToJava(date_sampling), dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), dateSQLToJava(result.getDate("Date_Naissance")), result.getString("Nom_Espece")));
 
         return sa2;
         // Bouml preserved body end 00043102
@@ -177,7 +177,7 @@ public class Database {
         ResultSet result = ps.executeQuery();
         while (result.next()) {
             Animals pAnimal = new Animals();
-            pAnimal.setNumberBirthday(result.getString("Date_Naissance"));
+            pAnimal.setNumberBirthday(dateSQLToJava(result.getDate("Date_Naissance")));
             pAnimal.setNom(result.getString("Nom_Animal"));
             pAnimal.setSpecie(specie);
             list.add(pAnimal);
@@ -565,6 +565,29 @@ public class Database {
         return (jList);
         // Bouml preserved body end 000236C5
     }
+    
+     public String saveAnimal(Animals animal, int idClient, String pSpe) {
+        Species paramSpe = new Species(pSpe);
+        try {
+        PreparedStatement ps0 = con.prepareStatement("select * from ESPECE where NOM_CATEGORIE = '" + pSpe + "'");
+        ResultSet result0 = ps0.executeQuery();
+        while (result0.next()) {
+            paramSpe.setID(result0.getInt("ID_ESPECE"));
+        }
+            Statement state = b.getMyStatement();
+            String query = "Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")";
+                state.executeUpdate(query, state.RETURN_GENERATED_KEYS);
+                ResultSet clefs = state.getGeneratedKeys();
+                System.out.println(clefs.getObject(1));
+                return "success";
+        } catch (SQLException ex) {
+            System.out.println("Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")");
+            System.out.println("SQLException saveCustomer: " + ex.getMessage());
+            System.out.println("SQLState saveCustomer: " + ex.getSQLState());
+            System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
+            return "failed";
+        }
+    }
  
     public String saveBddUser() throws SQLException {
         ConnectBDD con = new ConnectBDD();
@@ -603,7 +626,7 @@ public class Database {
      * @param datejava (dd-mm-aaaa)
      * @return dateSQl (aaaa-mm-dd)
      */
-    public String dateJavaToSQL(java.util.Date datejava){
+    public String dateJavaToSQL(Date datejava){
         String convert = datejava.toString();
          String dd =convert.substring(0,2);
          String mm= convert.substring(3,5);

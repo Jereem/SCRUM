@@ -10,14 +10,21 @@ public class Animals {
   private String specie;
   private String nom;
   private Boolean sexe;
-  private Date numberBirthday;
+  private java.util.Date numberBirthday;
 
   public Animals(){
       
   }
-  public Animals(String specie, Date birthday, String nom) {
+  public Animals(String specie, java.util.Date birthday, String nom) {
     // Bouml preserved body begin 00020D83
 	  this.specie = specie;
+	  this.numberBirthday = birthday;
+	  this.nom = nom;
+    // Bouml preserved body end 00020D83
+  }
+  public Animals(java.util.Date birthday, String nom) {
+    // Bouml preserved body begin 00020D83
+	  this.sexe = sexe;
 	  this.numberBirthday = birthday;
 	  this.nom = nom;
     // Bouml preserved body end 00020D83
@@ -37,7 +44,7 @@ public class Animals {
     // Bouml preserved body end 00022C83
   }
 
-  public Date getNumberBirthday() {
+  public java.util.Date getNumberBirthday() {
     // Bouml preserved body begin 00022D03
 	  return this.numberBirthday;
     // Bouml preserved body end 00022D03
@@ -54,7 +61,7 @@ public class Animals {
     // Bouml preserved body end 00022D83
   }
 
-  public void setNumberBirthday(Date new_NumberBirthday) {
+  public void setNumberBirthday(java.util.Date new_NumberBirthday) {
     // Bouml preserved body begin 00022E03
 	  this.numberBirthday = new_NumberBirthday;
     // Bouml preserved body end 00022E03

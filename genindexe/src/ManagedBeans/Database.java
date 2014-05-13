@@ -299,11 +299,8 @@ public class Database {
         // Bouml preserved body begin 00023645
         try {
             Statement state = b.getMyStatement();
-            String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values('" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"')";
-                state.executeUpdate(query, state.RETURN_GENERATED_KEYS);
-                ResultSet clefs = state.getGeneratedKeys();
-                clefs.next();
-                System.out.println(clefs.getObject(1));
+            String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays, Login, Mdp) Values('" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"', '"+cust.getLogin()+"', '"+cust.getMotDePasse()+"')";
+                state.executeUpdate(query);
                 return "success";
 
 //            }
@@ -317,14 +314,39 @@ public class Database {
         // Bouml preserved body end 00023645
     }
     
-    public String saveCustomer(Customers cust, Adress entreprise, String nom_ent, String nom_contact, String nom_dept) throws SQLException {
+    public String saveCustomer(Customers cust, Adress entreprise, String nom_ent, String nom_contact, String nom_dept, String secteur_activite) {
         try{
-        b.getMyStatement().executeUpdate("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", "+Integer.toString(cust.getAdress().getNumber())+", "+cust.getAdress().getStreet()+", "+ cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone()+", "+cust.getCellular()+", "+cust.getFax()+", "+cust.getEmail()+", "+cust.getAdress().getCountry(), b.getMyStatement().RETURN_GENERATED_KEYS);
+            Statement state = b.getMyStatement();
+
+            /*
+            Insertion de l'entreprise
+            */
+            String queryInsertEnt = ("Insert Into Entreprise(NomEntr, depSpecial, Secteur_Activite, Nom_Rue_Fac, NUM_RUE_FAC, CP_FAC, Ville_FAC, Contact_Fac) Values('"+nom_ent+"','"+nom_dept+"', '"+secteur_activite+"', '"+entreprise.getStreet()+"', '"+Integer.toString(entreprise.getNumber())+"', '"+Integer.toString(entreprise.getZipCode())+"', '"+entreprise.getCity()+"', '"+nom_contact+"')");
+            state.executeQuery(queryInsertEnt);
             
-            System.out.println(b.getMyStatement().RETURN_GENERATED_KEYS);
+            
+            /*
+            Recupere le dernier ID d'entreprise
+            */
+            String queryGetId = ("select MAX(ID_ENTR) from entreprise ");
+            PreparedStatement ps=con.prepareStatement(queryGetId);
+            ResultSet ID = ps.executeQuery();
+            
+            /*
+            insertion du client avvec l'id d'entreprise.
+            */
+            String queryInsertCustomer = "Insert Into Client(ID_ENTR, Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays, Login, Mdp) Values('"+ID.getString("MAX(ID_ENTR)")+"', '" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"', '"+cust.getLogin()+"', '"+cust.getMotDePasse()+"')";
+            state.executeUpdate(queryInsertCustomer);
+            
+            
+            
             return "success";
         }
-        catch(SQLException e){
+        catch (SQLException ex) {
+            System.out.println("Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")");
+            System.out.println("SQLException saveCustomer: " + ex.getMessage());
+            System.out.println("SQLState saveCustomer: " + ex.getSQLState());
+            System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
             return "failed";
         }
     }

@@ -299,9 +299,10 @@ public class Database {
         // Bouml preserved body begin 00023645
         try {
             Statement state = b.getMyStatement();
-            String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values(" + cust.getFirstName() + ", " + cust.getLastName() + ", " + Integer.toString(cust.getAdress().getNumber()) + ", " + cust.getAdress().getStreet() + ", " + cust.getAdress().getZipCode() + ", " + cust.getAdress().getCity() + ", " + cust.getPhone() + ", " + cust.getCellular() + ", " + cust.getFax() + ", " + cust.getEmail() + ", " + cust.getAdress().getCountry()+")";
+            String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values('" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"')";
                 state.executeUpdate(query, state.RETURN_GENERATED_KEYS);
                 ResultSet clefs = state.getGeneratedKeys();
+                clefs.next();
                 System.out.println(clefs.getObject(1));
                 return "success";
 
@@ -664,7 +665,7 @@ public class Database {
                     if (prenom.equals(result.getString("Prenom_Client"))) {
                         if (adresse.getCity().equals(result.getString("Ville"))) {
                             if (adresse.getZipCode() == Integer.parseInt(result.getString("CP"))) {
-                                if (adress.getStreet().equals(result.getString("Nom_Rue"))) {
+                                if (adresse.getStreet().equals(result.getString("Nom_Rue"))) {
                                     if (adresse.getNumber() == Integer.parseInt(result.getString("Num_Rue"))) {
                                         return false;
                                     }

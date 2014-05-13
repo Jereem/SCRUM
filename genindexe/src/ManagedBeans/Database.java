@@ -134,7 +134,7 @@ public class Database {
         java.sql.Date date_sampling = result.getDate("Date_recep");
         java.sql.Date date_storage = result.getDate("Date_stock");
 
-        Samples sa2 = new Samples(id, result.getString("Type_Ech"), dateSQLToJava(date_sampling), dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), result.getString("Date_naissance"), result.getString("Nom_Espece")));
+        Samples sa2 = new Samples(id, result.getString("Type_Ech"), dateSQLToJava(date_sampling), dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), dateSQLToJava(result.getDate("Date_Naissance")), result.getString("Nom_Espece")));
 
         return sa2;
         // Bouml preserved body end 00043102
@@ -177,7 +177,7 @@ public class Database {
         ResultSet result = ps.executeQuery();
         while (result.next()) {
             Animals pAnimal = new Animals();
-            pAnimal.setNumberBirthday(result.getString("Date_Naissance"));
+            pAnimal.setNumberBirthday(dateSQLToJava(result.getDate("Date_Naissance")));
             pAnimal.setNom(result.getString("Nom_Animal"));
             pAnimal.setSpecie(specie);
             list.add(pAnimal);
@@ -185,6 +185,57 @@ public class Database {
         return (list);
         // Bouml preserved body end 00043282
     }
+    
+//rechercher selon un id_client de tout ces animaux
+        public List<Animals> getListAnimalCustomer(Integer id_customer,String chaine) throws SQLException {
+        List<Animals> listA = new ArrayList<>();
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        chaine+="%";
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Animal WHERE nom_animal=" + chaine +" and ID_CLIENT="+id_customer);
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Animals pAnimals= new Animals();
+            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            
+            listA.add(pAnimals);
+        }
+        return (listA);
+        // Bouml preserved body end 000236C5
+    }
+        
+        public JList getJListAnimalCustomer(Integer id_customer, String chaine) throws SQLException {
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+        // Bouml preserved body begin 000236C5
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        
+        if (chaine.length()==0){
+            chaine="";
+                    }
+        else{
+            chaine="nom_animal like '"+chaine+"%' and ";
+        }
+        
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer);
+        //get animal data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Animals pAnimals = new Animals();
+            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            dlm.addElement(pAnimals.getNom());
+        }
+        jList.setModel(dlm);
+        return (jList);
+        // Bouml preserved body end 000236C5
+    }    
 
     /**
      * This function permits to get the user that use this session.
@@ -233,30 +284,36 @@ public class Database {
     public JList getListCustomers(String name) throws SQLException {
         System.out.println("methode getListCustomers");
         // Bouml preserved body begin 000234C5
-        
+
         JList jList = new JList();
-        DefaultListModel dlm=new DefaultListModel();
+        DefaultListModel dlm = new DefaultListModel();
 
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
-        System.out.println("connexion");
-        name+='%';
+        name += '%';
         PreparedStatement ps;
-        ps = con.prepareStatement("SELECT * FROM CLIENT WHERE NOM_CLIENT LIKE '"+ name+ "'");
-        System.out.println("requete passé");
+        ps = con.prepareStatement("SELECT * FROM CLIENT WHERE NOM_CLIENT LIKE '" + name + "'");
         //get customer data from database
         ResultSet result = ps.executeQuery();
         while (result.next()) {
-            System.out.println("ligne resultat requete");
-            String Name=result.getString("Nom_Client");
-            Name+=result.getString("Prenom_Client");
+            String Name = result.getString("id_client");
+            Name += ": ";
+            Name += result.getString("Nom_Client");
+            Name += ' ';
+            Name += result.getString("Prenom_Client");
+            Name += ' ';
+            Name += result.getString("CP");
+            Name += ' ';
+            Name += result.getString("Ville");
+            Name += ' ';
             dlm.addElement(Name);
             jList.setModel(dlm);
         }
         return (jList);
         // Bouml preserved body end 000234C5
     }
+
     
 
     public Customers searchCustomerName(String name) throws SQLException {
@@ -271,7 +328,7 @@ public class Database {
         if (name.equals(client.getLastName())) {
             return client;
         } else {
-            Customers cust = new Customers("jean", "dupond", 86000, "Poitiers", "090909", "090909", "090909", 1);
+            Customers cust = new Customers("jean", "dupond", 86000, "Poitiers", "090909", "090909", "090909","jdupond","1234",  1);
             return cust;
         }
         // Bouml preserved body end 00023545
@@ -289,7 +346,7 @@ public class Database {
         if (client.getID() == ID) {
             return client;
         } else {
-            Customers cust = new Customers("jean", "dupond", 86000, "Poitiers", "090909", "090909", "090909", 1);
+            Customers cust = new Customers("jean", "dupond", 86000, "Poitiers", "090909", "090909", "090909","jdupond","1234", 1);
             return cust;
         }
         // Bouml preserved body end 000235C5
@@ -559,6 +616,30 @@ public class Database {
         return (jList);
         // Bouml preserved body end 000236C5
     }
+    
+     public String saveAnimal(Animals animal, int idClient, String pSpe) {
+        Species paramSpe = new Species(pSpe);
+        try {
+        PreparedStatement ps0 = con.prepareStatement("select * from ESPECE where NOM_CATEGORIE = '" + pSpe + "'");
+        ResultSet result0 = ps0.executeQuery();
+        while (result0.next()) {
+            paramSpe.setID(result0.getInt("ID_ESPECE"));
+        }
+            Statement state = b.getMyStatement();
+            String query = "Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")";
+                state.executeUpdate(query, state.RETURN_GENERATED_KEYS);
+                ResultSet clefs = state.getGeneratedKeys();
+                System.out.println(clefs.getObject(1));
+                return "success";
+        } catch (SQLException ex) {
+            System.out.println("Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")");
+            System.out.println("SQLException saveCustomer: " + ex.getMessage());
+            System.out.println("SQLState saveCustomer: " + ex.getSQLState());
+            System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
+            return "failed";
+        }
+    }
+     
  
     public String saveBddUser() throws SQLException {
         ConnectBDD con = new ConnectBDD();
@@ -590,7 +671,23 @@ public class Database {
         }
 
     }
-
+/**
+     * prend une date au format String et la convertie au format date de java
+     * @param date
+     * @return dateJava (dd-mm-aaaa)
+     */
+    public java.util.Date dateStringToJava(String date){
+         String aaaa= date.substring(6,10);
+         String mm= date.substring(3,5);
+         String dd= date.substring(0,2);
+       
+         java.util.Date dateJava = null;
+         dateJava.setYear(Integer.parseInt(aaaa));
+         dateJava.setMonth(Integer.parseInt(mm));
+         dateJava.setDate(Integer.parseInt(dd));
+     
+        return dateJava;
+    }
   
    /**
      *prend une date au format java et la convertie au format SQL
@@ -615,13 +712,13 @@ public class Database {
      * @param dateSQL (aaaa-mm-dd)
      * @return da
      */
-    public beans.Date dateSQLToJava(java.sql.Date dateSQL){
+    public java.util.Date dateSQLToJava(java.sql.Date dateSQL){
       
         int dd = dateSQL.getDate();
         int mm = (dateSQL.getMonth())+1;
         int aaaa = dateSQL.getYear();
 
-        beans.Date da = new Date(dd,mm,aaaa);
+        java.util.Date da = new java.util.Date(dd,mm,aaaa);
 
         return da;
     }

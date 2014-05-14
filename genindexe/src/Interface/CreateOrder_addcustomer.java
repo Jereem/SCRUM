@@ -63,6 +63,11 @@ public int id_client;
         jLabel2.setText("Ou");
 
         jButton2.setText("Creation client");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Saisir le nom du client dans le cadre ci-dessus", " ", " ", " " };
@@ -169,6 +174,12 @@ public int id_client;
         }
 
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JFrame CreateCustommer = new JFrame("Creer un nouveau client");
+        CreateCustommer.add(new US1());
+        CreateCustommer.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 public JPanel getAddCustomer(){
     return this;
     
@@ -187,13 +198,13 @@ public JPanel getAddCustomer(){
     // End of variables declaration//GEN-END:variables
 
     public static void main(String[] args) throws SQLException {
-        JLabel myLabel = new JLabel("ajout client");
+        JFrame myLabel = new JFrame("ajout client");
         CreateOrder_addcustomer ajouterclient = new CreateOrder_addcustomer();
         myLabel.setLayout(new GridLayout(1, 2));
         myLabel.add(ajouterclient);
-       // myLabel.pack();
+        myLabel.pack();
         myLabel.setVisible(true);
-        //myLabel.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        myLabel.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
 

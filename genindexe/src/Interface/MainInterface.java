@@ -19,7 +19,7 @@ public class MainInterface extends javax.swing.JFrame {
     US1 createCustomer = new US1();
     CreateAnimal createAnimal = new CreateAnimal();
     CreateSpecie createspecie = new CreateSpecie();
-    CreateOrder createOrder = new CreateOrder();
+    CreateOrder_addcustomer createOrder = new CreateOrder_addcustomer();
     ExploreOrders exploreorder = new ExploreOrders();
 
     public MainInterface() {
@@ -197,7 +197,7 @@ public class MainInterface extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         remove(jPanel2);
-        jPanel2 = new CreateOrder();
+        jPanel2 = new CreateOrder_addcustomer();
         getContentPane().add(jPanel2, new java.awt.GridBagConstraints());
         this.repaint();
         this.revalidate();

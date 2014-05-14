@@ -6,12 +6,15 @@
 
 package Interface;
 
+import ManagedBeans.Database;
 import java.awt.GridLayout;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import ManagedBeans.TypeEchData;
 import beans.Samples;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +24,7 @@ import javax.swing.JOptionPane;
 public class CreateOrder_selectTypeEch extends javax.swing.JPanel {
 
     private TypeEchData typ;
+    public int id_type_ech;
     
     /**
      * Creates new form CreateOrder_selectTypeEch
@@ -52,8 +56,13 @@ public class CreateOrder_selectTypeEch extends javax.swing.JPanel {
         jButton_Add_Sample.setBackground(new java.awt.Color(51, 102, 255));
         jButton_Add_Sample.setText("Valider");
         jButton_Add_Sample.addActionListener(new java.awt.event.ActionListener() {
+            
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Add_SampleActionPerformed(evt);
+                try {
+                    jButton_Add_SampleActionPerformed(evt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CreateOrder_selectTypeEch.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -86,19 +95,21 @@ public class CreateOrder_selectTypeEch extends javax.swing.JPanel {
         );
     }// </editor-fold>                        
 
-    private void jButton_Add_SampleActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-
+    private void jButton_Add_SampleActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {                                                   
         Samples sample = new Samples();
         String type = (String)Liste_Type.getSelectedValue();
-        System.out.print(type);
+
         
         if (type != null){
             JOptionPane.showMessageDialog(this, "Type sélectionné");
+            Database instance = new Database();
+            id_type_ech=instance.getIdTypeEchbyName(type);
+            System.out.println(id_type_ech);
         }
         else {
             JOptionPane.showMessageDialog(this,"Erreur de sélection","Erreur",JOptionPane.ERROR_MESSAGE);
+            id_type_ech=0;
         }
-        
     }                                                  
 
 

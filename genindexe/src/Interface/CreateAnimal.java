@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Interface;
 
 import ManagedBeans.Database;
@@ -23,13 +22,19 @@ import javax.swing.JOptionPane;
 public class CreateAnimal extends javax.swing.JPanel {
 
     private ManagedAnimal ani;
+    private int id_client;
+
     /**
      * Creates new form CreateAnimal
      */
     public CreateAnimal() {
         ani = new ManagedAnimal();
         initComponents();
-        
+
+    }
+
+    public void setIdClient(int id) {
+        id_client = id;
     }
 
     /**
@@ -147,20 +152,24 @@ public class CreateAnimal extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextFieldNomActionPerformed
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        
+
         Animals animal = new Animals();
         System.out.println(jTextFieldBirth.getText());
         DateTools d = new DateTools();
         animal.setNumberBirthday(DateTools.stringToDate(jTextFieldBirth.getText(), "dd-MM-yyyy"));
         animal.setNom(jTextFieldNom.getText());
-        String sexe = (String)jComboBoxSexe.getSelectedItem();
-        if ("Femelle".equals(sexe)){animal.setSexe(false);}
-        else {animal.setSexe(true);}
-        if ("success".equals(ani.saveAnimal(animal,16, (String)jListEspeces.getSelectedValue()))){
-            JOptionPane.showMessageDialog(this,"Enregistrement reussi !");
+        String sexe = (String) jComboBoxSexe.getSelectedItem();
+        if ("Femelle".equals(sexe)) {
+            animal.setSexe(false);
+        } else {
+            animal.setSexe(true);
         }
-        else {
-            JOptionPane.showMessageDialog(this,"L'enregistrement a echoué !","Erreur",JOptionPane.ERROR_MESSAGE);
+        if ("success".equals(ani.saveAnimal(animal, id_client, (String) jListEspeces.getSelectedValue()))) {
+            JOptionPane.showMessageDialog(this, "Enregistrement reussi !");
+            ((JFrame) this.getTopLevelAncestor()).dispose();
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "L'enregistrement a echoué !", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAddActionPerformed
 
@@ -187,7 +196,7 @@ public class CreateAnimal extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldNom;
     // End of variables declaration//GEN-END:variables
 
-public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException {
         JFrame myFrame = new JFrame("Test interface");
         CreateAnimal test = new CreateAnimal();
         myFrame.setLayout(new GridLayout(1, 2));

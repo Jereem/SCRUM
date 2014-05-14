@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Interface;
 
 import ManagedBeans.Database;
@@ -27,18 +26,18 @@ import javax.swing.JOptionPane;
  * @author Johanne
  */
 public class CreateOrder_addanimal extends javax.swing.JPanel {
+
     private Integer id_client;
     private List<Integer> listAnimauxChoisi = new ArrayList<Integer>();
     private JPanel jPanel1;
-    
 
     /**
      * Creates new form NewJFrame
      */
     public CreateOrder_addanimal(List<Integer> listAnimauxChoisi, Integer id_client) {
-      this.id_client=id_client;
-      this.listAnimauxChoisi=listAnimauxChoisi;
-      initComponents(listAnimauxChoisi,id_client);
+        this.id_client = id_client;
+        this.listAnimauxChoisi = listAnimauxChoisi;
+        initComponents(listAnimauxChoisi, id_client);
     }
 
     /**
@@ -49,16 +48,16 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents(List<Integer> listAnimauxChoisi, Integer id_client) {
-		Database DB = new Database();
-                ManagedAnimal data = new ManagedAnimal();
+        Database DB = new Database();
+        ManagedAnimal data = new ManagedAnimal();
         jPanel1 = new javax.swing.JPanel();
-                jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList(); /// correspond à List<Integer> listAnimauxChoisi
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         search_animal = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-		
+
         add_animal_button = new javax.swing.JButton();
         confirm_button = new javax.swing.JButton();
         cancel_button = new javax.swing.JButton();
@@ -72,18 +71,17 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
 
         jScrollPane2.setViewportView(jList2);
 
-
         jLabel1.setText("Selection d'un Animal");
 
         jLabel2.setText("Entrer les 3 premieres lettres :");
 
         search_animal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                try {
+                
                     search_animalKeyReleased(evt);
-                } catch (SQLException ex) {
-                    Logger.getLogger(CreateOrder_addanimal.class.getName()).log(Level.SEVERE, null, ex);
-                }
+               
+                   
+                
             }
         });
 
@@ -104,9 +102,9 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
         });
 
         cancel_button.setText("Supprimer Dernier Animal");
-        
+
         cancel_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt){
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     cancel_buttonActionPerformed(evt);
                 } catch (SQLException ex) {
@@ -115,10 +113,10 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
             }
         });
 
-        listAnimal = DB.getJListAnimalCustomer(id_client,"");///liste des animaux du client
+        listAnimal = DB.getJListAnimalCustomer(id_client, "");///liste des animaux du client
         jScrollPane1.setViewportView(listAnimal);
 //a modifier
-        animauxChoisi=data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
+        animauxChoisi = data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
         jScrollPane3.setViewportView(animauxChoisi);
 
         jLabel4.setText("Votre choix :");
@@ -140,76 +138,247 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
-                    .addGroup(layout.createSequentialGroup()
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(search_animal, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(38, 38, 38)
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(add_animal_button, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 2, Short.MAX_VALUE)))
-                .addGap(26, 26, 26))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(confirm_button)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cancel_button)
-                .addGap(53, 53, 53))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(previous_step, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(83, 83, 83)
-                        .addComponent(next_step, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jScrollPane3)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(jLabel2)
+                                                                .addComponent(search_animal, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGap(38, 38, 38)
+                                                        .addComponent(jLabel3)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(add_animal_button, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 2, Short.MAX_VALUE)))
+                        .addGap(26, 26, 26))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(confirm_button)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancel_button)
+                        .addGap(53, 53, 53))
+                .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(38, 38, 38)
+                                        .addComponent(previous_step, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(83, 83, 83)
+                                        .addComponent(next_step, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(179, 179, 179)
+                                        .addComponent(jLabel1)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(search_animal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(36, 36, 36)
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(search_animal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jLabel1)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(jLabel3)
+                                                .addComponent(add_animal_button))))
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cancel_button)
+                                .addComponent(confirm_button))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addGap(4, 4, 4)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(add_animal_button))))
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cancel_button)
-                    .addComponent(confirm_button))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addGap(4, 4, 4)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(previous_step)
-                    .addComponent(next_step))
-                .addContainerGap(37, Short.MAX_VALUE))
+                                .addComponent(previous_step)
+                                .addComponent(next_step))
+                        .addContainerGap(37, Short.MAX_VALUE))
         );
-        
+
+        javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
+        this.setLayout(layoutP);
+        layoutP.setHorizontalGroup(
+                layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layoutP.setVerticalGroup(
+                layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        DB.Close();
+
+    }// </editor-fold>                        
+
+    private void add_animal_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+        JFrame CreerAnimal = new JFrame("Creer un nouvel animal");
+        CreateAnimal createanimal = new CreateAnimal();
+        createanimal.setIdClient(id_client);
+        CreerAnimal.add(createanimal);
+        CreerAnimal.setExtendedState(CreerAnimal.MAXIMIZED_HORIZ);
+        CreerAnimal.pack();
+        CreerAnimal.setVisible(true);// ajouter panel de teddy
+        CreerAnimal.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                if (listAnimauxChoisi.isEmpty()) {
+                    Database instance = new Database();
+                    listAnimal = (JList) instance.getJListAnimalCustomer(id_client, "");
+                    jScrollPane1.setViewportView(listAnimal); 
+                    instance.Close();
+
+                } else {
+                    Database instance = new Database();
+                    listAnimal = (JList) instance.getJListAnimalCustomer(id_client, "", listAnimauxChoisi);
+                    jScrollPane1.setViewportView(listAnimal);
+                    instance.Close();
+                }
+            }
+        });
+        this.repaint();
+        this.revalidate();
+    }
+
+    private void search_animalKeyReleased(java.awt.event.KeyEvent evt) {
+        int taille_chaine = 0;
+        String chaine = search_animal.getText();
+        taille_chaine = chaine.length();
+        if ((taille_chaine > 2)) {
+            if (listAnimauxChoisi.isEmpty()) {
+                Database instance = new Database();
+                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, chaine);
+                jScrollPane1.setViewportView(listAnimal);
+                instance.Close();
+            } else {
+                Database instance = new Database();
+                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, chaine, listAnimauxChoisi);
+                jScrollPane1.setViewportView(listAnimal);
+                instance.Close();
+            }
+        } else {
+            if (listAnimauxChoisi.isEmpty()) {
+                Database instance = new Database();
+                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, "");
+                jScrollPane1.setViewportView(listAnimal);
+                instance.Close();
+            } else {
+                Database instance = new Database();
+                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, chaine, listAnimauxChoisi);
+                jScrollPane1.setViewportView(listAnimal);
+                instance.Close();
+            }
+        }
+        this.repaint();
+        this.revalidate();
+    }
+
+    private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+
+        System.out.println(listAnimal.getSelectedValue());
+
+        String id_select = (String) listAnimal.getSelectedValue();
+        int id_added_animal;
+        int fin_id = id_select.indexOf(": ");
+        id_added_animal = Integer.parseInt(id_select.substring(0, (fin_id)));
+        System.out.println("id_animal");
+        System.out.println(id_added_animal);
+        listAnimauxChoisi.add(id_added_animal);
+
+        for (int i = 0; i < listAnimauxChoisi.size(); i++) {
+            System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
+        }
+        Database instance = new Database();
+        try {
+
+            listAnimal = (JList) instance.getJListAnimalCustomer(listAnimauxChoisi);
+            jScrollPane1.setViewportView(listAnimal);
+
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        instance.Close();
+
+        ManagedAnimal data = new ManagedAnimal();
+        animauxChoisi = data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
+        jScrollPane3.setViewportView(animauxChoisi);
+    }
+
+    private void cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
+        //si liste de selection vide
+        if (listAnimauxChoisi.isEmpty()) {
+
+            ///message error
+            JOptionPane.showMessageDialog(this, "Aucun Animal Supprimer");
+            ///mise à jour de la liste disponible de choix
+            Database DB = new Database();
+            listAnimal = DB.getJListAnimalCustomer(id_client, "");
+            jScrollPane1.setViewportView(listAnimal);
+            DB.Close();
+
+        } else {//liste de sélection non vide
+            //confirmation de la suppression
+            JOptionPane d = new JOptionPane();
+            int retour = d.showConfirmDialog(this, "Suppression du dernier animal selectionne ?",
+                    "Suppression", JOptionPane.YES_NO_OPTION);
+            // confirmation OK
+            if (retour == 0) {
+                /// suppresion du dernier animal
+                listAnimauxChoisi.remove(listAnimauxChoisi.size() - 1);
+                ///si liste maintenant vide
+                if (listAnimauxChoisi.isEmpty()) {
+
+                    //mise a jour de la liste de sélection possible ==> initiale
+                    Database DB = new Database();
+                    listAnimal = DB.getJListAnimalCustomer(id_client, "");
+                    jScrollPane1.setViewportView(listAnimal);
+                    DB.Close();
+                } else {// il reste des animaux selectionnes
+                    //test affichage liste
+                    for (int i = 0; i < listAnimauxChoisi.size(); i++) {
+                        System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
+                    }
+
+                    Database instance = new Database();
+                    try {
+                        listAnimal = (JList) instance.getJListAnimalCustomer(listAnimauxChoisi);
+                        jScrollPane1.setViewportView(listAnimal);
+                    } catch (SQLException ex) {
+                        System.out.println("SQLException: " + ex.getMessage());
+                        System.out.println("SQLState: " + ex.getSQLState());
+                        System.out.println("VendorError: " + ex.getErrorCode());
+                    }
+                    instance.Close();
+                }
+                //message confirmation
+                JOptionPane.showMessageDialog(this, "Suppression reussi");
+            }
+
+        }
+
+        ManagedAnimal data = new ManagedAnimal();
+        animauxChoisi = data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
+        jScrollPane3.setViewportView(animauxChoisi);
+
+    }
+
+    private void previous_stepActionPerformed(java.awt.event.ActionEvent evt) {
+        listAnimauxChoisi.clear();
+          this.remove(jPanel1);
+        jPanel1=new CreateOrder_addcustomer();
         javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
         this.setLayout(layoutP);
         layoutP.setHorizontalGroup(
@@ -220,199 +389,26 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
             layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-       DB.Close();
-       
-    }// </editor-fold>                        
-
-
-	
-
-    private void add_animal_buttonActionPerformed(java.awt.event.ActionEvent evt) {
-            JFrame CreerAnimal = new JFrame("Creer un nouvel animal");
-            CreerAnimal.add(new CreateAnimal());
-            CreerAnimal.setExtendedState(CreerAnimal.MAXIMIZED_HORIZ);
-            CreerAnimal.pack();
-            CreerAnimal.setVisible(true);// ajouter panel de teddy
-    }
-
-    private void search_animalKeyReleased(java.awt.event.KeyEvent evt) throws SQLException {     
-        int taille_chaine = 0;
-        String chaine = search_animal.getText();
-        taille_chaine = chaine.length();
-        if ((taille_chaine > 2)) {
-            
-            if (listAnimauxChoisi.isEmpty()){
-                System.out.println("casnormal");
-          Database instance = new Database();
-          listAnimal = (JList) instance.getJListAnimalCustomer(id_client,chaine);
-          jScrollPane1.setViewportView(listAnimal);
-          instance.Close();
-            }
-            else{
-                System.out.println("des choses dans la liste");
-                 Database instance = new Database();
-                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, chaine,listAnimauxChoisi);
-                jScrollPane1.setViewportView(listAnimal);
-                instance.Close();
-            }
-        }
-        else {
-               if (listAnimauxChoisi.isEmpty()){
-                   System.out.println("casnormal2");
-                   
-          Database instance = new Database();
-          listAnimal = (JList) instance.getJListAnimalCustomer(id_client,"");
-          jScrollPane1.setViewportView(listAnimal);
-          instance.Close();
-            }
-               else{
-                   System.out.println("des choses dans la liste2");
-                Database instance = new Database();
-                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, "",listAnimauxChoisi);
-                jScrollPane1.setViewportView(listAnimal);
-                instance.Close();
-            }
-        }
-
-        }
-    
-
-private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) { 
-        
-        System.out.println(listAnimal.getSelectedValue());
-        
-        String id_select=(String) listAnimal.getSelectedValue();
-        int id_added_animal;
-        int fin_id=id_select.indexOf(": ");
-        id_added_animal=Integer.parseInt(id_select.substring(0,(fin_id)));
-        System.out.println("id_animal");
-        System.out.println(id_added_animal);
-        listAnimauxChoisi.add(id_added_animal);
-        
-        
-                for(int i = 0; i < listAnimauxChoisi.size(); i++)
-                    {
-                        System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
-                        }
-        Database instance = new Database();
-        try {
-              
-        listAnimal = (JList) instance.getJListAnimalCustomer(listAnimauxChoisi);
-        jScrollPane1.setViewportView(listAnimal);
-                
-        } catch (SQLException ex) {
-         System.out.println("SQLException: " + ex.getMessage());
-             System.out.println("SQLState: " + ex.getSQLState());
-              System.out.println("VendorError: " + ex.getErrorCode());
-            }
-         instance.Close();    
-         
-         ManagedAnimal data= new ManagedAnimal();
-         animauxChoisi=data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
-         jScrollPane3.setViewportView(animauxChoisi);
-    }                                              
-
-private void cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {                                              
-        //si liste de selection vide
-    if (listAnimauxChoisi.isEmpty()){
-        
-        ///message error
-            JOptionPane.showMessageDialog(this,"Aucun Animal Supprimer");
-        ///mise à jour de la liste disponible de choix
-            Database DB = new Database();
-            listAnimal = DB.getJListAnimalCustomer(id_client,"");
-            jScrollPane1.setViewportView(listAnimal);
-            DB.Close();
-        
-        }
-        else{//liste de sélection non vide
-        //confirmation de la suppression
-            JOptionPane d = new JOptionPane();
-            int retour = d.showConfirmDialog(this, "Suppression du dernier animal selectionne ?", 
-      "Suppression", JOptionPane.YES_NO_OPTION);
-            // confirmation OK
-            if (retour==0){
-                /// suppresion du dernier animal
-                listAnimauxChoisi.remove(listAnimauxChoisi.size()-1);
-                ///si liste maintenant vide
-                if (listAnimauxChoisi.isEmpty()){
-                    
-                    //mise a jour de la liste de sélection possible ==> initiale
-                     Database DB = new Database();
-                     listAnimal = DB.getJListAnimalCustomer(id_client,"");
-                     jScrollPane1.setViewportView(listAnimal);
-                     DB.Close();
-                 }
-                else{// il reste des animaux selectionnes
-                //test affichage liste
-                for(int i = 0; i < listAnimauxChoisi.size(); i++)
-                    { System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));}
-                
-                 Database instance = new Database();
-                try {
-                    listAnimal = (JList) instance.getJListAnimalCustomer(listAnimauxChoisi);
-                    jScrollPane1.setViewportView(listAnimal);
-                } 
-                catch (SQLException ex) {
-                    System.out.println("SQLException: " + ex.getMessage());
-                    System.out.println("SQLState: " + ex.getSQLState());
-                    System.out.println("VendorError: " + ex.getErrorCode());
-                }
-                instance.Close();
-                }
-                //message confirmation
-                JOptionPane.showMessageDialog(this,"Suppression reussi");
-                }
-              
-          
-        }
-          
-         ManagedAnimal data= new ManagedAnimal();
-         animauxChoisi=data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
-         jScrollPane3.setViewportView(animauxChoisi);
-        
-        
-    }                                             
-
-
-    private List<Integer> previous_stepActionPerformed(java.awt.event.ActionEvent evt) {  
-        JOptionPane d = new JOptionPane();
-       int retour = d.showConfirmDialog(this, "Si Etape Precedente, Perte de la liste de choix d'Animaux", 
-      "Suppression", JOptionPane.YES_NO_OPTION);
-            // confirmation OK
-            if (retour==0){
-        //liste de sélection vide
-        listAnimauxChoisi.clear();
-        this.setVisible(false);
-        return listAnimauxChoisi;
-        
-            }
-            else{
-                return null;
-            }
-            
-        
-        
-    }                                             
-
-    private void next_stepActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        this.remove(jPanel1);
-//        jPanel1=new CreateOrder_selectType();
-//        javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
-//        this.setLayout(layoutP);
-//        layoutP.setHorizontalGroup(
-//            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//        );
-//        layoutP.setVerticalGroup(
-//            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//        );
         this.repaint();
         this.revalidate();
-    }                                         
+    }
 
-
+    private void next_stepActionPerformed(java.awt.event.ActionEvent evt) {
+        this.remove(jPanel1);
+        jPanel1=new CreateOrder_numberEch();
+        javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
+        this.setLayout(layoutP);
+        layoutP.setHorizontalGroup(
+            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layoutP.setVerticalGroup(
+            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        this.repaint();
+        this.revalidate();
+    }
 
     // Variables declaration - do not modify   
     private javax.swing.JButton add_animal_button;
@@ -437,18 +433,16 @@ private void cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) throws
         JFrame myFrame = new JFrame("Test interface");
         Integer id_client = 16;
         List<Integer> listAnimauxChoisi = new ArrayList<>();
-        CreateOrder_addanimal test = new CreateOrder_addanimal(listAnimauxChoisi,id_client);
+        CreateOrder_addanimal test = new CreateOrder_addanimal(listAnimauxChoisi, id_client);
         myFrame.setLayout(new GridLayout(1, 2));
         myFrame.add(test);
         myFrame.pack();
         myFrame.setVisible(true);
         myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        for(int i = 0; i < listAnimauxChoisi.size(); i++)
-    {
-      System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
-    }
-        
+        for (int i = 0; i < listAnimauxChoisi.size(); i++) {
+            System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
+        }
+
     }
 
 }
-

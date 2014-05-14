@@ -9,6 +9,8 @@ package Interface;
 import ManagedBeans.Database;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JOptionPane;
@@ -20,6 +22,7 @@ import javax.swing.JOptionPane;
 public class CreateOrder_selectType extends javax.swing.JPanel {
 
     private Database instance = new Database();
+    public int id_type_test=0;
     /**
      * Creates new form CreateOrder_selectType
      */
@@ -117,11 +120,20 @@ public class CreateOrder_selectType extends javax.swing.JPanel {
 
     private void jToggleButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MouseReleased
         if (jList1.getSelectedValue()!=null){
-            //enregistrement du type d'echantillon
-            JOptionPane.showMessageDialog(this,"Selection du type de test");
-            String id_client_select=(String) jList1.getSelectedValue();
-            
-           
+            try {
+                //enregistrement du type d'echantillon
+                JOptionPane.showMessageDialog(this,"Selection du type de test");
+                String nom_test=(String) jList1.getSelectedValue();
+                id_type_test=instance.getIdbyName(nom_test);
+                System.out.println(nom_test);
+                System.out.println(id_type_test);
+            } catch (SQLException ex) {
+                  
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+                
         }
         else{
             JOptionPane.showMessageDialog(this,"Veuillez selectionner un type de test");
@@ -130,7 +142,7 @@ public class CreateOrder_selectType extends javax.swing.JPanel {
     }//GEN-LAST:event_jToggleButton1MouseReleased
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
-        
+        id_type_test=0;
     }//GEN-LAST:event_jButton1MouseReleased
 
 

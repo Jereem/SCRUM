@@ -203,22 +203,23 @@ public class Database {
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
-       
-        PreparedStatement ps,ps1;
-         
-        ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM Animal WHERE ID_ANIMAL="+id_animal);
-       
+        
+        
+        PreparedStatement ps;
+        PreparedStatement ps1;
+        
+        ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM ANIMAL WHERE ID_ANIMAL='" + id_animal + "'");
+        //ps.setInt(1, id_animal );
         ResultSet result = ps.executeQuery();
-        System.out.println("id_client database");
-        int id_client = result.getInt("ID_CLIENT");
-        result.getInt(1);
-        System.out.println("id_client");
-        System.out.println(id_client);
-        int id_espece = result.getInt("ID_ESPECE");
-         
+        int id_espece = 0;
+        int id_client = 0;
+        while (result.next()) {
+        id_espece =  result.getInt("ID_ESPECE");
+        id_client = result.getInt("ID_CLIENT");
+        }
+        
         if (result!= null){
-
-        ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT="+id_client+" AND ID_ESPECE="+id_espece+" AND ID_ANIMAL !="+id_animal);
+        ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT='"+id_client+"' AND ID_ESPECE='"+id_espece+"' AND ID_ANIMAL !="+id_animal+"");
         //get animal data from database
         ResultSet result1 = ps1.executeQuery();
         while (result1.next()) {

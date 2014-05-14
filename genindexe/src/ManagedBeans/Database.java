@@ -384,14 +384,12 @@ public class Database {
         }
     }
 
-    public List<Types_analysis> getListAnalysisType() throws SQLException {
+    public List<Types_analysis> getListAnalysisType() {
         // Bouml preserved body begin 000236C5
         List<Types_analysis> listTA = new ArrayList<>();
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
+        try{
         PreparedStatement ps;
-        ps = con.prepareStatement("select * from TypeAnalyse");
+        ps = con.prepareStatement("select * from TypeAnalyse ");
         //get customer data from database
         ResultSet result = ps.executeQuery();
         while (result.next()) {
@@ -401,6 +399,15 @@ public class Database {
             listTA.add(pTypes_analysis);
         }
         return (listTA);
+        }
+        catch(SQLException ex){
+            System.out.println("SQLException getListAnalysisType: " + ex.getMessage());
+            System.out.println("SQLState getListAnalysisType: " + ex.getSQLState());
+            System.out.println("VendorError getListAnalysisType: " + ex.getErrorCode());
+            return null;
+        }
+        
+    
         // Bouml preserved body end 000236C5
     }
 

@@ -149,12 +149,13 @@ public class Database {
     }  
     
         
-     public JList getJListAnimalCustomer(Integer id_customer, String chaine,List<Integer> laListe) throws SQLException {
+     public JList getJListAnimalCustomer(Integer id_customer, String chaine,List<Integer> laListe) {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
         // Bouml preserved body begin 000236C5
         //si liste non vide
         String listAnimaux;
+        try{
         if (laListe.isEmpty()){
             listAnimaux ="";
         }
@@ -167,11 +168,10 @@ public class Database {
             listAnimaux= " AND ID_ANIMAL not in "+listAnimaux;
             
             //espèce
-            if (con == null) {
-                throw new SQLException("Can't get database connection");
-            }
+           
         
         int first_animal=laListe.get(0);
+        
         PreparedStatement ps;
         PreparedStatement ps1;
         
@@ -190,7 +190,7 @@ public class Database {
         else{
             chaine="nom_animal like '"+chaine+"%' and ";
         }
-        try{
+        
         PreparedStatement ps;
         ps = con.prepareStatement("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer+listAnimaux);
         System.out.println("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer+listAnimaux);
@@ -205,6 +205,7 @@ public class Database {
         jList.setModel(dlm);
         return (jList);
         }
+        
         catch(SQLException ex){
         System.out.println("SQLException getJListAnimalCustomer: " + ex.getMessage());
             System.out.println("SQLState getJListAnimalCustomer: " + ex.getSQLState());

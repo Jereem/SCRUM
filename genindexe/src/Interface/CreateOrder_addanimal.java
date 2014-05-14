@@ -77,11 +77,11 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
 
         search_animal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                try {
+                
                     search_animalKeyReleased(evt);
-                } catch (SQLException ex) {
-                    Logger.getLogger(CreateOrder_addanimal.class.getName()).log(Level.SEVERE, null, ex);
-                }
+               
+                   
+                
             }
         });
 
@@ -236,7 +236,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
                 if (listAnimauxChoisi.isEmpty()) {
                     Database instance = new Database();
                     listAnimal = (JList) instance.getJListAnimalCustomer(id_client, "");
-                    jScrollPane1.setViewportView(listAnimal);
+                    jScrollPane1.setViewportView(listAnimal); 
                     instance.Close();
 
                 } else {
@@ -395,17 +395,17 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
 
     private void next_stepActionPerformed(java.awt.event.ActionEvent evt) {
         this.remove(jPanel1);
-//        jPanel1=new CreateOrder_selectType();
-//        javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
-//        this.setLayout(layoutP);
-//        layoutP.setHorizontalGroup(
-//            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//        );
-//        layoutP.setVerticalGroup(
-//            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//        );
+        jPanel1=new CreateOrder_selectType();
+        javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
+        this.setLayout(layoutP);
+        layoutP.setHorizontalGroup(
+            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layoutP.setVerticalGroup(
+            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
         this.repaint();
         this.revalidate();
     }

@@ -77,7 +77,11 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
 
         search_animal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                search_animalKeyReleased(evt);
+                try {
+                    search_animalKeyReleased(evt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CreateOrder_addanimal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -219,18 +223,21 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
             CreerAnimal.setVisible(true);// ajouter panel de teddy
     }
 
-    private void search_animalKeyReleased(java.awt.event.KeyEvent evt) {     
+    private void search_animalKeyReleased(java.awt.event.KeyEvent evt) throws SQLException {     
         int taille_chaine = 0;
         String chaine = search_animal.getText();
         taille_chaine = chaine.length();
         if ((taille_chaine > 2)) {
+            
             if (listAnimauxChoisi.isEmpty()){
+                System.out.println("casnormal");
           Database instance = new Database();
           listAnimal = (JList) instance.getJListAnimalCustomer(id_client,chaine);
           jScrollPane1.setViewportView(listAnimal);
           instance.Close();
             }
             else{
+                System.out.println("des choses dans la liste");
                  Database instance = new Database();
                 listAnimal = (JList) instance.getJListAnimalCustomer(id_client, chaine,listAnimauxChoisi);
                 jScrollPane1.setViewportView(listAnimal);
@@ -239,14 +246,17 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
         }
         else {
                if (listAnimauxChoisi.isEmpty()){
+                   System.out.println("casnormal2");
+                   
           Database instance = new Database();
           listAnimal = (JList) instance.getJListAnimalCustomer(id_client,"");
           jScrollPane1.setViewportView(listAnimal);
           instance.Close();
             }
                else{
-                 Database instance = new Database();
-                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, chaine,listAnimauxChoisi);
+                   System.out.println("des choses dans la liste2");
+                Database instance = new Database();
+                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, "",listAnimauxChoisi);
                 jScrollPane1.setViewportView(listAnimal);
                 instance.Close();
             }

@@ -149,7 +149,7 @@ public class Database {
     }  
     
         
-     public JList getJListAnimalCustomer(Integer id_customer, String chaine,List<Integer> laListe) {
+     public JList getJListAnimalCustomer(Integer id_customer, String chaine,List<Integer> laListe) throws SQLException {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
         // Bouml preserved body begin 000236C5
@@ -166,6 +166,23 @@ public class Database {
             listAnimaux=listAnimaux.substring(0,listAnimaux.length()-1)+")";
             listAnimaux= " AND ID_ANIMAL not in "+listAnimaux;
             
+            //espèce
+            if (con == null) {
+                throw new SQLException("Can't get database connection");
+            }
+        
+        int first_animal=laListe.get(0);
+        PreparedStatement ps;
+        PreparedStatement ps1;
+        
+        ps= con.prepareStatement("SELECT ID_ESPECE FROM ANIMAL WHERE ID_ANIMAL='" + first_animal + "'");
+        //ps.setInt(1, id_animal );
+        ResultSet result = ps.executeQuery();
+        int id_espece = 0;
+        while (result.next()) {
+        id_espece =  result.getInt("ID_ESPECE");
+        }
+             listAnimaux= listAnimaux+" AND ID_ESPECE="+id_espece;
             }
         if (chaine.length()==0){
             chaine="";
@@ -176,6 +193,7 @@ public class Database {
         try{
         PreparedStatement ps;
         ps = con.prepareStatement("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer+listAnimaux);
+        System.out.println("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer+listAnimaux);
         //get animal data from database
         ResultSet result = ps.executeQuery();
         while (result.next()) {

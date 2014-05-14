@@ -20,7 +20,7 @@ public class CreateOrder extends javax.swing.JPanel {
     /**
      * Creates new form CreateOrder
      */
-    public CreateOrder() throws SQLException {
+    public CreateOrder()  {
         initComponents();
         
         

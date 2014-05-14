@@ -394,8 +394,9 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
     }
 
     private void next_stepActionPerformed(java.awt.event.ActionEvent evt) {
+        System.out.println(listAnimauxChoisi.get(0)+" "+id_client);
         this.remove(jPanel1);
-        //jPanel1=new CreateOrder_numberEch();
+        jPanel1=new CreateOrder_selectTypeEch();
         javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
         this.setLayout(layoutP);
         layoutP.setHorizontalGroup(

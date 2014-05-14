@@ -22,7 +22,7 @@ public class CreateSpecie extends javax.swing.JPanel {
      * Creates new form CreateSpecie
      * @throws java.sql.SQLException
      */
-    public CreateSpecie() throws SQLException {
+    public CreateSpecie() {
         initComponents();
     }
 
@@ -33,14 +33,21 @@ public class CreateSpecie extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() throws SQLException {
+    private void initComponents()  {
 
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane(); 
         DB = new Database();
+        try{
 	listCategory = DB.getJListCategory();
+        }
+        catch(SQLException ex){
+            System.out.println("SQLException CreateSpecie: " + ex.getMessage());
+            System.out.println("SQLState CreateSpecie: " + ex.getSQLState());
+            System.out.println("VendorError CreateSpecie: " + ex.getErrorCode());
+        }
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -55,9 +62,9 @@ public class CreateSpecie extends javax.swing.JPanel {
 
         jScrollPane1.setViewportView(listCategory);
 
-        jLabel1.setText("Nom de sa catégorie :");
+        jLabel1.setText("Nom de l'espèce :");
 
-        jLabel2.setText("Nom de l'espèce :");
+        jLabel2.setText("Nom de sa catégorie :");
 
         jTextField1.setText("NomEspèce");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {

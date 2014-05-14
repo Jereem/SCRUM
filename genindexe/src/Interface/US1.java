@@ -479,7 +479,7 @@ public class US1 extends javax.swing.JPanel {
                             JOptionPane.showMessageDialog(this,"Enregistrement reussi");
                             instance.Close();
                             if(FromOtherFrame){
-                                
+                                ((JFrame) this.getTopLevelAncestor()).dispose() ; 
                             }
                         }
                         else {
@@ -490,6 +490,9 @@ public class US1 extends javax.swing.JPanel {
                         if ("success".equals(instance.saveCustomer(myCusto))){
                             JOptionPane.showMessageDialog(this,"Enregistrement reussi");
                             instance.Close();
+                            if(FromOtherFrame){
+                                ((JFrame) this.getTopLevelAncestor()).dispose() ; 
+                            }
                         }
                         else {
                             JOptionPane.showMessageDialog(this,"Echec de l'enregistrement","Erreur",JOptionPane.ERROR_MESSAGE);

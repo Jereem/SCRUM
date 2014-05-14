@@ -71,102 +71,6 @@ public class Database {
         b.close();
     }
 
-    /**
-     * This function permits to list all the orders in the database.
-     */
-//  public List<Orders> getListOrder() throws SQLException {
-//    // Bouml preserved body begin 0003D002
-//	  List<Orders> list = new ArrayList<Orders>();
-//          if (con == null) {
-//            throw new SQLException("Can't get database connection");
-//        }
-//        PreparedStatement ps;
-//        ps = con.prepareStatement("select * from ");
-//        //get customer data from database
-//        ResultSet result = ps.executeQuery();
-//        while (result.next()) {
-//            Orders pOrder = new Orders();
-//            pOrder.setPaid(result.getString("Nom_Projet"));
-//	  list.add(this.order);
-//        }
-//	  return(list);
-//    // Bouml preserved body end 0003D002
-//  }
-    /**
-     * This function permits to search the order in the database that have the
-     * customer in parameter.
-     */
-    public Orders searchOrder(Customers customer) {
-        // Bouml preserved body begin 00042F02
-        return (this.order);
-        // Bouml preserved body end 00042F02
-    }
-
-    /**
-     * This function permits to search the order in the database that has this
-     * id.
-     */
-    public Orders searchOrder(int id) {
-        // Bouml preserved body begin 00042F82
-        return (this.order);
-        // Bouml preserved body end 00042F82
-    }
-
-    /**
-     * This function permits to save in the database the order in parameter.
-     */
-    public void saveOrder(Orders order) {
-        // Bouml preserved body begin 00043082
-        this.order = order;
-        // Bouml preserved body end 00043082
-    }
-
-    public Samples searchSample(String id) throws SQLException {
-        // Bouml preserved body begin 00043102
-        int id_number = Integer.parseInt(id);
-
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        PreparedStatement ps;
-        ps = con.prepareStatement("SELECT * FROM Echantillon NATURAL JOIN Type_Echantillon NATURAL JOIN Animal NATURAL JOIN Espece WHERE Id_Ech='" + id_number + "'");
-        //get customer data from database
-        ResultSet result = ps.executeQuery();
-        java.sql.Date date_sampling = result.getDate("Date_recep");
-        java.sql.Date date_storage = result.getDate("Date_stock");
-        DateTools d = new DateTools();
-        Samples sa2 = new Samples(id, result.getString("Type_Ech"), d.dateSQLToJava(date_sampling), d.dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), d.dateSQLToJava(result.getDate("Date_Naissance")), result.getString("Nom_Espece")));
-
-        return sa2;
-        // Bouml preserved body end 00043102
-    }
-
-    public List<Samples> getListSamples() {
-        // Bouml preserved body begin 00043182
-        List<Samples> listS = new ArrayList<Samples>();
-        listS.add(this.sample);
-        return (listS);
-        // Bouml preserved body end 00043182
-    }
-    
-    public List<String> GetListTypeSamples() throws SQLException {
-    	PreparedStatement ps;
-    	ps=con.prepareStatement("Select * From Type_Echantillon");
-    	ResultSet result = ps.executeQuery();
-    	List<String> LS = new ArrayList<>();
-    	while(result.next()){
-    		
-    		LS.add(result.getString("Type_Ech"));
-    	}
-    	return LS;
-    }
-
-    public void saveSample(Samples sample) {
-        // Bouml preserved body begin 00043202
-        this.sample = sample;
-        // Bouml preserved body end 00043202
-    }
-
     public List<Animals> searchAnimal(String specie) throws SQLException {
         List<Animals> list = new ArrayList<>();
         if (con == null) {
@@ -242,7 +146,7 @@ public class Database {
         
     /**
      *
-     * @param id_animal id de l'animal selectione
+     * @param id_animal id de l'animal selectione si id_animal=0 methode classique
      * @return liste d'animal du même propriétaire et de la même espece
      * @throws SQLException
      */
@@ -253,27 +157,40 @@ public class Database {
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
-        PreparedStatement ps,ps1;
-        ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM Animal WHERE ID_ANIMAL="+id_animal);
         
+        
+        PreparedStatement ps;
+        PreparedStatement ps1;
+        
+        ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM ANIMAL WHERE ID_ANIMAL='" + id_animal + "'");
+        //ps.setInt(1, id_animal );
         ResultSet result = ps.executeQuery();
+        int id_espece = 0;
+        int id_client = 0;
+        while (result.next()) {
+        id_espece =  result.getInt("ID_ESPECE");
+        id_client = result.getInt("ID_CLIENT");
+        }
         
-        String id_client = result.getString("ID_CLIENT");
-        String id_espece = result.getString("ID_ESPECE");
+        if (id_animal==null){
+            return getJListAnimalCustomer(id_client,"");
+        }
+        else{
         
-        
-        
-        ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT="+id_client+" AND ID_ESPECE="+id_espece+" AND ID_ANIMAL !="+id_animal);
+        if (result!= null){
+        ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT='"+id_client+"' AND ID_ESPECE='"+id_espece+"' AND ID_ANIMAL !="+id_animal+"");
         //get animal data from database
         ResultSet result1 = ps1.executeQuery();
         while (result1.next()) {
             Animals pAnimals = new Animals();
             pAnimals.setNom(result1.getString("NOM_ANIMAL"));
-            pAnimals.setID(result.getInt("ID_ANIMAL"));
+            pAnimals.setID(result1.getInt("ID_ANIMAL"));
             dlm.addElement(pAnimals.getID()+": "+pAnimals.getNom());
         }
+          }
         jList.setModel(dlm);
         return (jList);
+        }
         // Bouml preserved body end 000236C5
     } 
 

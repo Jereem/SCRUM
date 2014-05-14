@@ -81,6 +81,10 @@ public Connection getMyConnexion() {
             System.out.println("SQL connection fermeture failed !!!");
         }
     }
+
+    public PreparedStatement prepareStatement(String insert_into_ConnexionID_CLIENT_MAIL_Login) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
      
      
     

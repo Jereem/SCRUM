@@ -64,6 +64,17 @@ public class Samples {
     // Bouml preserved body end 0002A282
   }
   
+  public Samples(String Type_sample, java.util.Date D_sampling, java.util.Date D_storage, Animals anim) {
+
+	  this.type = Type_sample;
+	  this.dateSampling = D_sampling;
+	  this.dateStorage = D_storage;
+	  this.animal = anim;
+	  this.analyzed = false; // default: the sample is not analyzed
+	  this.analysis = new ArrayList<Analysis>();
+    // Bouml preserved body end 0002A282
+  }
+  
   public Samples(){
 	  
   }

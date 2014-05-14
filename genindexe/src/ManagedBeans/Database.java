@@ -393,8 +393,11 @@ public class Database {
             Statement state = b.getMyStatement();
             String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values('" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"')";
                 state.executeUpdate(query);
+            
                 
+            System.out.println("Email : "+cust.getEmail());
             if(cust.getEmail()!=null){
+            
             /*
             Recuperation de l'id du client ainsi insere
             */
@@ -404,9 +407,12 @@ public class Database {
             ID.next();
             
             String queryInssertConnexion = "Insert into connexion(Login, Mdp, Id_Client) Values('"+cust.getLogin()+"', '"+cust.getMotDePasse()+"', '"+ID.getString("MAX(ID_CLIENT)")+"')";
-                System.out.println(queryInssertConnexion);
+            System.out.println(queryInssertConnexion);
             state.executeUpdate(queryInssertConnexion);
               }
+            else{
+                System.out.println("Email vide : "+ cust.getEmail());
+            }
                 return "success";
 
 //            }
@@ -821,8 +827,12 @@ public class Database {
         }
     }
     
-    
-    
+    /**
+     *
+     * @param nom du test
+     * @return id du test
+     * @throws SQLException
+     */
     public int getIdbyName(String nomtest) throws SQLException{
         int id_type_test=0;
         if (con == null) {
@@ -838,10 +848,27 @@ public class Database {
 
         return id_type_test;
     }
+    
+    /**
+     *
+     * @param nomtypech
+     * @return id du type d'echantillon
+     * @throws SQLException
+     */
+    public int getIdTypeEchbyName(String nomtypech) throws SQLException{
+        int id_type_test=0;
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select ID_TYPE_ECHANTILLON from TYPE_ECHANTILLON where TYPE_ECH='"+nomtypech+"'");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+           id_type_test= result.getInt("ID_TYPE_ECHANTILLON");  
+        }
+
+        return id_type_test;
+    }
   
 }
-
-    
-
-
-

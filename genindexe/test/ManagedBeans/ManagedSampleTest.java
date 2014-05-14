@@ -69,20 +69,20 @@ public class ManagedSampleTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of searchSample method, of class ManagedSample.
-     */
-    @Test
-    public void testSearchSample() throws Exception {
-        System.out.println("searchSample");
-        String id = "";
-        ManagedSample instance = new ManagedSample();
-        Samples expResult = null;
-        Samples result = instance.searchSample(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    /**
+//     * Test of searchSample method, of class ManagedSample.
+//     */
+//    @Test
+//    public void testSearchSample() throws Exception {
+//        System.out.println("searchSample");
+//        String id = "";
+//        ManagedSample instance = new ManagedSample();
+//        Samples expResult = null;
+//        Samples result = instance.searchSample(id);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 
     /**
      * Test of getListSamples method, of class ManagedSample.
@@ -122,10 +122,11 @@ public class ManagedSampleTest {
         java.util.Date D_storage = new Date();
         Date birthday = new Date();
         Animals anim = new Animals("Vache", birthday, "titi");
+        anim.setID(1);
         Samples sample = new Samples("plume", D_sampling, D_storage, anim);
         Date dReception = new Date();
         int idCommande = 1;
-        ManagedSample instance = new ManagedSample();
+        ManagedSample instance = new ManagedSample(sample);
         String expResult = "success";
         String result = instance.saveSample(sample, dReception, idCommande);
         assertEquals(expResult, result);
@@ -137,13 +138,15 @@ public class ManagedSampleTest {
     @Test
     public void testSearchIdTypeSample() {
         System.out.println("searchIdTypeSample");
-        Samples sample = null;
-        ManagedSample instance = new ManagedSample();
-        int expResult = 0;
+        java.util.Date D_sampling = new Date();
+        java.util.Date D_storage = new Date();
+        Date birthday = new Date();
+        Animals anim = new Animals("Vache", birthday, "titi");
+        Samples sample = new Samples("plume", D_sampling, D_storage, anim);
+        ManagedSample instance = new ManagedSample(sample);
+        int expResult = 1;
         int result = instance.searchIdTypeSample(sample);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

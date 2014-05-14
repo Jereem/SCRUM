@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class CreateOrder_addanimal extends javax.swing.JPanel {
     private Integer id_client;
-    private List<Integer> listAnimauxChoisi;
+    private List<Integer> listAnimauxChoisi = new ArrayList<Integer>();
     
 
     /**
@@ -314,7 +314,7 @@ private List<Integer> cancel_buttonActionPerformed(java.awt.event.ActionEvent ev
     }                                             
 
     private void next_stepActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
+        
     }                                         
 
 

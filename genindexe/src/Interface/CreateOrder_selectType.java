@@ -127,7 +127,7 @@ public class CreateOrder_selectType extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
  public static void main(String[] args) throws SQLException {
         JFrame myFrame = new JFrame("select type");
-        CreateSpecie test = new CreateSpecie();
+        CreateOrder_selectType test = new CreateOrder_selectType();
         myFrame.setLayout(new GridLayout(1, 2));
         myFrame.add(test);
         myFrame.pack();

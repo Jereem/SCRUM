@@ -7,8 +7,10 @@
 package Interface;
 
 import ManagedBeans.Database;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -25,7 +27,7 @@ public class CreateOrder_addcustomer extends javax.swing.JPanel {
     
 private Database instance;
 public int id_client;
-private List<Integer> listAnimauxChoisi;
+private List<Integer> listAnimauxChoisi = new ArrayList<>();
     /**
      * Creates new form CreateOrder_addcustomer
      */
@@ -179,7 +181,16 @@ private List<Integer> listAnimauxChoisi;
         }
         this.remove(jPanel1);
         jPanel1=new CreateOrder_addanimal(listAnimauxChoisi, id_client);
-        this.add(jPanel1);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
         this.repaint();
         this.revalidate();
         

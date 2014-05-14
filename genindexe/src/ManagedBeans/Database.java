@@ -114,13 +114,11 @@ public class Database {
         // Bouml preserved body end 000236C5
     }
         
-        public JList getJListAnimalCustomer(Integer id_customer, String chaine) throws SQLException {
+        public JList getJListAnimalCustomer(Integer id_customer, String chaine) {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
         // Bouml preserved body begin 000236C5
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
+        
         
         if (chaine.length()==0){
             chaine="";
@@ -128,7 +126,7 @@ public class Database {
         else{
             chaine="nom_animal like '"+chaine+"%' and ";
         }
-        
+        try{
         PreparedStatement ps;
         ps = con.prepareStatement("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer);
         //get animal data from database
@@ -141,7 +139,13 @@ public class Database {
         }
         jList.setModel(dlm);
         return (jList);
-        // Bouml preserved body end 000236C5
+        }
+        catch(SQLException ex){
+        System.out.println("SQLException getJListAnimalCustomer: " + ex.getMessage());
+            System.out.println("SQLState getJListAnimalCustomer: " + ex.getSQLState());
+            System.out.println("VendorError getJListAnimalCustomer: " + ex.getErrorCode());
+            return null;
+        }
     }  
         
     /**

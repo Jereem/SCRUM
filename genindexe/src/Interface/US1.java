@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class US1 extends javax.swing.JPanel {
 
+    Boolean FromOtherFrame = false;
     /**
      * Creates new form US1
      */
@@ -28,7 +29,10 @@ public class US1 extends javax.swing.JPanel {
         initComponents();
     }
     
-    
+    public void setFromOtherFrame(Boolean YesNo){
+        FromOtherFrame = YesNo;
+    }
+            
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -473,6 +477,10 @@ public class US1 extends javax.swing.JPanel {
                         EntAdress.setZipCode(Integer.parseInt(jTextField6.getText()));
                         if ("success".equals(instance.saveCustomer(myCusto, EntAdress, jTextField1.getText(), jTextField3.getText(), jTextField2.getText(), jTextField20.getText()))){
                             JOptionPane.showMessageDialog(this,"Enregistrement reussi");
+                            instance.Close();
+                            if(FromOtherFrame){
+                                
+                            }
                         }
                         else {
                             JOptionPane.showMessageDialog(this,"Echec de l'enregistrement","Erreur",JOptionPane.ERROR_MESSAGE);
@@ -481,12 +489,13 @@ public class US1 extends javax.swing.JPanel {
                     else {
                         if ("success".equals(instance.saveCustomer(myCusto))){
                             JOptionPane.showMessageDialog(this,"Enregistrement reussi");
+                            instance.Close();
                         }
                         else {
                             JOptionPane.showMessageDialog(this,"Echec de l'enregistrement","Erreur",JOptionPane.ERROR_MESSAGE);
                         }
                     }
-                instance.Close();
+                
                 }
                 else{
                     JOptionPane.showMessageDialog(this,"Le client existe déjà","Erreur",JOptionPane.ERROR_MESSAGE);
@@ -589,14 +598,15 @@ public class US1 extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 
-// public static void main(String[] args){
-//     JFrame myframe = new JFrame("US1");
-//     myframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//     US1 IT = new US1();
-//     myframe.setLayout(new FlowLayout());
-//     myframe.add(IT);
-//     myframe.pack();
-//     myframe.setVisible(true);
-//     
-// }
+ public static void main(String[] args){
+     JFrame myframe = new JFrame("US1");
+     myframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+     US1 IT = new US1();
+     myframe.setLayout(new FlowLayout());
+     myframe.add(IT);
+     myframe.pack();
+     myframe.setVisible(true);
+     
+     
+ }
 }

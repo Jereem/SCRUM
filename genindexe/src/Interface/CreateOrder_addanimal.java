@@ -32,7 +32,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
     /**
      * Creates new form NewJFrame
      */
-    public CreateOrder_addanimal(List<Integer> listAnimauxChoisi, Integer id_client) throws SQLException{
+    public CreateOrder_addanimal(List<Integer> listAnimauxChoisi, Integer id_client) {
       this.id_client=id_client;
       this.listAnimauxChoisi=listAnimauxChoisi;
       initComponents(listAnimauxChoisi,id_client);
@@ -45,7 +45,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initComponents(List<Integer> listAnimauxChoisi, Integer id_client) throws SQLException{
+    private void initComponents(List<Integer> listAnimauxChoisi, Integer id_client) {
 		Database DB = new Database();
                 ManagedAnimal data = new ManagedAnimal();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -213,30 +213,21 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
         taille_chaine = chaine.length();
         if ((taille_chaine > 2)) {
           Database instance = new Database();
-            try {               
+                           
                 listAnimal = (JList) instance.getJListAnimalCustomer(id_client,chaine);
                 jScrollPane1.setViewportView(listAnimal);
                 
-           } 
-            catch (SQLException ex) {
-                System.out.println("SQLException: " + ex.getMessage());
-               System.out.println("SQLState: " + ex.getSQLState());
-               System.out.println("VendorError: " + ex.getErrorCode());
-            }
+           
             instance.Close();
 
         }
         else {
             Database instance = new Database();
-            try {               
+                          
                 listAnimal = (JList) instance.getJListAnimalCustomer(id_client,"");
                 jScrollPane1.setViewportView(listAnimal);
                 
-           } catch (SQLException ex) {
-                System.out.println("SQLException: " + ex.getMessage());
-               System.out.println("SQLState: " + ex.getSQLState());
-               System.out.println("VendorError: " + ex.getErrorCode());
-            }
+          
             instance.Close();
         }
     }

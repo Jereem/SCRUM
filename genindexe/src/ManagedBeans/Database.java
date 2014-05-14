@@ -821,8 +821,12 @@ public class Database {
         }
     }
     
-    
-    
+    /**
+     *
+     * @param nom du test
+     * @return id du test
+     * @throws SQLException
+     */
     public int getIdbyName(String nomtest) throws SQLException{
         int id_type_test=0;
         if (con == null) {
@@ -838,10 +842,27 @@ public class Database {
 
         return id_type_test;
     }
+    
+    /**
+     *
+     * @param nomtypech
+     * @return id du type d'echantillon
+     * @throws SQLException
+     */
+    public int getIdTypeEchbyName(String nomtypech) throws SQLException{
+        int id_type_test=0;
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select ID_TYPE_ECHANTILLON from TYPE_ECHANTILLON where TYPE_ECH='"+nomtypech+"'");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+           id_type_test= result.getInt("ID_TYPE_ECHANTILLON");  
+        }
+
+        return id_type_test;
+    }
   
 }
-
-    
-
-
-

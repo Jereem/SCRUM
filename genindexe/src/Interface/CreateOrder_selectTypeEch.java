@@ -7,14 +7,22 @@
 package Interface;
 
 import ManagedBeans.Database;
-import java.awt.GridLayout;
-import java.sql.SQLException;
-import javax.swing.JFrame;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import ManagedBeans.ManagedOrder;
+import ManagedBeans.ManagedSample;
 import ManagedBeans.TypeEchData;
+import beans.Animals;
+import beans.Orders;
 import beans.Samples;
+import java.awt.GridLayout;
+import java.sql.Array;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,11 +33,15 @@ public class CreateOrder_selectTypeEch extends javax.swing.JPanel {
 
     private TypeEchData typ;
     public int id_type_ech;
+    private List<Integer> ListeIdAnimal = new ArrayList<Integer>();
+    private List<Samples> ListeEch = new ArrayList<Samples>();
+    private  Orders order;
     
     /**
      * Creates new form CreateOrder_selectTypeEch
      */
-    public CreateOrder_selectTypeEch() {
+    public CreateOrder_selectTypeEch(List<Integer> ListeAnimal) {
+        ListeIdAnimal=ListeAnimal;
         typ = new TypeEchData();
         initComponents();
     }
@@ -98,13 +110,26 @@ public class CreateOrder_selectTypeEch extends javax.swing.JPanel {
     private void jButton_Add_SampleActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {                                                   
         Samples sample = new Samples();
         String type = (String)Liste_Type.getSelectedValue();
-
+        Animals animal = new Animals();
         
         if (type != null){
-            JOptionPane.showMessageDialog(this, "Type sélectionné");
+           
             Database instance = new Database();
+            ManagedSample Ms = new ManagedSample();
+            
             id_type_ech=instance.getIdTypeEchbyName(type);
-            System.out.println(id_type_ech);
+            for(int i=0;i<ListeIdAnimal.size();i++){
+                animal.setID(ListeIdAnimal.get(i));
+                sample = new Samples(type, new Date(), null, animal);
+                ListeEch.add(sample);
+            }
+            order = new Orders(ListeEch, new Date(), 0);
+            ManagedOrder Mo= new ManagedOrder();
+            Mo.saveOrder(order);
+            
+           
+            
+            
         }
         else {
             JOptionPane.showMessageDialog(this,"Erreur de sélection","Erreur",JOptionPane.ERROR_MESSAGE);
@@ -120,13 +145,13 @@ public class CreateOrder_selectTypeEch extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration                   
 
-        public static void main(String[] args) throws SQLException {
-        JFrame myFrame = new JFrame("Test interface Type Echantillon");
-        CreateOrder_selectTypeEch ajouterTypeEch = new CreateOrder_selectTypeEch();
-        myFrame.setLayout(new GridLayout(1, 2));
-        myFrame.add(ajouterTypeEch);
-        myFrame.pack();
-        myFrame.setVisible(true);
-        myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-    }
+//        public static void main(String[] args) throws SQLException {
+//        JFrame myFrame = new JFrame("Test interface Type Echantillon");
+//        CreateOrder_selectTypeEch ajouterTypeEch = new CreateOrder_selectTypeEch();
+//        myFrame.setLayout(new GridLayout(1, 2));
+//        myFrame.add(ajouterTypeEch);
+//        myFrame.pack();
+//        myFrame.setVisible(true);
+//        myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//    }
 }

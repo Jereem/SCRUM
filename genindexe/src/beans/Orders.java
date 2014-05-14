@@ -54,7 +54,7 @@ public class Orders {
     // Bouml preserved body end 0001F402
   }
   
-  public Orders(ArrayList<Samples> samples, Date date_order, int priority) {
+  public Orders(List<Samples> samples, Date date_order, int priority) {
     // Bouml preserved body begin 0001F402
 	  this.samples = samples;
 	  this.numberSamples= samples.size();

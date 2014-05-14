@@ -219,25 +219,36 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
         String chaine = search_animal.getText();
         taille_chaine = chaine.length();
         if ((taille_chaine > 2)) {
+            if (listAnimauxChoisi.isEmpty()){
           Database instance = new Database();
-                           
-                listAnimal = (JList) instance.getJListAnimalCustomer(id_client,chaine);
+          listAnimal = (JList) instance.getJListAnimalCustomer(id_client,chaine);
+          jScrollPane1.setViewportView(listAnimal);
+          instance.Close();
+            }
+            else{
+                 Database instance = new Database();
+                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, chaine,listAnimauxChoisi);
                 jScrollPane1.setViewportView(listAnimal);
-                
-           
-            instance.Close();
-
+                instance.Close();
+            }
         }
         else {
-            Database instance = new Database();
-                          
-                listAnimal = (JList) instance.getJListAnimalCustomer(id_client,"");
+               if (listAnimauxChoisi.isEmpty()){
+          Database instance = new Database();
+          listAnimal = (JList) instance.getJListAnimalCustomer(id_client,"");
+          jScrollPane1.setViewportView(listAnimal);
+          instance.Close();
+            }
+               else{
+                 Database instance = new Database();
+                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, chaine,listAnimauxChoisi);
                 jScrollPane1.setViewportView(listAnimal);
-                
-          
-            instance.Close();
+                instance.Close();
+            }
         }
-    }
+
+        }
+    
 
 private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) { 
         
@@ -285,7 +296,7 @@ private void cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) throws
             listAnimal = DB.getJListAnimalCustomer(id_client,"");
             jScrollPane1.setViewportView(listAnimal);
             DB.Close();
-        //return (List) listAnimauxChoisi;
+        
         }
         else{//liste de sélection non vide
         //confirmation de la suppression
@@ -337,12 +348,28 @@ private void cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) throws
     }                                             
 
 
-    private void previous_stepActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
+    private List<Integer> previous_stepActionPerformed(java.awt.event.ActionEvent evt) {  
+        JOptionPane d = new JOptionPane();
+       int retour = d.showConfirmDialog(this, "Si Etape Precedente, Perte de la liste de choix d'Animaux", 
+      "Suppression", JOptionPane.YES_NO_OPTION);
+            // confirmation OK
+            if (retour==0){
+        //liste de sélection vide
+        listAnimauxChoisi.clear();
+        this.setVisible(false);
+        return listAnimauxChoisi;
+        
+            }
+            else{
+                return null;
+            }
+            
+        
+        
     }                                             
 
-    private void next_stepActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        
+    private List<Integer> next_stepActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        return listAnimauxChoisi;
     }                                         
 
 

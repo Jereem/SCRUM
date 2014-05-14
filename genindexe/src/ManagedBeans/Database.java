@@ -147,7 +147,53 @@ public class Database {
             return null;
         }
     }  
+    
         
+     public JList getJListAnimalCustomer(Integer id_customer, String chaine,List<Integer> laListe) {
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+        // Bouml preserved body begin 000236C5
+        //si liste non vide
+        String listAnimaux;
+        if (laListe.isEmpty()){
+            listAnimaux ="";
+        }
+        else
+        {   listAnimaux ="(";
+            for(int i = 0; i < laListe.size(); i++){
+            listAnimaux+=laListe.get(i)+",";
+            }
+            listAnimaux=listAnimaux.substring(0,listAnimaux.length()-1)+")";
+            listAnimaux= " AND ID_ANIMAL not in "+listAnimaux;
+            
+            }
+        if (chaine.length()==0){
+            chaine="";
+                    }
+        else{
+            chaine="nom_animal like '"+chaine+"%' and ";
+        }
+        try{
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer+listAnimaux);
+        //get animal data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Animals pAnimals = new Animals();
+            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            pAnimals.setID(result.getInt("ID_ANIMAL"));
+            dlm.addElement(pAnimals.getID()+": "+pAnimals.getNom());
+        }
+        jList.setModel(dlm);
+        return (jList);
+        }
+        catch(SQLException ex){
+        System.out.println("SQLException getJListAnimalCustomer: " + ex.getMessage());
+            System.out.println("SQLState getJListAnimalCustomer: " + ex.getSQLState());
+            System.out.println("VendorError getJListAnimalCustomer: " + ex.getErrorCode());
+            return null;
+        }
+    }
     /**
      *
      * @param id_animal id de l'animal selectione si id_animal=0 methode classique

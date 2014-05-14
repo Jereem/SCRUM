@@ -6,15 +6,24 @@
 
 package ManagedBeans;
 
+import beans.Analysis;
+import beans.Animals;
 import beans.Customers;
 import beans.Orders;
+import beans.Samples;
+import beans.Types_analysis;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.not;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -118,13 +127,26 @@ public class ManagedOrderTest {
     @Test
     public void testSaveOrder() {
         System.out.println("saveOrder");
-        Orders order = null;
+        java.util.Date D_sampling = new Date();
+        java.util.Date D_storage = new Date();
+        Date birthday = new Date();
+        Animals anim = new Animals("Vache", birthday, "titi");
+        anim.setID(1);
+        ArrayList<Samples> samples = new ArrayList<>();
+        Types_analysis typeAna = new Types_analysis("Bird sexing", 150);
+        Analysis ana = new Analysis(22, typeAna);
+        Samples sample1 = new Samples("plume", D_sampling, D_storage, anim);
+        sample1.addAnalysis(ana);
+        samples.add(sample1);
+        Samples sample2 = new Samples("sang", D_sampling, D_storage, anim);
+        sample2.addAnalysis(ana);
+        samples.add(sample2);
+        Date dReception = new Date();
+        Orders order = new Orders(samples, dReception, 1);
         ManagedOrder instance = new ManagedOrder();
-        String expResult = "";
+        String expResult = "success";
         String result = instance.saveOrder(order);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -134,11 +156,8 @@ public class ManagedOrderTest {
     public void testSearchLastId() {
         System.out.println("searchLastId");
         ManagedOrder instance = new ManagedOrder();
-        int expResult = 0;
         int result = instance.searchLastId();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertThat(result, is(not(0)));
     }
 
     /**
@@ -147,13 +166,26 @@ public class ManagedOrderTest {
     @Test
     public void testSearchIdTypeAnalyse() {
         System.out.println("searchIdTypeAnalyse");
-        Orders order = null;
+        java.util.Date D_sampling = new Date();
+        java.util.Date D_storage = new Date();
+        Date birthday = new Date();
+        Animals anim = new Animals("Vache", birthday, "titi");
+        anim.setID(1);
+        ArrayList<Samples> samples = new ArrayList<>();
+        Types_analysis typeAna = new Types_analysis("Bird sexing", 150);
+        Analysis ana = new Analysis(22, typeAna);
+        Samples sample1 = new Samples("plume", D_sampling, D_storage, anim);
+        sample1.addAnalysis(ana);
+        samples.add(sample1);
+        Samples sample2 = new Samples("sang", D_sampling, D_storage, anim);
+        sample2.addAnalysis(ana);
+        samples.add(sample2);
+        Date dReception = new Date();
+        Orders order = new Orders(samples, dReception, 5);
         ManagedOrder instance = new ManagedOrder();
-        int expResult = 0;
+        int expResult = 1;
         int result = instance.searchIdTypeAnalyse(order);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }

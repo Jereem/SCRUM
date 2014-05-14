@@ -251,21 +251,21 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
      * @param args
      * @throws SQLException
      */
-    public static void main(String[] args) throws SQLException {
-        JFrame myFrame = new JFrame("Test interface");
-        Integer id_client = 16;
-        List<Integer> listAnimauxChoisi = new ArrayList<>();
-        CreateOrder_addanimal test = new CreateOrder_addanimal(listAnimauxChoisi,id_client);
-        myFrame.setLayout(new GridLayout(1, 2));
-        myFrame.add(test);
-        myFrame.pack();
-        myFrame.setVisible(true);
-        myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        for(int i = 0; i < listAnimauxChoisi.size(); i++)
-    {
-      System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
-    }
-        
-    }
+//    public static void main(String[] args) throws SQLException {
+//        JFrame myFrame = new JFrame("Test interface");
+//        Integer id_client = 16;
+//        List<Integer> listAnimauxChoisi = new ArrayList<>();
+//        CreateOrder_addanimal test = new CreateOrder_addanimal(listAnimauxChoisi,id_client);
+//        myFrame.setLayout(new GridLayout(1, 2));
+//        myFrame.add(test);
+//        myFrame.pack();
+//        myFrame.setVisible(true);
+//        myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        for(int i = 0; i < listAnimauxChoisi.size(); i++)
+//    {
+//      System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
+//    }
+//        
+//    }
 
 }

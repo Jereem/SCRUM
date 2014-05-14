@@ -114,13 +114,11 @@ public class Database {
         // Bouml preserved body end 000236C5
     }
         
-        public JList getJListAnimalCustomer(Integer id_customer, String chaine) throws SQLException {
+        public JList getJListAnimalCustomer(Integer id_customer, String chaine) {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
         // Bouml preserved body begin 000236C5
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
+        
         
         if (chaine.length()==0){
             chaine="";
@@ -128,7 +126,7 @@ public class Database {
         else{
             chaine="nom_animal like '"+chaine+"%' and ";
         }
-        
+        try{
         PreparedStatement ps;
         ps = con.prepareStatement("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer);
         //get animal data from database
@@ -141,7 +139,13 @@ public class Database {
         }
         jList.setModel(dlm);
         return (jList);
-        // Bouml preserved body end 000236C5
+        }
+        catch(SQLException ex){
+        System.out.println("SQLException getJListAnimalCustomer: " + ex.getMessage());
+            System.out.println("SQLState getJListAnimalCustomer: " + ex.getSQLState());
+            System.out.println("VendorError getJListAnimalCustomer: " + ex.getErrorCode());
+            return null;
+        }
     }  
         
     /**
@@ -460,6 +464,31 @@ public class Database {
         }
         return pTypes_analysis;
     }
+    
+    /**Cette methode renvoi la liste des types d'echantillons
+     *
+     * @return JList
+     */
+    public JList getJlistTypeAnalysis() throws SQLException{
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+         if (con == null) {
+            throw new SQLException("Can't get database connection getJlistTypeAnalysis");
+        }
+        
+        PreparedStatement ps;
+        ps = con.prepareStatement("SELECT * FROM TYPE_ANALYSE");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        Types_analysis pTypes_analysis = new Types_analysis();
+        while (result.next()) {
+            pTypes_analysis.setType(result.getString("Type_Analy"));
+            dlm.addElement(pTypes_analysis.getType());
+            jList.setModel(dlm);
+        }
+        return jList;
+    }
+    
 
     public void saveAnalysisType(Types_analysis typeAnalysis) {
         // Bouml preserved body begin 00023945

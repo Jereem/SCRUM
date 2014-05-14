@@ -6,8 +6,11 @@
 
 package Interface;
 
+import ManagedBeans.Database;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
@@ -21,7 +24,17 @@ public class CreateOrder_selectType extends javax.swing.JPanel {
      * Creates new form CreateOrder_selectType
      */
     public CreateOrder_selectType() {
-        
+        Database instance = new Database();
+        try {      
+            //comboBox.setModel(new DefaultComboBoxModel(listModel.toArray()));
+                   jComboBox1.setModel(new DefaultComboBoxModel());
+                   //jScrollPane1.setViewportView(jList1);
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+
         initComponents();
     }
 
@@ -127,7 +140,7 @@ public class CreateOrder_selectType extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
  public static void main(String[] args) throws SQLException {
         JFrame myFrame = new JFrame("select type");
-        CreateSpecie test = new CreateSpecie();
+        CreateOrder_selectType test = new CreateOrder_selectType();
         myFrame.setLayout(new GridLayout(1, 2));
         myFrame.add(test);
         myFrame.pack();

@@ -96,9 +96,10 @@ public class ManagedOrder {
             if (con == null) {
                 throw new SQLException("Can't get database connection");
             }
-            PreparedStatement ps = b.prepareStatement("INSERT INTO Commande(DATE_COMMANDE, DELAI_RAPIDE) VALUES (?,?)");
+            PreparedStatement ps = b.prepareStatement("INSERT INTO Commande(DATE_COMMANDE, DELAI_RAPIDE, ID_TYPE) VALUES (?,?,?)");
             ps.setDate(1, (java.sql.Date) this.selectedOrder.getDateOrder());
             ps.setInt(2, this.selectedOrder.getPriorityLevel());
+            ps.setInt(2, searchIdTypeAnalyse(this.selectedOrder));
             int statut = ps.executeUpdate();
             b.close();
             sendRes = "success";
@@ -132,6 +133,30 @@ public class ManagedOrder {
             }
             PreparedStatement ps;
             ps = con.prepareStatement("select ID_COMMANDE from COMMANDE order by ID_COMMANDE");
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                resultID = (result.getInt("ID_TYPE_ECHANTILLON"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("ma requete");
+            System.out.println("SQLException checkAnimal " + ex.getMessage());
+            System.out.println("SQLState checkAnimal: " + ex.getSQLState());
+            System.out.println("VendorError checkAnimal: " + ex.getErrorCode());
+            b.close();
+        }
+        return resultID;
+    }
+    
+    public int searchIdTypeAnalyse(Orders order) {
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
+        int resultID = 0;
+        try {
+            if (con == null) {
+                throw new SQLException("Can't get database connection");
+            }
+            PreparedStatement ps;
+            ps = con.prepareStatement("select ID_TYPE from TYPE_ANALYSE where TYPE_ANALY = '" + order.getSamples().get(1).getAnalysis().getTypeAnalysis().getType() + "' ");
             ResultSet result = ps.executeQuery();
             while (result.next()) {
                 resultID = (result.getInt("ID_TYPE_ECHANTILLON"));

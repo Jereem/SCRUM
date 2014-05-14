@@ -84,7 +84,7 @@ public class ManagedSample {
         int pIdCommande = idCommande;
         //retourne l'id du type d'ech
         int pIdTypeEchantillon = searchIdTypeSample(this.selectedSample);
-        int pIdAnimal = 0;
+        int pIdAnimal = sample.getAnimal().getID();
         Date pDateReception = dReception;
         try{
             if (con == null) {

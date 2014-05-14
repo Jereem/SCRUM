@@ -27,6 +27,7 @@ public class CreateOrder_numberEch extends javax.swing.JPanel {
     private List<Integer> listAnimauxChoisi = new ArrayList<Integer>();
     private List<Integer> NbEchantillon = new ArrayList<Integer>();
     private Integer AnimalChoisi;
+    private Integer position;
     /**
      * Creates new form CreateOrder_numberEch
      * @param listAnimauxChoisi
@@ -57,7 +58,7 @@ public class CreateOrder_numberEch extends javax.swing.JPanel {
         jLabel1.setText("Nombre d'echantillon par animal");
         jPanel1.add(jLabel1);
         for(int i = 0; i < listAnimauxChoisi.size(); i++){
-	this.add(initComponents(listAnimauxChoisi.get(i),id_client,NbEchantillon));
+	this.add(initComponents(listAnimauxChoisi.get(i),id_client,NbEchantillon,i));
 		}
         previous_step= new javax.swing.JButton();
         next_step = new javax.swing.JButton();
@@ -68,15 +69,22 @@ public class CreateOrder_numberEch extends javax.swing.JPanel {
         return jPanel1;
         
     }
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private JPanel initComponents(Integer AnimalChoisi, Integer id_client,List<Integer> NbEchantillon) throws SQLException {
+   
+    private JPanel initComponents(Integer AnimalChoisi, Integer id_client,List<Integer> NbEchantillon,Integer position) throws SQLException {
 		JPanel jPanel1 = new javax.swing.JPanel();	
 		this.AnimalChoisi=AnimalChoisi;
 		this.NbEchantillon=NbEchantillon;
+		this.position=position;
 
 		SpinnerNumberModel snm = new SpinnerNumberModel(0,0,666,1); 
 		JSpinner jSpinner1 = new JSpinner(snm); 
+		jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+                public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                    //int n = Integer.parseInt(jSpinner1.getValue().toString());
+                    //NbEchantillon.set(position,n);
+                    jSpinner1StateChanged(evt);
+                }
+        });
 		
         Animal = new javax.swing.JLabel("Animal : "+AnimalChoisi);
 
@@ -92,8 +100,16 @@ public class CreateOrder_numberEch extends javax.swing.JPanel {
 		jPanel1.add(jSpinner1);
         return jPanel1;
        
-    }// </editor-fold>//GEN-END:initComponents
-
+    }
+    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {
+        int n = Integer.parseInt(jSpinner1.getValue().toString());
+        System.out.println(n); 
+        this.NbEchantillon=NbEchantillon;
+        this.position=position;
+       
+        NbEchantillon.set(position,n);
+       System.out.println(n); // TODO add your handling code here:
+    } 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Animal;

@@ -252,10 +252,8 @@ private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) {
         System.out.println("id_animal");
         System.out.println(id_added_animal);
         listAnimauxChoisi.add(id_added_animal);
-       
-        int first_animal = (Integer)listAnimauxChoisi.get(0);
         
-        System.out.println(first_animal);
+        
                 for(int i = 0; i < listAnimauxChoisi.size(); i++)
                     {
                         System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
@@ -263,7 +261,7 @@ private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) {
         Database instance = new Database();
         try {
               
-        listAnimal = (JList) instance.getJListAnimalCustomer(first_animal);
+        listAnimal = (JList) instance.getJListAnimalCustomer(listAnimauxChoisi);
         jScrollPane1.setViewportView(listAnimal);
                 
         } catch (SQLException ex) {
@@ -299,7 +297,17 @@ private List<Integer> cancel_buttonActionPerformed(java.awt.event.ActionEvent ev
                 ManagedAnimal data= new ManagedAnimal();
                 animauxChoisi=data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
                 jScrollPane3.setViewportView(animauxChoisi);
-            }
+                Database instance = new Database();
+                try {
+                    listAnimal = (JList) instance.getJListAnimalCustomer(listAnimauxChoisi);
+                    jScrollPane1.setViewportView(listAnimal);
+                } catch (SQLException ex) {
+                    System.out.println("SQLException: " + ex.getMessage());
+                    System.out.println("SQLState: " + ex.getSQLState());
+                    System.out.println("VendorError: " + ex.getErrorCode());
+                }
+                instance.Close();  
+                }
          ManagedAnimal data= new ManagedAnimal();
          animauxChoisi=data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
          jScrollPane3.setViewportView(animauxChoisi);   

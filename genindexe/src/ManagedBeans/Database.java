@@ -150,7 +150,7 @@ public class Database {
      * @return liste d'animal du même propriétaire et de la même espece
      * @throws SQLException
      */
-    public JList getJListAnimalCustomer(Integer id_animal) throws SQLException {
+    public JList getJListAnimalCustomer(List<Integer> laListe) throws SQLException {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
         // Bouml preserved body begin 000236C5
@@ -158,11 +158,11 @@ public class Database {
             throw new SQLException("Can't get database connection");
         }
         
-        
+        int first_animal=laListe.get(0);
         PreparedStatement ps;
         PreparedStatement ps1;
         
-        ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM ANIMAL WHERE ID_ANIMAL='" + id_animal + "'");
+        ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM ANIMAL WHERE ID_ANIMAL='" + first_animal + "'");
         //ps.setInt(1, id_animal );
         ResultSet result = ps.executeQuery();
         int id_espece = 0;
@@ -171,14 +171,23 @@ public class Database {
         id_espece =  result.getInt("ID_ESPECE");
         id_client = result.getInt("ID_CLIENT");
         }
-        
-        if (id_animal==null){
+        String listAnimaux ="";
+        if (laListe.isEmpty()){
             return getJListAnimalCustomer(id_client,"");
         }
-        else{
+        else
+        {   listAnimaux ="(";
+            for(int i = 0; i < laListe.size(); i++){
+            listAnimaux+=laListe.get(i)+",";
+            }
+            listAnimaux=listAnimaux.substring(0,listAnimaux.length()-1)+")";
+            listAnimaux= "AND ID_ANIMAL not in "+listAnimaux;
+            
+            }
         
         if (result!= null){
-        ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT='"+id_client+"' AND ID_ESPECE='"+id_espece+"' AND ID_ANIMAL !="+id_animal+"");
+        ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT='"+id_client+"' AND ID_ESPECE='"+id_espece+"' "+listAnimaux);
+        System.out.println("SELECT * FROM Animal WHERE ID_CLIENT='"+id_client+"' AND ID_ESPECE='"+id_espece+"' "+listAnimaux);
         //get animal data from database
         ResultSet result1 = ps1.executeQuery();
         while (result1.next()) {
@@ -192,7 +201,7 @@ public class Database {
         return (jList);
         }
         // Bouml preserved body end 000236C5
-    } 
+
 
     /**
      * This function permits to get the user that use this session.

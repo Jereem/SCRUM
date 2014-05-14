@@ -395,7 +395,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
 
     private void next_stepActionPerformed(java.awt.event.ActionEvent evt) {
         this.remove(jPanel1);
-        jPanel1=new CreateOrder_numberEch();
+        //jPanel1=new CreateOrder_numberEch();
         javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
         this.setLayout(layoutP);
         layoutP.setHorizontalGroup(

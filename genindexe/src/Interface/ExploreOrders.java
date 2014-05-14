@@ -156,8 +156,9 @@ public class ExploreOrders extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
      Database instance = new Database();
+     /* 
         try {
-           if ("success".equals(instance.(jTextField2.getText(), (String) listCategory.getSelectedValue()))){
+          if ("success".equals(instance.(jTextField2.getText(), (String) listCategory.getSelectedValue()))){
                 JOptionPane.showMessageDialog(this,"Enregistrement reussi");
             }
             else {
@@ -170,7 +171,7 @@ public class ExploreOrders extends javax.swing.JPanel {
             System.out.println("VendorError: " + ex.getErrorCode());
         
        }
-            
+       */    
                 
     }                                        
 

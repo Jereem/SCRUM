@@ -18,6 +18,7 @@ public class MainInterface extends javax.swing.JFrame {
     
     US1 createCustomer = new US1();
     CreateAnimal createAnimal = new CreateAnimal();
+    CreateSpecie createspecie = new CreateSpecie();
     CreateOrder createOrder = new CreateOrder();
     public MainInterface() {
         initComponents();
@@ -149,6 +150,11 @@ public class MainInterface extends javax.swing.JFrame {
         jMenu3.setText("Enregistrement");
 
         jMenuItem5.setText("Nouvelle Commande");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem5);
 
         jMenuItem1.setText("Nouveau Client");
@@ -168,6 +174,11 @@ public class MainInterface extends javax.swing.JFrame {
         jMenu3.add(jMenuItem2);
 
         jMenuItem3.setText("Nouvelle Espece");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem3);
 
         jMenuItem4.setText("Nouvelle Categorie");
@@ -248,6 +259,23 @@ public class MainInterface extends javax.swing.JFrame {
         this.revalidate();
         this.pack();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        jPanel2.setVisible(false);
+        jPanel2.setEnabled(false);
+        this.setContentPane(createOrder);
+        this.repaint();
+        this.revalidate();
+        this.pack();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+jPanel2.setVisible(false);
+        jPanel2.setEnabled(false);
+        this.setContentPane(createspecie);
+        this.repaint();
+        this.revalidate();
+        this.pack();    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments

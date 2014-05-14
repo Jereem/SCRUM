@@ -20,7 +20,7 @@ public class CreateOrder extends javax.swing.JPanel {
     /**
      * Creates new form CreateOrder
      */
-    public CreateOrder() throws SQLException {
+    public CreateOrder()  {
         initComponents();
         
         jPanel1= new CreateOrder_addcustomer();
@@ -101,10 +101,10 @@ public class CreateOrder extends javax.swing.JPanel {
     public static void main(String[] args) throws SQLException {
         JFrame myFrame = new JFrame("Test interface");
         CreateOrder test = new CreateOrder();
-        CreateOrder_addanimal testanimal = new CreateOrder_addanimal();
+        //CreateOrder_addanimal testanimal = new CreateOrder_addanimal();
         myFrame.setLayout(new GridLayout(1, 2));   
         myFrame.add(test);
-        myFrame.add(testanimal);
+        //myFrame.add(testanimal);
 
         myFrame.pack();
         myFrame.setVisible(true);

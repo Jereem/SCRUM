@@ -211,7 +211,12 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
 
 	
 
-    private void add_animal_buttonActionPerformed(java.awt.event.ActionEvent evt) { // ajouter panel de teddy
+    private void add_animal_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+            JFrame CreerAnimal = new JFrame("Creer un nouvel animal");
+            CreerAnimal.add(new CreateAnimal());
+            CreerAnimal.setExtendedState(CreerAnimal.MAXIMIZED_HORIZ);
+            CreerAnimal.pack();
+            CreerAnimal.setVisible(true);// ajouter panel de teddy
     }
 
     private void search_animalKeyReleased(java.awt.event.KeyEvent evt) {     
@@ -347,7 +352,7 @@ private void cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) throws
 
 
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify   
     private javax.swing.JButton add_animal_button;
     private javax.swing.JList animauxChoisi;
     private javax.swing.JButton cancel_button;

@@ -391,8 +391,22 @@ public class Database {
         // Bouml preserved body begin 00023645
         try {
             Statement state = b.getMyStatement();
-            String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays, Login, Mdp) Values('" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"', '"+cust.getLogin()+"', '"+cust.getMotDePasse()+"')";
+            String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values('" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"')";
                 state.executeUpdate(query);
+                
+            if(cust.getEmail()!=null){
+            /*
+            Recuperation de l'id du client ainsi insere
+            */
+            String queryGetId = ("select MAX(ID_CLIENT) from CLIENT ");
+            PreparedStatement ps=con.prepareStatement(queryGetId);
+            ResultSet ID = ps.executeQuery();
+            ID.next();
+            
+            String queryInssertConnexion = "Insert into connexion(Login, Mdp, Id_Client) Values('"+cust.getLogin()+"', '"+cust.getMotDePasse()+"', '"+ID.getString("MAX(ID_CLIENT)")+"')";
+                System.out.println(queryInssertConnexion);
+            state.executeUpdate(queryInssertConnexion);
+              }
                 return "success";
 
 //            }
@@ -429,7 +443,7 @@ public class Database {
             String queryInsertCustomer = "Insert Into Client(ID_ENTR, Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values('"+ID.getString("MAX(ID_ENTR)")+"', '" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"')";
             state.executeUpdate(queryInsertCustomer);
             
-              if(cust.getEmail()==null){    
+              if(cust.getEmail()!=null){    
             
             /*
             Recuperation de l'id du client ainsi insere

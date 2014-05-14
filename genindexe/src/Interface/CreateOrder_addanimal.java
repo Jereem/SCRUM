@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 public class CreateOrder_addanimal extends javax.swing.JPanel {
     private Integer id_client;
     private List<Integer> listAnimauxChoisi = new ArrayList<Integer>();
+    private JPanel jPanel1;
     
 
     /**
@@ -50,7 +51,8 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
     private void initComponents(List<Integer> listAnimauxChoisi, Integer id_client) {
 		Database DB = new Database();
                 ManagedAnimal data = new ManagedAnimal();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
+                jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList(); /// correspond à List<Integer> listAnimauxChoisi
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -135,8 +137,8 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -207,7 +209,17 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
                     .addComponent(next_step))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
-
+        
+        javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
+        this.setLayout(layoutP);
+        layoutP.setHorizontalGroup(
+            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layoutP.setVerticalGroup(
+            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
        DB.Close();
        
     }// </editor-fold>                        
@@ -383,8 +395,21 @@ private void cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) throws
         
     }                                             
 
-    private List<Integer> next_stepActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        return listAnimauxChoisi;
+    private void next_stepActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        this.remove(jPanel1);
+//        jPanel1=new CreateOrder_selectType();
+//        javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
+//        this.setLayout(layoutP);
+//        layoutP.setHorizontalGroup(
+//            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//        );
+//        layoutP.setVerticalGroup(
+//            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//        );
+        this.repaint();
+        this.revalidate();
     }                                         
 
 

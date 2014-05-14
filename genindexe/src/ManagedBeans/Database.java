@@ -114,13 +114,11 @@ public class Database {
         // Bouml preserved body end 000236C5
     }
         
-        public JList getJListAnimalCustomer(Integer id_customer, String chaine) throws SQLException {
+        public JList getJListAnimalCustomer(Integer id_customer, String chaine) {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
         // Bouml preserved body begin 000236C5
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
+        
         
         if (chaine.length()==0){
             chaine="";
@@ -128,7 +126,7 @@ public class Database {
         else{
             chaine="nom_animal like '"+chaine+"%' and ";
         }
-        
+        try{
         PreparedStatement ps;
         ps = con.prepareStatement("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer);
         //get animal data from database
@@ -141,28 +139,99 @@ public class Database {
         }
         jList.setModel(dlm);
         return (jList);
-        // Bouml preserved body end 000236C5
+        }
+        catch(SQLException ex){
+        System.out.println("SQLException getJListAnimalCustomer: " + ex.getMessage());
+            System.out.println("SQLState getJListAnimalCustomer: " + ex.getSQLState());
+            System.out.println("VendorError getJListAnimalCustomer: " + ex.getErrorCode());
+            return null;
+        }
     }  
+    
         
+     public JList getJListAnimalCustomer(Integer id_customer, String chaine,List<Integer> laListe) throws SQLException {
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+        // Bouml preserved body begin 000236C5
+        //si liste non vide
+        String listAnimaux;
+        if (laListe.isEmpty()){
+            listAnimaux ="";
+        }
+        else
+        {   listAnimaux ="(";
+            for(int i = 0; i < laListe.size(); i++){
+            listAnimaux+=laListe.get(i)+",";
+            }
+            listAnimaux=listAnimaux.substring(0,listAnimaux.length()-1)+")";
+            listAnimaux= " AND ID_ANIMAL not in "+listAnimaux;
+            
+            //espèce
+            if (con == null) {
+                throw new SQLException("Can't get database connection");
+            }
+        
+        int first_animal=laListe.get(0);
+        PreparedStatement ps;
+        PreparedStatement ps1;
+        
+        ps= con.prepareStatement("SELECT ID_ESPECE FROM ANIMAL WHERE ID_ANIMAL='" + first_animal + "'");
+        //ps.setInt(1, id_animal );
+        ResultSet result = ps.executeQuery();
+        int id_espece = 0;
+        while (result.next()) {
+        id_espece =  result.getInt("ID_ESPECE");
+        }
+             listAnimaux= listAnimaux+" AND ID_ESPECE="+id_espece;
+            }
+        if (chaine.length()==0){
+            chaine="";
+                    }
+        else{
+            chaine="nom_animal like '"+chaine+"%' and ";
+        }
+        try{
+        PreparedStatement ps;
+        ps = con.prepareStatement("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer+listAnimaux);
+        System.out.println("select * from Animal WHERE " + chaine +" ID_CLIENT="+id_customer+listAnimaux);
+        //get animal data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Animals pAnimals = new Animals();
+            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            pAnimals.setID(result.getInt("ID_ANIMAL"));
+            dlm.addElement(pAnimals.getID()+": "+pAnimals.getNom());
+        }
+        jList.setModel(dlm);
+        return (jList);
+        }
+        catch(SQLException ex){
+        System.out.println("SQLException getJListAnimalCustomer: " + ex.getMessage());
+            System.out.println("SQLState getJListAnimalCustomer: " + ex.getSQLState());
+            System.out.println("VendorError getJListAnimalCustomer: " + ex.getErrorCode());
+            return null;
+        }
+    }
     /**
      *
      * @param id_animal id de l'animal selectione si id_animal=0 methode classique
      * @return liste d'animal du même propriétaire et de la même espece
      * @throws SQLException
      */
-    public JList getJListAnimalCustomer(Integer id_animal) throws SQLException {
+    public JList getJListAnimalCustomer(List<Integer> laListe) throws SQLException {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
+        
         // Bouml preserved body begin 000236C5
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
         
-        
+        int first_animal=laListe.get(0);
         PreparedStatement ps;
         PreparedStatement ps1;
         
-        ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM ANIMAL WHERE ID_ANIMAL='" + id_animal + "'");
+        ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM ANIMAL WHERE ID_ANIMAL='" + first_animal + "'");
         //ps.setInt(1, id_animal );
         ResultSet result = ps.executeQuery();
         int id_espece = 0;
@@ -171,14 +240,23 @@ public class Database {
         id_espece =  result.getInt("ID_ESPECE");
         id_client = result.getInt("ID_CLIENT");
         }
-        
-        if (id_animal==null){
+        String listAnimaux ="";
+        if (laListe.isEmpty()){
             return getJListAnimalCustomer(id_client,"");
         }
-        else{
+        else
+        {   listAnimaux ="(";
+            for(int i = 0; i < laListe.size(); i++){
+            listAnimaux+=laListe.get(i)+",";
+            }
+            listAnimaux=listAnimaux.substring(0,listAnimaux.length()-1)+")";
+            listAnimaux= "AND ID_ANIMAL not in "+listAnimaux;
+            
+            }
         
         if (result!= null){
-        ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT='"+id_client+"' AND ID_ESPECE='"+id_espece+"' AND ID_ANIMAL !="+id_animal+"");
+        ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT='"+id_client+"' AND ID_ESPECE='"+id_espece+"' "+listAnimaux);
+        System.out.println("SELECT * FROM Animal WHERE ID_CLIENT='"+id_client+"' AND ID_ESPECE='"+id_espece+"' "+listAnimaux);
         //get animal data from database
         ResultSet result1 = ps1.executeQuery();
         while (result1.next()) {
@@ -192,7 +270,7 @@ public class Database {
         return (jList);
         }
         // Bouml preserved body end 000236C5
-    } 
+
 
     /**
      * This function permits to get the user that use this session.
@@ -313,8 +391,22 @@ public class Database {
         // Bouml preserved body begin 00023645
         try {
             Statement state = b.getMyStatement();
-            String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays, Login, Mdp) Values('" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"', '"+cust.getLogin()+"', '"+cust.getMotDePasse()+"')";
+            String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values('" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"')";
                 state.executeUpdate(query);
+                
+            if(cust.getEmail()!=null){
+            /*
+            Recuperation de l'id du client ainsi insere
+            */
+            String queryGetId = ("select MAX(ID_CLIENT) from CLIENT ");
+            PreparedStatement ps=con.prepareStatement(queryGetId);
+            ResultSet ID = ps.executeQuery();
+            ID.next();
+            
+            String queryInssertConnexion = "Insert into connexion(Login, Mdp, Id_Client) Values('"+cust.getLogin()+"', '"+cust.getMotDePasse()+"', '"+ID.getString("MAX(ID_CLIENT)")+"')";
+                System.out.println(queryInssertConnexion);
+            state.executeUpdate(queryInssertConnexion);
+              }
                 return "success";
 
 //            }
@@ -351,7 +443,7 @@ public class Database {
             String queryInsertCustomer = "Insert Into Client(ID_ENTR, Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values('"+ID.getString("MAX(ID_ENTR)")+"', '" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"')";
             state.executeUpdate(queryInsertCustomer);
             
-              if(cust.getEmail()==null){    
+              if(cust.getEmail()!=null){    
             
             /*
             Recuperation de l'id du client ainsi insere
@@ -450,6 +542,31 @@ public class Database {
         }
         return pTypes_analysis;
     }
+    
+    /**Cette methode renvoi la liste des types d'echantillons
+     *
+     * @return JList
+     */
+    public JList getJlistTypeAnalysis() throws SQLException{
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+         if (con == null) {
+            throw new SQLException("Can't get database connection getJlistTypeAnalysis");
+        }
+        
+        PreparedStatement ps;
+        ps = con.prepareStatement("SELECT * FROM TYPE_ANALYSE");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        Types_analysis pTypes_analysis = new Types_analysis();
+        while (result.next()) {
+            pTypes_analysis.setType(result.getString("Type_Analy"));
+            dlm.addElement(pTypes_analysis.getType());
+            jList.setModel(dlm);
+        }
+        return jList;
+    }
+    
 
     public void saveAnalysisType(Types_analysis typeAnalysis) {
         // Bouml preserved body begin 00023945
@@ -702,6 +819,24 @@ public class Database {
             System.out.println("VendorError IsDoublon: " + ex.getErrorCode());
             return false;
         }
+    }
+    
+    
+    
+    public int getIdbyName(String nomtest) throws SQLException{
+        int id_type_test=0;
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select ID_TYPE from TYPE_ANALYSE where TYPE_ANALY='"+nomtest+"'");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+           id_type_test= result.getInt("ID_TYPE");  
+        }
+
+        return id_type_test;
     }
   
 }

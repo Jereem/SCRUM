@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JList;
+import java.util.List;
 import javax.swing.JPanel;
 
 
@@ -22,15 +23,21 @@ import javax.swing.JPanel;
  */
 
 public class CreateOrder_addanimal extends javax.swing.JPanel{
+    private Integer id_client;
+    private List<Integer> listAnimauxChoisi;
 
-    public Integer id_client = 16;
-    public ArrayList listAnimauxChoisi;
+    
+    
     /**
      * Creates new form CreateOrder_addanimal
+     * @param listAnimauxChoisi
+     * @param id_client
      * @throws java.sql.SQLException
      */
-    public CreateOrder_addanimal() throws SQLException{
-        initComponents();
+    public CreateOrder_addanimal(List<Integer> listAnimauxChoisi, Integer id_client) throws SQLException{
+      this.id_client=id_client;
+      this.listAnimauxChoisi=listAnimauxChoisi;
+      initComponents();
     }
 
     /**
@@ -51,6 +58,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
         confirm_button = new javax.swing.JButton();
         cancel_button = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
+        
         listAnimal = DB.getJListAnimalCustomer(id_client,"");
 
         jLabel1.setText("Selectionner un Animal");
@@ -111,7 +119,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(search_animal, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -186,7 +194,8 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
 
     private ArrayList cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         this.setVisible(false);
-        return listAnimauxChoisi;
+        System.out.println(listAnimauxChoisi);
+        return (ArrayList) listAnimauxChoisi;
         
     }                                             
 
@@ -194,8 +203,34 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
         
         System.out.println(listAnimal.getSelectedValue());
         
-        //add()
-        // TODO add your handling code here:
+        String id_select=(String) listAnimal.getSelectedValue();
+        int id_added_animal;
+        int fin_id=id_select.indexOf(": ");
+        id_added_animal=Integer.parseInt(id_select.substring(0,(fin_id)));
+        System.out.println("id_animal");
+        System.out.println(id_added_animal);
+        listAnimauxChoisi.add(id_added_animal);
+       
+        int first_animal = (Integer)listAnimauxChoisi.get(0);
+        
+        System.out.println(first_animal);
+                for(int i = 0; i < listAnimauxChoisi.size(); i++)
+                    {
+                        System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
+                        }
+        //Database instance = new Database();
+        //try {
+              
+        // listAnimal = (JList) instance.getJListAnimalCustomer(first_animal);
+          //jScrollPane1.setViewportView(listAnimal);
+                
+         //} catch (SQLException ex) {
+            // System.out.println("SQLException: " + ex.getMessage());
+             //System.out.println("SQLState: " + ex.getSQLState());
+              //System.out.println("VendorError: " + ex.getErrorCode());
+           // }
+                
+        
     }                                              
 
 
@@ -218,11 +253,19 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
      */
     public static void main(String[] args) throws SQLException {
         JFrame myFrame = new JFrame("Test interface");
-        CreateOrder_addanimal test = new CreateOrder_addanimal();
+        Integer id_client = 16;
+        List<Integer> listAnimauxChoisi = new ArrayList<>();
+        CreateOrder_addanimal test = new CreateOrder_addanimal(listAnimauxChoisi,id_client);
         myFrame.setLayout(new GridLayout(1, 2));
         myFrame.add(test);
         myFrame.pack();
         myFrame.setVisible(true);
         myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        for(int i = 0; i < listAnimauxChoisi.size(); i++)
+    {
+      System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
     }
+        
+    }
+
 }

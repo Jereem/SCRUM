@@ -218,17 +218,17 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
                     {
                         System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));
                         }
-        //Database instance = new Database();
-        //try {
+        Database instance = new Database();
+        try {
               
-        // listAnimal = (JList) instance.getJListAnimalCustomer(first_animal);
-          //jScrollPane1.setViewportView(listAnimal);
+         listAnimal = (JList) instance.getJListAnimalCustomer(first_animal);
+          jScrollPane1.setViewportView(listAnimal);
                 
-         //} catch (SQLException ex) {
-            // System.out.println("SQLException: " + ex.getMessage());
-             //System.out.println("SQLState: " + ex.getSQLState());
-              //System.out.println("VendorError: " + ex.getErrorCode());
-           // }
+         } catch (SQLException ex) {
+             System.out.println("SQLException: " + ex.getMessage());
+             System.out.println("SQLState: " + ex.getSQLState());
+              System.out.println("VendorError: " + ex.getErrorCode());
+            }
                 
         
     }                                              

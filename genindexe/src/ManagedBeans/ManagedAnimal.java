@@ -37,24 +37,26 @@ public class ManagedAnimal {
     }
     
     public String saveAnimal(Animals animal, int idClient, String pSpe) {
+        System.out.println(pSpe);
         Species paramSpe = new Species(pSpe);
         DateTools d = new DateTools();
         try {
-        PreparedStatement ps0 = con.prepareStatement("select * from ESPECE where NOM_CATEGORIE = '" + pSpe + "'");
+        PreparedStatement ps0 = con.prepareStatement("select * from ESPECE where NOM_ESPECE = '" + pSpe + "'");
         ResultSet result0 = ps0.executeQuery();
         while (result0.next()) {
             paramSpe.setID(result0.getInt("ID_ESPECE"));
         }
             Statement state = b.getMyStatement();
-            
-            String query = "Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + d.dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")";
+            int sexe = 0;
+            if (animal.getSexe()){sexe = 1;}
+            String query = "Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values('" + animal.getNom() + "', '" + d.dateJavaToSQL(animal.getNumberBirthday()) + "', " + sexe + ", " + paramSpe.getID() + ", " + idClient +")";
                 state.executeUpdate(query, state.RETURN_GENERATED_KEYS);
-                ResultSet clefs = state.getGeneratedKeys();
-                System.out.println(clefs.getObject(1));
                 return "success";
         } catch (SQLException ex) {
-            System.out.println("Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + d.dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")");
-            System.out.println("SQLException saveAnimal: " + ex.getMessage());
+            int sexe = 0;
+            if (animal.getSexe()){sexe = 1;}
+            System.out.println("Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values('" + animal.getNom() + "', '" + d.dateJavaToSQL(animal.getNumberBirthday()) + "', " + sexe + ", " + paramSpe.getID() + ", " + idClient +")");
+            System.out.println("SQLException saveAnimal celle la et pas une autre : " + ex.getMessage());
             System.out.println("SQLState saveAnimal: " + ex.getSQLState());
             System.out.println("VendorError saveAnimal: " + ex.getErrorCode());
             return "failed";

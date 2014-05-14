@@ -278,14 +278,15 @@ public class US1 extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField11))
-                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel15)
@@ -298,15 +299,11 @@ public class US1 extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel18)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel16)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jLabel2)
                             .addComponent(jLabel11)
                             .addGroup(layout.createSequentialGroup()
@@ -348,7 +345,7 @@ public class US1 extends javax.swing.JPanel {
                                 .addGap(277, 277, 277)
                                 .addComponent(jRadioButton2))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 38, Short.MAX_VALUE)))
+                        .addGap(0, 9, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(166, 166, 166)
@@ -498,7 +495,7 @@ public class US1 extends javax.swing.JPanel {
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         if(jRadioButton2.isSelected()){
             jPanel1.setEnabled(false);
-            jPanel1.setVisible(false);
+            jPanel1.setVisible(false);            
         }
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
@@ -590,14 +587,14 @@ public class US1 extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 
- public static void main(String[] args){
-     JFrame myframe = new JFrame("US1");
-     myframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-     US1 IT = new US1();
-     myframe.setLayout(new FlowLayout());
-     myframe.add(IT);
-     myframe.pack();
-     myframe.setVisible(true);
-     
- }
+// public static void main(String[] args){
+//     JFrame myframe = new JFrame("US1");
+//     myframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//     US1 IT = new US1();
+//     myframe.setLayout(new FlowLayout());
+//     myframe.add(IT);
+//     myframe.pack();
+//     myframe.setVisible(true);
+//     
+// }
 }

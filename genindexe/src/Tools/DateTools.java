@@ -28,15 +28,13 @@ public class DateTools {
     }
     
     public String dateJavaToSQL(Date datejava){
-        String convert = datejava.toString();
-         String dd =convert.substring(0,2);
-         String mm= convert.substring(3,5);
-         String aa= convert.substring(6,10);
-       
-         String dateSQL=aa+"-"+mm+"-"+dd;
-        
-         System.out.println(dateSQL);
-        return dateSQL;
+        System.out.println(datejava);
+        java.sql.Date sqlDate = new java.sql.Date(datejava.getTime());
+         System.out.println(sqlDate);
+         SimpleDateFormat formatDateJour = new SimpleDateFormat("dd/MM/yy"); 
+        String dateFormatee = formatDateJour.format(datejava); 
+        System.out.println("Date formatée : " + dateFormatee);
+        return dateFormatee;
     }
     
     public static java.util.Date stringToDate(String sDate, String sFormat) { 

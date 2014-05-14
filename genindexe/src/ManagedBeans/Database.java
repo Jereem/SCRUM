@@ -255,7 +255,9 @@ public class Database {
         }
         PreparedStatement ps,ps1;
         ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM Animal WHERE ID_ANIMAL="+id_animal);
+        
         ResultSet result = ps.executeQuery();
+        
         String id_client = result.getString("ID_CLIENT");
         String id_espece = result.getString("ID_ESPECE");
         
@@ -267,7 +269,8 @@ public class Database {
         while (result1.next()) {
             Animals pAnimals = new Animals();
             pAnimals.setNom(result1.getString("NOM_ANIMAL"));
-            dlm.addElement(pAnimals.getNom());
+            pAnimals.setID(result.getInt("ID_ANIMAL"));
+            dlm.addElement(pAnimals.getID()+": "+pAnimals.getNom());
         }
         jList.setModel(dlm);
         return (jList);

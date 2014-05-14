@@ -178,6 +178,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
                 jScrollPane1.setViewportView(listAnimal);
                 
            } catch (SQLException ex) {
+               
                 System.out.println("SQLException: " + ex.getMessage());
                System.out.println("SQLState: " + ex.getSQLState());
                System.out.println("VendorError: " + ex.getErrorCode());
@@ -220,14 +221,16 @@ public class CreateOrder_addanimal extends javax.swing.JPanel{
                         }
         Database instance = new Database();
         try {
-              
-         listAnimal = (JList) instance.getJListAnimalCustomer(first_animal);
-          jScrollPane1.setViewportView(listAnimal);
+         
+         
+         listAnimal =instance.getJListAnimalCustomer(first_animal);
+         // jScrollPane1.setViewportView(listAnimal);
                 
          } catch (SQLException ex) {
+             System.out.println("le problème est dans le formulaire");
              System.out.println("SQLException: " + ex.getMessage());
              System.out.println("SQLState: " + ex.getSQLState());
-              System.out.println("VendorError: " + ex.getErrorCode());
+             System.out.println("VendorError: " + ex.getErrorCode());
             }
                 
         

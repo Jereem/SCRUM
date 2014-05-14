@@ -77,7 +77,11 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
 
         search_animal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                search_animalKeyReleased(evt);
+                try {
+                    search_animalKeyReleased(evt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CreateOrder_addanimal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 

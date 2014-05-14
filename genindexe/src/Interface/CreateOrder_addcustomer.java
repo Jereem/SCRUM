@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Interface;
 
 import ManagedBeans.Database;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -22,10 +23,11 @@ import javax.swing.JPanel;
  * @author jeremygillet
  */
 public class CreateOrder_addcustomer extends javax.swing.JPanel {
-    
-private Database instance;
-public int id_client;
-private List<Integer> listAnimauxChoisi;
+
+    private Database instance;
+    public int id_client;
+    private List<Integer> listAnimauxChoisi = new ArrayList<>();
+
     /**
      * Creates new form CreateOrder_addcustomer
      */
@@ -163,26 +165,34 @@ private List<Integer> listAnimauxChoisi;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jList1.getSelectedValue()!=null){
+        if (jList1.getSelectedValue() != null) {
             //enregistrement du client
-            JOptionPane.showMessageDialog(this,"Selection du client réussi");
-            String id_client_select=(String) jList1.getSelectedValue();
-            
+            JOptionPane.showMessageDialog(this, "Selection du client réussi");
+            String id_client_select = (String) jList1.getSelectedValue();
+
             int fin_id = id_client_select.indexOf(": ");
-            id_client=Integer.parseInt(id_client_select.substring(0,(fin_id)));
+            id_client = Integer.parseInt(id_client_select.substring(0, (fin_id)));
             System.out.println("id_client");
             System.out.println(id_client);
-        }
-        else{
-            JOptionPane.showMessageDialog(this,"Veuillez selectionner un client");
-            id_client=0;
+        } else {
+            JOptionPane.showMessageDialog(this, "Veuillez selectionner un client");
+            id_client = 0;
         }
         this.remove(jPanel1);
-        jPanel1=new CreateOrder_addanimal(listAnimauxChoisi, id_client);
-        this.add(jPanel1);
+        jPanel1 = new CreateOrder_addanimal(listAnimauxChoisi, id_client);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
         this.repaint();
         this.revalidate();
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
@@ -190,9 +200,9 @@ private List<Integer> listAnimauxChoisi;
         String chaine = jTextField1.getText();
         taille_chaine = chaine.length();
         if (taille_chaine > 3) {
-            try {      
-                   jList1= instance.getListCustomers(chaine);
-                   jScrollPane1.setViewportView(jList1);
+            try {
+                jList1 = instance.getListCustomers(chaine);
+                jScrollPane1.setViewportView(jList1);
             } catch (SQLException ex) {
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
@@ -204,15 +214,18 @@ private List<Integer> listAnimauxChoisi;
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         JFrame CreateCustommer = new JFrame("Creer un nouveau client");
-        CreateCustommer.add(new US1());
-        CreateCustommer.setExtendedState(CreateCustommer.MAXIMIZED_VERT);
+        US1 createcustomer = new US1();
+        createcustomer.setFromOtherFrame(true);
+        CreateCustommer.add(createcustomer);
+        CreateCustommer.setExtendedState(CreateCustommer.MAXIMIZED_HORIZ);
         CreateCustommer.pack();
         CreateCustommer.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-public JPanel getAddCustomer(){
-    return this;
-    
-}
+
+    public JPanel getAddCustomer() {
+        return this;
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -236,12 +249,5 @@ public JPanel getAddCustomer(){
         myLabel.setVisible(true);
         myLabel.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
-
-
-
-
-
-
-
 
 }

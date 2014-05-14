@@ -216,7 +216,7 @@ private List<Integer> listAnimauxChoisi = new ArrayList<>();
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         JFrame CreateCustommer = new JFrame("Creer un nouveau client");
         CreateCustommer.add(new US1());
-        CreateCustommer.setExtendedState(CreateCustommer.MAXIMIZED_VERT);
+        CreateCustommer.setExtendedState(CreateCustommer.MAXIMIZED_HORIZ);
         CreateCustommer.pack();
         CreateCustommer.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed

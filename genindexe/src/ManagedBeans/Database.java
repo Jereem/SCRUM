@@ -71,52 +71,6 @@ public class Database {
         b.close();
     }
 
-    public Samples searchSample(String id) throws SQLException {
-        // Bouml preserved body begin 00043102
-        int id_number = Integer.parseInt(id);
-
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        PreparedStatement ps;
-        ps = con.prepareStatement("SELECT * FROM Echantillon NATURAL JOIN Type_Echantillon NATURAL JOIN Animal NATURAL JOIN Espece WHERE Id_Ech='" + id_number + "'");
-        //get customer data from database
-        ResultSet result = ps.executeQuery();
-        java.sql.Date date_sampling = result.getDate("Date_recep");
-        java.sql.Date date_storage = result.getDate("Date_stock");
-        DateTools d = new DateTools();
-        Samples sa2 = new Samples(id, result.getString("Type_Ech"), d.dateSQLToJava(date_sampling), d.dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), d.dateSQLToJava(result.getDate("Date_Naissance")), result.getString("Nom_Espece")));
-
-        return sa2;
-        // Bouml preserved body end 00043102
-    }
-
-    public List<Samples> getListSamples() {
-        // Bouml preserved body begin 00043182
-        List<Samples> listS = new ArrayList<Samples>();
-        listS.add(this.sample);
-        return (listS);
-        // Bouml preserved body end 00043182
-    }
-    
-    public List<String> GetListTypeSamples() throws SQLException {
-    	PreparedStatement ps;
-    	ps=con.prepareStatement("Select * From Type_Echantillon");
-    	ResultSet result = ps.executeQuery();
-    	List<String> LS = new ArrayList<>();
-    	while(result.next()){
-    		
-    		LS.add(result.getString("Type_Ech"));
-    	}
-    	return LS;
-    }
-
-    public void saveSample(Samples sample) {
-        // Bouml preserved body begin 00043202
-        this.sample = sample;
-        // Bouml preserved body end 00043202
-    }
-
     public List<Animals> searchAnimal(String specie) throws SQLException {
         List<Animals> list = new ArrayList<>();
         if (con == null) {

@@ -23,11 +23,9 @@ public class CreateOrder extends javax.swing.JPanel {
     public CreateOrder() throws SQLException {
         initComponents();
         
-        jPanel1= new CreateOrder_addcustomer();
-        //jPanel2= new CreateOrder_addanimal();
         
         
-        
+            
     }
 
     /**
@@ -99,13 +97,12 @@ public class CreateOrder extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) throws SQLException {
-        JFrame myFrame = new JFrame("Test interface");
-        CreateOrder test = new CreateOrder();
+        JFrame myFrame = new JFrame("Interface US2");
+        CreateOrder_addcustomer testcustomer = new CreateOrder_addcustomer();
         CreateOrder_addanimal testanimal = new CreateOrder_addanimal();
-        myFrame.setLayout(new GridLayout(1, 2));   
-        myFrame.add(test);
+        myFrame.setLayout(new GridLayout(3, 1));   
+        myFrame.add(testcustomer);
         myFrame.add(testanimal);
-
         myFrame.pack();
         myFrame.setVisible(true);
         myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);

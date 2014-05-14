@@ -20,14 +20,32 @@ import java.util.List;
  */
 public class ManagedOrder {
 
+    private List<Orders> lOrdersNotF;
     private Orders selectedOrder;
     private ManagedSample myManagedSample;
 
     public ManagedOrder() {
+        lOrdersNotF = getListOrderNotFinished();
     }
 
     public ManagedOrder(Orders selectedOrder) {
         this.selectedOrder = selectedOrder;
+    }
+
+    public List<Orders> getlOrdersNotF() {
+        return lOrdersNotF;
+    }
+
+    public void setlOrdersNotF(List<Orders> lOrdersNotF) {
+        this.lOrdersNotF = lOrdersNotF;
+    }
+
+    public ManagedSample getMyManagedSample() {
+        return myManagedSample;
+    }
+
+    public void setMyManagedSample(ManagedSample myManagedSample) {
+        this.myManagedSample = myManagedSample;
     }
 
     public Orders getSelectedOrder() {

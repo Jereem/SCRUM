@@ -24,14 +24,20 @@ public class ExploreOrders_Samples extends javax.swing.JPanel {
     public ExploreOrders_Samples() {
         initComponents();
         
-        jTextPane1.setText(Integer.toString(Id_Order));
+        jTextPane2.setText(Integer.toString(Id_Order));
         ManagedBeans.ManagedOrder Mo=new ManagedOrder();
+        
         int nbfini;
-        
         nbfini=Mo.getNbEchTermine(Id_Order);
-        jTextPane2.setActionMap(null);
+        jTextPane3.setText(Integer.toString(nbfini));
         
+        int nbpasfini;
+        nbpasfini=Mo.getNbEchPasTermine(Id_Order);
+        jTextPane1.setText(Integer.toString(nbpasfini));
         
+        int nbtotal;
+        nbtotal = nbfini + nbpasfini;
+        jTextPane4.setText(Integer.toString(nbtotal));
     }
 
     

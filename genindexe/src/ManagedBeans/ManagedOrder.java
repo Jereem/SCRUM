@@ -1,45 +1,78 @@
 package ManagedBeans;
 
+import Tools.ConnectBDD;
 import beans.Customers;
 import beans.Orders;
+import beans.Samples;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Teddy
  */
 public class ManagedOrder {
-    
-    
+
+    private Orders selectedOrder;
+    private ManagedSample myManagedSample;
+
+    public ManagedOrder() {
+    }
+
+    public ManagedOrder(Orders selectedOrder) {
+        this.selectedOrder = selectedOrder;
+    }
+
+    public Orders getSelectedOrder() {
+        return selectedOrder;
+    }
+
+    public void setSelectedOrder(Orders selectedOrder) {
+        this.selectedOrder = selectedOrder;
+    }
+
     /**
      * This function permits to list all the orders in the database.
      */
-//  public List<Orders> getListOrder() throws SQLException {
-//    // Bouml preserved body begin 0003D002
-//	  List<Orders> list = new ArrayList<Orders>();
-//          if (con == null) {
-//            throw new SQLException("Can't get database connection");
-//        }
-//        PreparedStatement ps;
-//        ps = con.prepareStatement("select * from ");
-//        //get customer data from database
-//        ResultSet result = ps.executeQuery();
-//        while (result.next()) {
-//            Orders pOrder = new Orders();
-//            pOrder.setPaid(result.getString("Nom_Projet"));
-//	  list.add(this.order);
-//        }
-//	  return(list);
-//    // Bouml preserved body end 0003D002
-//  }
-    
+    public List<Orders> getListOrder() {
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
+        List<Orders> list = new ArrayList<Orders>();
+        try {
+            if (con == null) {
+                throw new SQLException("Can't get database connection");
+            }
+            PreparedStatement ps;
+            ps = con.prepareStatement("select * from COMMANDE");
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                Orders pOrder = new Orders();
+                pOrder.setIdOrder(result.getInt("ID_COMMANDE"));
+                list.add(this.selectedOrder);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println("ma requete");
+            System.out.println("SQLException checkAnimal " + ex.getMessage());
+            System.out.println("SQLState checkAnimal: " + ex.getSQLState());
+            System.out.println("VendorError checkAnimal: " + ex.getErrorCode());
+        }
+        b.close();
+        return (list);
+    }
+
     /**
      * This function permits to search the order in the database that have the
      * customer in parameter.
      */
     public Orders searchOrder(Customers customer) {
-        // Bouml preserved body begin 00042F02
-        return (this.order);
-        // Bouml preserved body end 00042F02
+        return (this.selectedOrder);
     }
 
     /**
@@ -47,17 +80,19 @@ public class ManagedOrder {
      * id.
      */
     public Orders searchOrder(int id) {
-        // Bouml preserved body begin 00042F82
-        return (this.order);
-        // Bouml preserved body end 00042F82
+        return (this.selectedOrder);
     }
 
     /**
      * This function permits to save in the database the order in parameter.
+     * @param order
      */
     public void saveOrder(Orders order) {
-        // Bouml preserved body begin 00043082
-        this.order = order;
-        // Bouml preserved body end 00043082
+        this.selectedOrder = order;
+        for(int i = 0; i < this.selectedOrder.getSamples().size(); i++)
+    {
+        this.myManagedSample = new ManagedSample(this.selectedOrder.getSamples().get(i));
+        myManagedSample.saveSample(myManagedSample.getSelectedSample(), this.selectedOrder.getDateOrder(), this.selectedOrder.getIdOrder());
+    }
     }
 }

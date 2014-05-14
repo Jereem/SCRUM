@@ -141,7 +141,7 @@ public class ManagedAnimal {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
         
-        if (laListe.size()!=0){
+        if (!laListe.isEmpty()){
             ConnectBDD b = new ConnectBDD();
             Connection con = b.getMyConnexion();
             try{

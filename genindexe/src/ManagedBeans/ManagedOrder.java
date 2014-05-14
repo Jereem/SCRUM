@@ -89,6 +89,42 @@ public class ManagedOrder {
     /**
      * This function permits to list all the orders in the database.
      */
+    public List<Orders> getListOrderNotFinished(Customers client) {
+        System.out.println("getListOrderNotFinished debug : ");
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
+        List<Orders> list = new ArrayList<Orders>();
+        System.out.println("getListOrderNotFinished debug liste vide : ");
+        try {
+            if (con == null) {
+                throw new SQLException("Can't get database connection");
+            }
+            PreparedStatement ps;
+            System.out.println("getListOrderNotFinished ps ok : ");
+            ps = con.prepareStatement("select ID_COMMANDE from COMMANDE natural join ECHANTILLON natural join TUBE natural join ANALYSE natural join ANIMAUX natural join CLIENT where ID_CLIENT = " + client.getID() + " RES_FINAL is NULL group by ID_COMMANDE ");
+            ResultSet result = ps.executeQuery();
+            System.out.println("before while : ");
+            while (result.next()) {
+                System.out.println("While : "+ result.getInt("ID_COMMANDE"));
+                Orders pOrder = new Orders();
+                pOrder.setIdOrder(result.getInt("ID_COMMANDE"));
+//                pOrder.setDateOrder(result.getDate("DATE_COMMANDE"));
+                list.add(pOrder);
+            }
+        }
+        catch (SQLException ex) {
+            System.out.println("select ID_COMMANDE, DATE_COMMANDE from COMMANDE natural join ECHANTILLON natural join TUBE natural join ANALYSE where RES_FINAL is NULL group by ID_COMMANDE");
+            System.out.println("SQLException getListOrderNotFinished " + ex.getMessage());
+            System.out.println("SQLState getListOrderNotFinished: " + ex.getSQLState());
+            System.out.println("VendorError getListOrderNotFinished: " + ex.getErrorCode());
+        }
+        b.close();
+        return (list);
+    }
+    
+    /**
+     * This function permits to list all the orders in the database.
+     */
     public List<Orders> getListOrderNotFinished() {
         System.out.println("getListOrderNotFinished debug : ");
         ConnectBDD b = new ConnectBDD();

@@ -5,12 +5,12 @@ package ManagedBeans;
  * with the database.
  */
 import Tools.ConnectBDD;
+import Tools.DateTools;
 import beans.Adress;
 import beans.Analysis;
 import beans.Animals;
 import beans.Category;
 import beans.Customers;
-import beans.Date;
 import beans.Orders;
 import beans.Samples;
 import beans.Species;
@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -133,8 +134,8 @@ public class Database {
         ResultSet result = ps.executeQuery();
         java.sql.Date date_sampling = result.getDate("Date_recep");
         java.sql.Date date_storage = result.getDate("Date_stock");
-
-        Samples sa2 = new Samples(id, result.getString("Type_Ech"), dateSQLToJava(date_sampling), dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), dateSQLToJava(result.getDate("Date_Naissance")), result.getString("Nom_Espece")));
+        DateTools d = new DateTools();
+        Samples sa2 = new Samples(id, result.getString("Type_Ech"), d.dateSQLToJava(date_sampling), d.dateSQLToJava(date_storage), new Animals((result.getString("Nom_Espece")), d.dateSQLToJava(result.getDate("Date_Naissance")), result.getString("Nom_Espece")));
 
         return sa2;
         // Bouml preserved body end 00043102
@@ -177,7 +178,8 @@ public class Database {
         ResultSet result = ps.executeQuery();
         while (result.next()) {
             Animals pAnimal = new Animals();
-            pAnimal.setNumberBirthday(dateSQLToJava(result.getDate("Date_Naissance")));
+            DateTools d = new DateTools();
+            pAnimal.setNumberBirthday(d.dateSQLToJava(result.getDate("Date_Naissance")));
             pAnimal.setNom(result.getString("Nom_Animal"));
             pAnimal.setSpecie(specie);
             list.add(pAnimal);
@@ -200,7 +202,7 @@ public class Database {
         while (result.next()) {
             Animals pAnimals= new Animals();
             pAnimals.setNom(result.getString("NOM_ANIMAL"));
-            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            pAnimals.setID(result.getInt("ID_CLIENT"));
             
             listA.add(pAnimals);
         }
@@ -230,12 +232,50 @@ public class Database {
         while (result.next()) {
             Animals pAnimals = new Animals();
             pAnimals.setNom(result.getString("NOM_ANIMAL"));
-            dlm.addElement(pAnimals.getNom());
+            pAnimals.setID(result.getInt("ID_ANIMAL"));
+            dlm.addElement(pAnimals.getID()+": "+pAnimals.getNom());
         }
         jList.setModel(dlm);
         return (jList);
         // Bouml preserved body end 000236C5
-    }    
+    }  
+        
+    /**
+     *
+     * @param id_animal id de l'animal selectione
+     * @return liste d'animal du même propriétaire et de la même espece
+     * @throws SQLException
+     */
+    public JList getJListAnimalCustomer(Integer id_animal) throws SQLException {
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+        // Bouml preserved body begin 000236C5
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps,ps1;
+        ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM Animal WHERE ID_ANIMAL="+id_animal);
+        
+        ResultSet result = ps.executeQuery();
+        
+        String id_client = result.getString("ID_CLIENT");
+        String id_espece = result.getString("ID_ESPECE");
+        
+        
+        
+        ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT="+id_client+" AND ID_ESPECE="+id_espece+" AND ID_ANIMAL !="+id_animal);
+        //get animal data from database
+        ResultSet result1 = ps1.executeQuery();
+        while (result1.next()) {
+            Animals pAnimals = new Animals();
+            pAnimals.setNom(result1.getString("NOM_ANIMAL"));
+            pAnimals.setID(result.getInt("ID_ANIMAL"));
+            dlm.addElement(pAnimals.getID()+": "+pAnimals.getNom());
+        }
+        jList.setModel(dlm);
+        return (jList);
+        // Bouml preserved body end 000236C5
+    } 
 
     /**
      * This function permits to get the user that use this session.
@@ -648,29 +688,6 @@ public class Database {
         return (jList);
         // Bouml preserved body end 000236C5
     }
-    
-     public String saveAnimal(Animals animal, int idClient, String pSpe) {
-        Species paramSpe = new Species(pSpe);
-        try {
-        PreparedStatement ps0 = con.prepareStatement("select * from ESPECE where NOM_CATEGORIE = '" + pSpe + "'");
-        ResultSet result0 = ps0.executeQuery();
-        while (result0.next()) {
-            paramSpe.setID(result0.getInt("ID_ESPECE"));
-        }
-            Statement state = b.getMyStatement();
-            String query = "Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")";
-                state.executeUpdate(query, state.RETURN_GENERATED_KEYS);
-                ResultSet clefs = state.getGeneratedKeys();
-                System.out.println(clefs.getObject(1));
-                return "success";
-        } catch (SQLException ex) {
-            System.out.println("Insert Into ANIMAL(NOM_ANIMAL, DATE_NAISSANCE, SEXE, ID_ESPECE, ID_CLIENT) Values(" + animal.getNom() + ", " + dateJavaToSQL(animal.getNumberBirthday()) + ", " + animal.getSexe() + ", " + paramSpe.getID() + ", " + idClient +")");
-            System.out.println("SQLException saveCustomer: " + ex.getMessage());
-            System.out.println("SQLState saveCustomer: " + ex.getSQLState());
-            System.out.println("VendorError saveCustomer: " + ex.getErrorCode());
-            return "failed";
-        }
-    }
      
  
     public String saveBddUser() throws SQLException {
@@ -703,57 +720,7 @@ public class Database {
         }
 
     }
-/**
-     * prend une date au format String et la convertie au format date de java
-     * @param date
-     * @return dateJava (dd-mm-aaaa)
-     */
-    public java.util.Date dateStringToJava(String date){
-         String aaaa= date.substring(6,10);
-         String mm= date.substring(3,5);
-         String dd= date.substring(0,2);
-       
-         java.util.Date dateJava = null;
-         dateJava.setYear(Integer.parseInt(aaaa));
-         dateJava.setMonth(Integer.parseInt(mm));
-         dateJava.setDate(Integer.parseInt(dd));
-     
-        return dateJava;
-    }
-  
-   /**
-     *prend une date au format java et la convertie au format SQL
-     * @param datejava (dd-mm-aaaa)
-     * @return dateSQl (aaaa-mm-dd)
-     */
-    public String dateJavaToSQL(java.util.Date datejava){
-        String convert = datejava.toString();
-         String dd =convert.substring(0,2);
-         String mm= convert.substring(3,5);
-         String aa= convert.substring(6,10);
-       
-         String dateSQL=aa+"-"+mm+"-"+dd;
-        
-         System.out.println(dateSQL);
-        return dateSQL;
-    }
-    
-    /**
-     * prend une date au format SQL et la convertie au format date de java
-     *
-     * @param dateSQL (aaaa-mm-dd)
-     * @return da
-     */
-    public java.util.Date dateSQLToJava(java.sql.Date dateSQL){
-      
-        int dd = dateSQL.getDate();
-        int mm = (dateSQL.getMonth())+1;
-        int aaaa = dateSQL.getYear();
 
-        java.util.Date da = new java.util.Date(dd,mm,aaaa);
-
-        return da;
-    }
     
     
     /**

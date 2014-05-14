@@ -1,5 +1,8 @@
 package beans;
 
+import Tools.DateTools;
+import java.util.Date;
+
 
  
 
@@ -26,6 +29,7 @@ public class Analysis {
 
   /**
    * constructor of analysis
+     * @param ID
    */
   public Analysis(int ID, Types_analysis ta, Date date) {
     // Bouml preserved body begin 00040602
@@ -41,7 +45,9 @@ public class Analysis {
 
   public void generateReport() {
     // Bouml preserved body begin 0002C102
-	  dateAnalysis.printDate();
+            DateTools d = new DateTools();
+            d.setMaDate(dateAnalysis);
+	  d.printDate();
 	  System.out.print(typeAnalysis.getType());
 	  System.out.println(ID);
 	  System.out.print("first reading :");

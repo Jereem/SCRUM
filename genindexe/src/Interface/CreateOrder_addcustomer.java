@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Interface;
 
 import ManagedBeans.Database;
@@ -27,7 +28,6 @@ public class CreateOrder_addcustomer extends javax.swing.JPanel {
     private Database instance;
     public int id_client;
     private List<Integer> listAnimauxChoisi = new ArrayList<>();
-
     /**
      * Creates new form CreateOrder_addcustomer
      */
@@ -165,21 +165,22 @@ public class CreateOrder_addcustomer extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jList1.getSelectedValue() != null) {
+        if (jList1.getSelectedValue()!=null){
             //enregistrement du client
-            JOptionPane.showMessageDialog(this, "Selection du client réussi");
-            String id_client_select = (String) jList1.getSelectedValue();
+            JOptionPane.showMessageDialog(this,"Selection du client réussi");
+            String id_client_select=(String) jList1.getSelectedValue();
 
             int fin_id = id_client_select.indexOf(": ");
-            id_client = Integer.parseInt(id_client_select.substring(0, (fin_id)));
+            id_client=Integer.parseInt(id_client_select.substring(0,(fin_id)));
             System.out.println("id_client");
             System.out.println(id_client);
-        } else {
-            JOptionPane.showMessageDialog(this, "Veuillez selectionner un client");
-            id_client = 0;
+        }
+        else{
+            JOptionPane.showMessageDialog(this,"Veuillez selectionner un client");
+            id_client=0;
         }
         this.remove(jPanel1);
-        jPanel1 = new CreateOrder_addanimal(listAnimauxChoisi, id_client);
+        jPanel1=new CreateOrder_addanimal(listAnimauxChoisi, id_client);
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -201,7 +202,7 @@ public class CreateOrder_addcustomer extends javax.swing.JPanel {
         taille_chaine = chaine.length();
         if (taille_chaine > 3) {
             try {
-                jList1 = instance.getListCustomers(chaine);
+                   jList1= instance.getListCustomers(chaine);
                 jScrollPane1.setViewportView(jList1);
             } catch (SQLException ex) {
                 System.out.println("SQLException: " + ex.getMessage());

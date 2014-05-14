@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,23 +79,30 @@ public class ManagedSample {
     }
 
     public String saveSample(Samples sample, Date dReception, int idCommande) {
+        System.out.println("Debut methode saveSample");
         ConnectBDD b = new ConnectBDD();
         Connection con = b.getMyConnexion();
         this.selectedSample = sample;
         int pIdCommande = idCommande;
         //retourne l'id du type d'ech
         int pIdTypeEchantillon = searchIdTypeSample(this.selectedSample);
-        int pIdAnimal = 0;
-        Date pDateReception = dReception;
+        int pIdAnimal = sample.getAnimal().getID();
+        String pDateReception = dateJavaToSQL(dReception);
         try{
+            System.out.println("Debut try");
             if (con == null) {
                 throw new SQLException("Can't get database connection");
             }
-            PreparedStatement ps = b.prepareStatement("INSERT INTO Echantillon(ID_COMMANDE, ID_TYPE_ECHANTILLON, ID_ANIMAL, DATE_RECEPTION) VALUES (?,?,?,?)");
+            System.out.println("pIdCommande : " + pIdCommande);
+            System.out.println("pIdTypeEchantillon : " + pIdTypeEchantillon);
+            System.out.println("pIdAnimal : " + pIdAnimal);
+            System.out.println("pDateReception : " + pDateReception);
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Echantillon(ID_COMMANDE, ID_TYPE_ECHANTILLON, ID_ANIMAL, DATE_RECEPTION) VALUES (?,?,?,?)");
+            System.out.println("PreparedStatement reussi");
             ps.setInt(1, pIdCommande);
             ps.setInt(2, pIdTypeEchantillon);
             ps.setInt(3, pIdAnimal);
-            ps.setDate(4, (java.sql.Date)pDateReception);
+            ps.setString(4, pDateReception);
             int statut = ps.executeUpdate();
             b.close();
             return "success";
@@ -133,5 +141,12 @@ public class ManagedSample {
             b.close();
         }
         return resultID;
+    }
+    
+    public String dateJavaToSQL(java.util.Date datejava){
+        java.sql.Date sqlDate = new java.sql.Date(datejava.getTime());
+         SimpleDateFormat formatDateJour = new SimpleDateFormat("dd/MM/yy"); 
+        String dateFormatee = formatDateJour.format(datejava); 
+        return dateFormatee;
     }
 }

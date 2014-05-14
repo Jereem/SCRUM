@@ -34,9 +34,19 @@ public class Analysis {
   public Analysis(int ID, Types_analysis ta, Date date) {
     // Bouml preserved body begin 00040602
 	  this.ID=ID;
-	  typeAnalysis=ta;
-	  dateAnalysis=date;
+	  this.typeAnalysis=ta;
+	  this.dateAnalysis=date;
     // Bouml preserved body end 00040602
+  }
+  
+  /**
+   * constructor of analysis
+     * @param ID
+     * @param ta
+   */
+  public Analysis(int ID, Types_analysis ta) {
+	  this.ID=ID;
+	  this.typeAnalysis=ta;
   }
   
   public Analysis(){

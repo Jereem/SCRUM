@@ -27,7 +27,7 @@ public class DateTools {
         this.maDate = maDate;
     }
     
-    public String dateJavaToSQL(Date datejava){
+    public String dateJavaToSQL(java.util.Date datejava){
         System.out.println(datejava);
         java.sql.Date sqlDate = new java.sql.Date(datejava.getTime());
          System.out.println(sqlDate);

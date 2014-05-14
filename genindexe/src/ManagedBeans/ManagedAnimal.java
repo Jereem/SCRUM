@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
@@ -130,5 +131,50 @@ public class ManagedAnimal {
         }
         b.close();
         return (jList);
+    }
+        /**
+     * Methode qui renvoie une Jlist contenant les id_animal: nom_animal selon un liste contenant les id_des animaux existante dans la BDD
+     * @return 
+     */
+    
+    public JList getJListAnimals(List<Integer> laListe) {
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+        
+        if (laListe.size()!=0){
+            ConnectBDD b = new ConnectBDD();
+            Connection con = b.getMyConnexion();
+            try{
+                if (con == null) {
+                throw new SQLException("Can't get database connection");
+                }
+        
+        for(int i = 0; i < laListe.size(); i++){// On balaye la liste 
+            PreparedStatement ps;
+            ps = con.prepareStatement("select * from ANIMAL where ID_ANIMAL="+laListe.get(i));
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+            Animals pAnimals = new Animals();
+            pAnimals.setNom(result.getString("NOM_ANIMAL"));
+            pAnimals.setID(result.getInt("ID_ANIMAL"));
+            dlm.addElement(pAnimals.getID()+": "+pAnimals.getNom());
+            jList.setModel(dlm);
+        }
+        jList.setModel(dlm);
+        }
+            }
+        catch (SQLException ex){
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+
+        b.close();
+        
+        
+        }
+        jList.setModel(dlm);
+        return (jList);
+        
     }
 }

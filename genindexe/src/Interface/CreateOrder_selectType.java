@@ -9,8 +9,6 @@ package Interface;
 import ManagedBeans.Database;
 import java.awt.GridLayout;
 import java.sql.SQLException;
-import javax.swing.ComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JOptionPane;
@@ -36,6 +34,7 @@ public class CreateOrder_selectType extends javax.swing.JPanel {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+         
         
     }
 
@@ -81,10 +80,6 @@ public class CreateOrder_selectType extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(120, 120, 120))
             .addGroup(layout.createSequentialGroup()
                 .addGap(109, 109, 109)
                 .addComponent(jToggleButton1)
@@ -93,8 +88,13 @@ public class CreateOrder_selectType extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(91, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(79, 79, 79))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(109, 109, 109))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,11 +116,21 @@ public class CreateOrder_selectType extends javax.swing.JPanel {
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MouseReleased
-        // TODO add your handling code here:
+        if (jList1.getSelectedValue()!=null){
+            //enregistrement du type d'echantillon
+            JOptionPane.showMessageDialog(this,"Selection du type de test");
+            String id_client_select=(String) jList1.getSelectedValue();
+            
+           
+        }
+        else{
+            JOptionPane.showMessageDialog(this,"Veuillez selectionner un type de test");
+
+        }
     }//GEN-LAST:event_jToggleButton1MouseReleased
 
     private void jButton1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseReleased
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton1MouseReleased
 
 

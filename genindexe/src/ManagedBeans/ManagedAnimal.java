@@ -25,15 +25,9 @@ import javax.swing.JList;
 public class ManagedAnimal {
     private Animals selectedAnimal;
 
-    private ConnectBDD b;
-    private Connection con;
+
 
     public ManagedAnimal() {
-        // Bouml preserved body begin 00043002
-        b = new ConnectBDD();
-        con = b.getMyConnexion();
-
-        // Bouml preserved body end 00043002
     }
     
     /**
@@ -44,6 +38,8 @@ public class ManagedAnimal {
      * @return 
      */
     public String saveAnimal(Animals animal, int idClient, String pSpe) {
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
         System.out.println(pSpe);
         Species paramSpe = new Species(pSpe);
         DateTools d = new DateTools();
@@ -69,6 +65,7 @@ public class ManagedAnimal {
             System.out.println("VendorError saveAnimal: " + ex.getErrorCode());
             return "failed";
         }
+        
         }
         else { return "failed"; }
     }
@@ -80,6 +77,8 @@ public class ManagedAnimal {
      * @return 
      */
     public Boolean checkAnimal(Animals animal, int idClient) {
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
         Boolean rslt = false;
         DateTools d = new DateTools();
         try {
@@ -96,7 +95,9 @@ public class ManagedAnimal {
             System.out.println("SQLState checkAnimal: " + ex.getSQLState());
             System.out.println("VendorError checkAnimal: " + ex.getErrorCode());
         }
+        b.close();
         return (rslt);
+        
     }
     
     /**
@@ -104,6 +105,8 @@ public class ManagedAnimal {
      * @return 
      */
     public JList getJListEspeces() {
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
         try{
@@ -125,6 +128,7 @@ public class ManagedAnimal {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+        b.close();
         return (jList);
     }
 }

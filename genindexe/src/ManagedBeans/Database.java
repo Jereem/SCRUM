@@ -253,25 +253,31 @@ public class Database {
         if (con == null) {
             throw new SQLException("Can't get database connection");
         }
+       
         PreparedStatement ps,ps1;
+         
         ps= con.prepareStatement("SELECT ID_CLIENT, ID_ESPECE FROM Animal WHERE ID_ANIMAL="+id_animal);
-        
+       
         ResultSet result = ps.executeQuery();
-        
-        String id_client = result.getString("ID_CLIENT");
-        String id_espece = result.getString("ID_ESPECE");
-        
-        
-        
+        System.out.println("id_client database");
+        int id_client = result.getInt("ID_CLIENT");
+        result.getInt(1);
+        System.out.println("id_client");
+        System.out.println(id_client);
+        int id_espece = result.getInt("ID_ESPECE");
+         
+        if (result!= null){
+
         ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT="+id_client+" AND ID_ESPECE="+id_espece+" AND ID_ANIMAL !="+id_animal);
         //get animal data from database
         ResultSet result1 = ps1.executeQuery();
         while (result1.next()) {
             Animals pAnimals = new Animals();
             pAnimals.setNom(result1.getString("NOM_ANIMAL"));
-            pAnimals.setID(result.getInt("ID_ANIMAL"));
+            pAnimals.setID(result1.getInt("ID_ANIMAL"));
             dlm.addElement(pAnimals.getID()+": "+pAnimals.getNom());
         }
+          }
         jList.setModel(dlm);
         return (jList);
         // Bouml preserved body end 000236C5

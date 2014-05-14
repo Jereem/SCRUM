@@ -87,12 +87,62 @@ public class ManagedOrder {
      * This function permits to save in the database the order in parameter.
      * @param order
      */
-    public void saveOrder(Orders order) {
+    public String saveOrder(Orders order) {
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
+        String sendRes = "failed";
         this.selectedOrder = order;
+        try{
+            if (con == null) {
+                throw new SQLException("Can't get database connection");
+            }
+            PreparedStatement ps = b.prepareStatement("INSERT INTO Commande(DATE_COMMANDE, DELAI_RAPIDE) VALUES (?,?)");
+            ps.setDate(1, (java.sql.Date) this.selectedOrder.getDateOrder());
+            ps.setInt(2, this.selectedOrder.getPriorityLevel());
+            int statut = ps.executeUpdate();
+            b.close();
+            sendRes = "success";
+        }
+        catch(SQLException ex) {
+            System.out.println("ma requete");
+            System.out.println("SQLException checkAnimal " + ex.getMessage());
+            System.out.println("SQLState checkAnimal: " + ex.getSQLState());
+            System.out.println("VendorError checkAnimal: " + ex.getErrorCode());
+            b.close();
+        sendRes = "failed";
+        }
+        if ("success".equals(sendRes)){
+            this.selectedOrder.setIdOrder(searchLastId());
         for(int i = 0; i < this.selectedOrder.getSamples().size(); i++)
     {
         this.myManagedSample = new ManagedSample(this.selectedOrder.getSamples().get(i));
-        myManagedSample.saveSample(myManagedSample.getSelectedSample(), this.selectedOrder.getDateOrder(), this.selectedOrder.getIdOrder());
+        sendRes = myManagedSample.saveSample(myManagedSample.getSelectedSample(), this.selectedOrder.getDateOrder(), this.selectedOrder.getIdOrder()) ;
     }
+    }
+        return sendRes;
+    }
+    
+    public int searchLastId() {
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
+        int resultID = 0;
+        try {
+            if (con == null) {
+                throw new SQLException("Can't get database connection");
+            }
+            PreparedStatement ps;
+            ps = con.prepareStatement("select ID_COMMANDE from COMMANDE order by ID_COMMANDE");
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                resultID = (result.getInt("ID_TYPE_ECHANTILLON"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("ma requete");
+            System.out.println("SQLException checkAnimal " + ex.getMessage());
+            System.out.println("SQLState checkAnimal: " + ex.getSQLState());
+            System.out.println("VendorError checkAnimal: " + ex.getErrorCode());
+            b.close();
+        }
+        return resultID;
     }
 }

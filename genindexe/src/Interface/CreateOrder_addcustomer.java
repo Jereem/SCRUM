@@ -7,6 +7,7 @@
 package Interface;
 
 import ManagedBeans.Database;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.sql.SQLException;
 import javax.swing.JFrame;
@@ -63,6 +64,11 @@ public int id_client;
         jLabel2.setText("Ou");
 
         jButton2.setText("Creation client");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jList1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Saisir le nom du client dans le cadre ci-dessus", " ", " ", " " };
@@ -169,6 +175,15 @@ public int id_client;
         }
 
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (jButton2.isSelected()){
+            JFrame myframe2 = new JFrame("Enregistrer un nouveau client");
+            myframe2.add(new US1());
+            myframe2.pack();
+            myframe2.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 public JPanel getAddCustomer(){
     return this;
     

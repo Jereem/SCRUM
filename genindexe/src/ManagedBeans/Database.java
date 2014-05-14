@@ -192,7 +192,7 @@ public class Database {
         
     /**
      *
-     * @param id_animal id de l'animal selectione
+     * @param id_animal id de l'animal selectione si id_animal=0 methode classique
      * @return liste d'animal du même propriétaire et de la même espece
      * @throws SQLException
      */
@@ -218,6 +218,11 @@ public class Database {
         id_client = result.getInt("ID_CLIENT");
         }
         
+        if (id_animal==null){
+            return getJListAnimalCustomer(id_client,"");
+        }
+        else{
+        
         if (result!= null){
         ps1= con.prepareStatement("SELECT * FROM Animal WHERE ID_CLIENT='"+id_client+"' AND ID_ESPECE='"+id_espece+"' AND ID_ANIMAL !="+id_animal+"");
         //get animal data from database
@@ -231,6 +236,7 @@ public class Database {
           }
         jList.setModel(dlm);
         return (jList);
+        }
         // Bouml preserved body end 000236C5
     } 
 

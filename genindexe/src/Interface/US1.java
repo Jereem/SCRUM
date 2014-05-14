@@ -450,7 +450,9 @@ public class US1 extends javax.swing.JPanel {
                 myCusto.setLogin(jTextField17.getText());
                 myCusto.setMotDePasse(jTextField18.getText());
                 myCusto.setEmail(jTextField19.getText());
-                if(myCusto.getEmail().equals("")){ 
+                if(myCusto.getEmail().equals("")){
+                    System.out.print("Email vide !! : ");
+                    System.out.println(myCusto.getEmail());
                     myCusto.setEmail(null);
                     myCusto.setLogin(null);
                     myCusto.setMotDePasse(null);

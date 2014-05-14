@@ -9,36 +9,25 @@ import java.util.Date;
 import java.util.List;
 
 public class Orders {
-  private static int countId = 1;
-
   private int idOrder;
-
   private Customers customer;
-
   /**
    * The priority level is expressed in days.
    */
   private int priorityLevel;
-
   /**
    * The number of samples for the order.
    */
   private int numberSamples;
-
   private List<Samples> samples;
-
   private Date dateDeadline;
-
   private Date dateOrder;
-
   private Invoice invoice;
-
   /**
    * TRUE if the invoice is paid, FALSE if not.
    * 
    */
   private boolean paid;
-
   /**
    * TRUE if the results are send. in this case, the analyse is finished, so the order is "stored" in the database.
    * FALSE if the analyse is still in progress. 
@@ -49,11 +38,9 @@ public class Orders {
         this.samples = new ArrayList<Samples>();
         this.paid = false;
         this.results_send = false;
-        this.idOrder = countId;
-        countId = countId + 1;
     }
 
-  public Orders(int num_samples, Date date_order, Date date_deadline, int priority, Customers customer) {
+  public Orders(int ID, int num_samples, Date date_order, Date date_deadline, int priority, Customers customer) {
     // Bouml preserved body begin 0001F402
 	  this.samples = new ArrayList<Samples>();
 	  this.numberSamples=num_samples;
@@ -63,10 +50,57 @@ public class Orders {
 	  this.customer=customer;
 	  this.paid = false;
 	  this.results_send=false;
-	  this.idOrder=countId;
-	  countId = countId +1;
+          this.idOrder = ID;
     // Bouml preserved body end 0001F402
   }
+
+    public int getIdOrder() {
+        return idOrder;
+    }
+
+    public void setIdOrder(int idOrder) {
+        this.idOrder = idOrder;
+    }
+
+    public Customers getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customers customer) {
+        this.customer = customer;
+    }
+
+    public int getNumberSamples() {
+        return numberSamples;
+    }
+
+    public void setNumberSamples(int numberSamples) {
+        this.numberSamples = numberSamples;
+    }
+
+    public Date getDateDeadline() {
+        return dateDeadline;
+    }
+
+    public void setDateDeadline(Date dateDeadline) {
+        this.dateDeadline = dateDeadline;
+    }
+
+    public Date getDateOrder() {
+        return dateOrder;
+    }
+
+    public void setDateOrder(Date dateOrder) {
+        this.dateOrder = dateOrder;
+    }
+
+    public boolean isResults_send() {
+        return results_send;
+    }
+
+    public void setResults_send(boolean results_send) {
+        this.results_send = results_send;
+    }
 
   public int getId() {
     // Bouml preserved body begin 0002FA02

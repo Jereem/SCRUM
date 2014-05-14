@@ -25,21 +25,25 @@ import javax.swing.JList;
 public class ManagedAnimal {
     private Animals selectedAnimal;
 
-    private ConnectBDD b;
-    private Connection con;
+
 
     public ManagedAnimal() {
-        // Bouml preserved body begin 00043002
-        b = new ConnectBDD();
-        con = b.getMyConnexion();
-
-        // Bouml preserved body end 00043002
     }
     
+    /**
+     * Methode qui sauvegarde un nouvel animal
+     * @param animal
+     * @param idClient
+     * @param pSpe
+     * @return 
+     */
     public String saveAnimal(Animals animal, int idClient, String pSpe) {
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
         System.out.println(pSpe);
         Species paramSpe = new Species(pSpe);
         DateTools d = new DateTools();
+        if (checkAnimal(animal, idClient)){
         try {
         PreparedStatement ps0 = con.prepareStatement("select * from ESPECE where NOM_ESPECE = '" + pSpe + "'");
         ResultSet result0 = ps0.executeQuery();
@@ -61,6 +65,39 @@ public class ManagedAnimal {
             System.out.println("VendorError saveAnimal: " + ex.getErrorCode());
             return "failed";
         }
+        
+        }
+        else { return "failed"; }
+    }
+    
+    /**
+     * Methode qui regarde si l'animal existe déjà ou pas
+     * @param animal
+     * @param idClient
+     * @return 
+     */
+    public Boolean checkAnimal(Animals animal, int idClient) {
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
+        Boolean rslt = false;
+        DateTools d = new DateTools();
+        try {
+        int nbResult = 0;
+        PreparedStatement ps1 = con.prepareStatement("select count(*) as resultCount from ANIMAL where NOM_ANIMAL = '" + animal.getNom() + "' and DATE_NAISSANCE = '" + d.dateJavaToSQL(animal.getNumberBirthday()) + "' and ID_CLIENT = " + idClient +"");
+        ResultSet result1 = ps1.executeQuery();
+        while (result1.next()) {
+            nbResult = result1.getInt("resultCount");
+        }
+        if (nbResult == 0){rslt = true;}
+        } catch (SQLException ex) {
+            System.out.println("select count(*) as resultCount from ANIMAL where NOM_ANIMAL = '" + animal.getNom() + "' and DATE_NAISSANCE = '" + d.dateJavaToSQL(animal.getNumberBirthday()) + "' and ID_CLIENT = " + idClient +"");
+            System.out.println("SQLException checkAnimal " + ex.getMessage());
+            System.out.println("SQLState checkAnimal: " + ex.getSQLState());
+            System.out.println("VendorError checkAnimal: " + ex.getErrorCode());
+        }
+        b.close();
+        return (rslt);
+        
     }
     
     /**
@@ -68,6 +105,8 @@ public class ManagedAnimal {
      * @return 
      */
     public JList getJListEspeces() {
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
         try{
@@ -89,6 +128,7 @@ public class ManagedAnimal {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+        b.close();
         return (jList);
     }
 }

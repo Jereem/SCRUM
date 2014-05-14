@@ -2,8 +2,11 @@
 package Interface;
 
 import ManagedBeans.Database;
+import beans.Customers;
 import java.awt.GridLayout;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
@@ -23,6 +26,7 @@ private Database instance;
      */
     public ExploreOrders() {
         initComponents();
+        instance = new Database();
     }
 
     /**
@@ -46,8 +50,9 @@ private Database instance;
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2= new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
-
+        jList2 = new javax.swing.JList();
 
         jLabel1.setText("Voir la commande d'un utilisateur");
 
@@ -64,10 +69,25 @@ private Database instance;
         jButton1.setText("Valider");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                try {
+                    jButton1ActionPerformed(evt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ExploreOrders.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
-
+        
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
+            }
+        });
+        
         jButton2.setText("Annuler");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,7 +100,13 @@ private Database instance;
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+         jList2.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Saisir le nom de l'entreprise dans le cadre ci-dessus puis sélectionner le client", " ", " ", " " };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
         jScrollPane1.setViewportView(jList1);
+        jScrollPane2.setViewportView(jList2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -108,6 +134,7 @@ private Database instance;
                         .addComponent(jLabel3)
                         .addComponent(jLabel4)
                         .addComponent(jTextField2))
+                       .addComponent(jScrollPane2)
                     .addComponent(jLabel6))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -136,7 +163,8 @@ private Database instance;
                         .addComponent(jLabel7)
                         .addGap(1, 1, 1)
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                            .addGap(41, 41, 41))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -147,7 +175,9 @@ private Database instance;
 
     }// </editor-fold>         
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {    
+        boolean trouve = false;
+        
         if (jList1.getSelectedValue()!=null){
             //enregistrement du client
             JOptionPane.showMessageDialog(this,"Selection du client réussi");
@@ -157,6 +187,28 @@ private Database instance;
             id_client=Integer.parseInt(id_client_select.substring(0,(fin_id)));
             System.out.println("id_client");
             System.out.println(id_client);
+        }
+        else if (jList2.getSelectedValue()!=null){
+            //enregistrement du client
+            JOptionPane.showMessageDialog(this,"Selection du client réussi");
+            String id_client_select=(String) jList2.getSelectedValue();
+            
+            int fin_id = id_client_select.indexOf(": ");
+            id_client=Integer.parseInt(id_client_select.substring(0,(fin_id)));
+            System.out.println("id_client");
+            System.out.println(id_client);
+        }
+        else if (Integer.parseInt(jTextField1.getText())!=0) {
+           int id = Integer.parseInt(jTextField1.getText());
+           trouve = instance.searchCustomer(id);
+           if (trouve=true){
+             System.out.println("id_client");
+             System.out.println(id);
+             JOptionPane.showMessageDialog(this,"Selection du client réussi");
+           }
+            else {
+               JOptionPane.showMessageDialog(this,"Veuillez donner un id valide");
+           }
         }
         else{
             JOptionPane.showMessageDialog(this,"Veuillez selectionner un client");
@@ -178,11 +230,24 @@ private Database instance;
                 System.out.println("VendorError: " + ex.getErrorCode());
             }
         }
-    }     
+    }
     
-public JPanel getAddCustomer(){
-    return this;
-}                                  
+        private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {                                        
+        int taille_chaine = 0;
+        String chaine = jTextField4.getText();
+        taille_chaine = chaine.length();
+        if (taille_chaine > 3) {
+            try {      
+                   jList2= instance.getListCustomersEnterprise(chaine);
+                   jScrollPane2.setViewportView(jList2);
+            } catch (SQLException ex) {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+            }
+        }
+    }
+                               
 
     /*
      * @param args the command line arguments
@@ -198,7 +263,9 @@ public JPanel getAddCustomer(){
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JList jList1;
+    private javax.swing.JList jList2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField4;

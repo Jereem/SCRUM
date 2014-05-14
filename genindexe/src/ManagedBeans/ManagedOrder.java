@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  *
@@ -339,4 +341,26 @@ public class ManagedOrder {
 
         return da;
     }
+    
+     public JList getListOrderNotFinish(Integer id) throws SQLException {
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+        ConnectBDD b = new ConnectBDD();
+        Connection con = b.getMyConnexion();
+        List<Orders> list = new ArrayList<Orders>();
+            if (con == null) {
+                throw new SQLException("Can't get database connection");
+            }
+            PreparedStatement ps;
+            ps = con.prepareStatement("select ID_COMMANDE from COMMANDE natural join ECHANTILLON natural join TUBE natural join ANALYSE natural join ANIMAL natural join CLIENT where ID_CLIENT = " + id + " and RES_FINAL is NULL group by ID_COMMANDE ");
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+            
+            String Name = result.getString("id_COMMANDE");
+            dlm.addElement(Name);
+            jList.setModel(dlm);
+        }
+        return (jList);
+        // Bouml preserved body end 000234C5
+     }
 }

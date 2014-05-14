@@ -153,6 +153,7 @@ public class Database {
     public JList getJListAnimalCustomer(List<Integer> laListe) throws SQLException {
         JList jList = new JList();
         DefaultListModel dlm = new DefaultListModel();
+        
         // Bouml preserved body begin 000236C5
         if (con == null) {
             throw new SQLException("Can't get database connection");

@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 public class CreateOrder_addanimal extends javax.swing.JPanel {
     private Integer id_client;
     private List<Integer> listAnimauxChoisi = new ArrayList<Integer>();
+    private JPanel jPanel1;
     
 
     /**
@@ -50,7 +51,8 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
     private void initComponents(List<Integer> listAnimauxChoisi, Integer id_client) {
 		Database DB = new Database();
                 ManagedAnimal data = new ManagedAnimal();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
+                jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList(); /// correspond à List<Integer> listAnimauxChoisi
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -77,7 +79,11 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
 
         search_animal.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                search_animalKeyReleased(evt);
+                try {
+                    search_animalKeyReleased(evt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CreateOrder_addanimal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -131,8 +137,8 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -203,7 +209,17 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
                     .addComponent(next_step))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
-
+        
+        javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
+        this.setLayout(layoutP);
+        layoutP.setHorizontalGroup(
+            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layoutP.setVerticalGroup(
+            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
        DB.Close();
        
     }// </editor-fold>                        
@@ -219,18 +235,21 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
             CreerAnimal.setVisible(true);// ajouter panel de teddy
     }
 
-    private void search_animalKeyReleased(java.awt.event.KeyEvent evt) {     
+    private void search_animalKeyReleased(java.awt.event.KeyEvent evt) throws SQLException {     
         int taille_chaine = 0;
         String chaine = search_animal.getText();
         taille_chaine = chaine.length();
         if ((taille_chaine > 2)) {
+            
             if (listAnimauxChoisi.isEmpty()){
+                System.out.println("casnormal");
           Database instance = new Database();
           listAnimal = (JList) instance.getJListAnimalCustomer(id_client,chaine);
           jScrollPane1.setViewportView(listAnimal);
           instance.Close();
             }
             else{
+                System.out.println("des choses dans la liste");
                  Database instance = new Database();
                 listAnimal = (JList) instance.getJListAnimalCustomer(id_client, chaine,listAnimauxChoisi);
                 jScrollPane1.setViewportView(listAnimal);
@@ -239,14 +258,17 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
         }
         else {
                if (listAnimauxChoisi.isEmpty()){
+                   System.out.println("casnormal2");
+                   
           Database instance = new Database();
           listAnimal = (JList) instance.getJListAnimalCustomer(id_client,"");
           jScrollPane1.setViewportView(listAnimal);
           instance.Close();
             }
                else{
-                 Database instance = new Database();
-                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, chaine,listAnimauxChoisi);
+                   System.out.println("des choses dans la liste2");
+                Database instance = new Database();
+                listAnimal = (JList) instance.getJListAnimalCustomer(id_client, "",listAnimauxChoisi);
                 jScrollPane1.setViewportView(listAnimal);
                 instance.Close();
             }
@@ -373,8 +395,21 @@ private void cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) throws
         
     }                                             
 
-    private List<Integer> next_stepActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        return listAnimauxChoisi;
+    private void next_stepActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        this.remove(jPanel1);
+//        jPanel1=new CreateOrder_selectType();
+//        javax.swing.GroupLayout layoutP = new javax.swing.GroupLayout(this);
+//        this.setLayout(layoutP);
+//        layoutP.setHorizontalGroup(
+//            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//        );
+//        layoutP.setVerticalGroup(
+//            layoutP.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//        );
+        this.repaint();
+        this.revalidate();
     }                                         
 
 

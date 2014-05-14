@@ -53,6 +53,16 @@ public class Orders {
           this.idOrder = ID;
     // Bouml preserved body end 0001F402
   }
+  
+  public Orders(ArrayList<Samples> samples, Date date_order, int priority) {
+    // Bouml preserved body begin 0001F402
+	  this.samples = samples;
+	  this.numberSamples= samples.size();
+	  this.dateOrder=date_order;
+	  this.priorityLevel = priority;
+	  this.paid = false;
+	  this.results_send=false;
+  }
 
     public int getIdOrder() {
         return idOrder;

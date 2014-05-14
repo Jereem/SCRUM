@@ -7,6 +7,7 @@
 package Interface;
 
 import ManagedBeans.Database;
+import ManagedBeans.ManagedAnimal;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
@@ -34,7 +35,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
     public CreateOrder_addanimal(List<Integer> listAnimauxChoisi, Integer id_client) throws SQLException{
       this.id_client=id_client;
       this.listAnimauxChoisi=listAnimauxChoisi;
-      initComponents();
+      initComponents(listAnimauxChoisi,id_client);
     }
 
     /**
@@ -44,9 +45,9 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
-    private void initComponents() throws SQLException{
+    private void initComponents(List<Integer> listAnimauxChoisi, Integer id_client) throws SQLException{
 		Database DB = new Database();
-
+                ManagedAnimal data = new ManagedAnimal();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList(); /// correspond à List<Integer> listAnimauxChoisi
         jLabel1 = new javax.swing.JLabel();
@@ -104,11 +105,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
         listAnimal = DB.getJListAnimalCustomer(id_client,"");///liste des animaux du client
         jScrollPane1.setViewportView(listAnimal);
 //a modifier
-        animauxChoisi.setModel(new javax.swing.AbstractListModel() {
-             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-             public int getSize() { return strings.length; }
-             public Object getElementAt(int i) { return strings[i]; }
-         });
+        animauxChoisi=data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
         jScrollPane3.setViewportView(animauxChoisi);
 
         jLabel4.setText("Votre choix :");
@@ -201,6 +198,7 @@ public class CreateOrder_addanimal extends javax.swing.JPanel {
         );
 
        DB.Close();
+       
     }// </editor-fold>                        
 
 
@@ -265,7 +263,7 @@ private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) {
         Database instance = new Database();
         try {
               
-         listAnimal = (JList) instance.getJListAnimalCustomer(first_animal);
+        listAnimal = (JList) instance.getJListAnimalCustomer(first_animal);
         jScrollPane1.setViewportView(listAnimal);
                 
         } catch (SQLException ex) {
@@ -273,13 +271,16 @@ private void confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) {
              System.out.println("SQLState: " + ex.getSQLState());
               System.out.println("VendorError: " + ex.getErrorCode());
             }
-         instance.Close();       
-        
+         instance.Close();    
+         
+         ManagedAnimal data= new ManagedAnimal();
+         animauxChoisi=data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
+         jScrollPane3.setViewportView(animauxChoisi);
     }                                              
 
 private List<Integer> cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) {                                              
         if (listAnimauxChoisi.isEmpty()){
-            JOptionPane.showMessageDialog(this,"Aucun Animal selectionner");
+            JOptionPane.showMessageDialog(this,"Aucun Animal Supprimer");
         this.setVisible(false);
         System.out.println(listAnimauxChoisi);
         return (List) listAnimauxChoisi;
@@ -295,8 +296,14 @@ private List<Integer> cancel_buttonActionPerformed(java.awt.event.ActionEvent ev
                     { System.out.println("donnée à l'indice " + i + " = " + listAnimauxChoisi.get(i));}
                 //confirmation suppression
                 JOptionPane.showMessageDialog(this,"Suppression reussi");
+                ManagedAnimal data= new ManagedAnimal();
+                animauxChoisi=data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
+                jScrollPane3.setViewportView(animauxChoisi);
             }
-            
+         ManagedAnimal data= new ManagedAnimal();
+         animauxChoisi=data.getJListAnimals(listAnimauxChoisi);///liste des animaux choisi
+         jScrollPane3.setViewportView(animauxChoisi);   
+          
         return null;}
         
         

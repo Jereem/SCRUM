@@ -450,6 +450,31 @@ public class Database {
         }
         return pTypes_analysis;
     }
+    
+    /**Cette methode renvoi la liste des types d'echantillons
+     *
+     * @return JList
+     */
+    public JList getJlistTypeAnalysis() throws SQLException{
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+         if (con == null) {
+            throw new SQLException("Can't get database connection getJlistTypeAnalysis");
+        }
+        
+        PreparedStatement ps;
+        ps = con.prepareStatement("SELECT * FROM TYPE_ANALYSE");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        Types_analysis pTypes_analysis = new Types_analysis();
+        while (result.next()) {
+            pTypes_analysis.setType(result.getString("Type_Analy"));
+            dlm.addElement(pTypes_analysis.getType());
+            jList.setModel(dlm);
+        }
+        return jList;
+    }
+    
 
     public void saveAnalysisType(Types_analysis typeAnalysis) {
         // Bouml preserved body begin 00023945

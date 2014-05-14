@@ -820,6 +820,24 @@ public class Database {
             return false;
         }
     }
+    
+    
+    
+    public int getIdbyName(String nomtest) throws SQLException{
+        int id_type_test=0;
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        PreparedStatement ps;
+        ps = con.prepareStatement("select ID_TYPE from TYPE_ANALYSE where TYPE_ANALY='"+nomtest+"'");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+           id_type_test= result.getInt("ID_TYPE");  
+        }
+
+        return id_type_test;
+    }
   
 }
 

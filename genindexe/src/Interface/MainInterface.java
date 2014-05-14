@@ -19,7 +19,7 @@ public class MainInterface extends javax.swing.JFrame {
     US1 createCustomer = new US1();
     CreateAnimal createAnimal = new CreateAnimal();
     CreateSpecie createspecie = new CreateSpecie();
-    CreateOrder_addcustomer CreateOrder_addcustomer = new CreateOrder_addcustomer();
+    CreateOrder_addcustomer createOrder = new CreateOrder_addcustomer();
     ExploreOrders exploreorder = new ExploreOrders();
 
     public MainInterface() {

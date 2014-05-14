@@ -11,8 +11,10 @@ import java.awt.GridLayout;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -166,7 +168,10 @@ public int id_client;
         }
 
     }//GEN-LAST:event_jTextField1KeyReleased
-
+public JPanel getAddCustomer(){
+    return this;
+    
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -181,13 +186,13 @@ public int id_client;
     // End of variables declaration//GEN-END:variables
 
     public static void main(String[] args) throws SQLException {
-        JFrame myFrame = new JFrame("ajout client");
+        JLabel myLabel = new JLabel("ajout client");
         CreateOrder_addcustomer ajouterclient = new CreateOrder_addcustomer();
-        myFrame.setLayout(new GridLayout(1, 2));
-        myFrame.add(ajouterclient);
-        myFrame.pack();
-        myFrame.setVisible(true);
-        myFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        myLabel.setLayout(new GridLayout(1, 2));
+        myLabel.add(ajouterclient);
+       // myLabel.pack();
+        myLabel.setVisible(true);
+        //myLabel.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
 

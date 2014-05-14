@@ -109,7 +109,7 @@ public class ManagedOrder {
                 Orders pOrder = new Orders();
                 pOrder.setIdOrder(result.getInt("ID_COMMANDE"));
 //                pOrder.setDateOrder(result.getDate("DATE_COMMANDE"));
-                list.add(this.selectedOrder);
+                list.add(pOrder);
             }
         }
         catch (SQLException ex) {

@@ -375,8 +375,11 @@ public class Database {
             Statement state = b.getMyStatement();
             String query = "Insert Into Client(Nom_Client, Prenom_Client, Num_Rue, Nom_Rue, CP, Ville, Tel, Tel_Port, Fax, Mail, Pays) Values('" + cust.getFirstName() + "', '" + cust.getLastName() + "', '" + Integer.toString(cust.getAdress().getNumber()) + "', '" + cust.getAdress().getStreet() + "', '" + cust.getAdress().getZipCode() + "', '" + cust.getAdress().getCity() + "', '" + cust.getPhone() + "', '" + cust.getCellular() + "', '" + cust.getFax() + "', '" + cust.getEmail() + "', '" + cust.getAdress().getCountry()+"')";
                 state.executeUpdate(query);
+            
                 
+            System.out.println("Email : "+cust.getEmail());
             if(cust.getEmail()!=null){
+            
             /*
             Recuperation de l'id du client ainsi insere
             */
@@ -386,9 +389,12 @@ public class Database {
             ID.next();
             
             String queryInssertConnexion = "Insert into connexion(Login, Mdp, Id_Client) Values('"+cust.getLogin()+"', '"+cust.getMotDePasse()+"', '"+ID.getString("MAX(ID_CLIENT)")+"')";
-                System.out.println(queryInssertConnexion);
+            System.out.println(queryInssertConnexion);
             state.executeUpdate(queryInssertConnexion);
               }
+            else{
+                System.out.println("Email vide : "+ cust.getEmail());
+            }
                 return "success";
 
 //            }

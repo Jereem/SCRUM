@@ -871,5 +871,62 @@ public class Database {
 
         return id_type_test;
     }
-  
+  public boolean searchCustomer(int ID) throws SQLException {
+        // Bouml preserved body begin 000235C5
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        //etu.saveNewAdherent();
+        try {
+            Customers client = new Customers();
+            PreparedStatement ps = con.prepareStatement("Select * FROM Client where ID_Client=" + ID);
+            ResultSet result = ps.executeQuery();
+            client.setID(result.getInt("ID_Client"));
+            if (client.getID() == ID) {
+                return true;
+            }
+            else return false;
+        // Bouml preserved body end 000235C5
+        }
+        catch (SQLException ex) {
+            System.out.println("SQLException IsDoublon: " + ex.getMessage());
+            System.out.println("SQLState IsDoublon: " + ex.getSQLState());
+            System.out.println("VendorError IsDoublon: " + ex.getErrorCode());
+            return false;
+        }
+        
+    }
+    
+    public JList getListCustomersEnterprise(String name) throws SQLException {
+        System.out.println("methode getListCustomers");
+        // Bouml preserved body begin 000234C5
+
+        JList jList = new JList();
+        DefaultListModel dlm = new DefaultListModel();
+
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        name += '%';
+        PreparedStatement ps;
+        ps = con.prepareStatement("SELECT * FROM CLIENT INNER JOIN ENTREPRISE ON ENTREPRISE.ID_ENTR = CLIENT.ID_ENTR  WHERE NOMENTR LIKE '" + name + "'");
+        //get customer data from database
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            String Name = result.getString("id_client");
+            Name += ": ";
+            Name += result.getString("Nom_Client");
+            Name += ' ';
+            Name += result.getString("Prenom_Client");
+            Name += ' ';
+            Name += result.getString("CP");
+            Name += ' ';
+            Name += result.getString("Ville");
+            Name += ' ';
+            dlm.addElement(Name);
+            jList.setModel(dlm);
+        }
+        return (jList);
+        // Bouml preserved body end 000234C5
+    }
 }

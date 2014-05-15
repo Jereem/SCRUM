@@ -305,11 +305,11 @@ public class ManagedOrder {
             }
             PreparedStatement ps;
             System.out.println(" type analyse : " + order.getSamples());
-            System.out.println(" type analyse : " + order.getSamples().get(1));
-            System.out.println(" type analyse : " + order.getSamples().get(1).getAnalysis());
-            System.out.println(" type analyse : " + order.getSamples().get(1).getAnalysis().getTypeAnalysis());
-            System.out.println(" type analyse : " + order.getSamples().get(1).getAnalysis().getTypeAnalysis().getType());
-            ps = con.prepareStatement("select ID_TYPE from TYPE_ANALYSE where TYPE_ANALY = '" + order.getSamples().get(1).getAnalysis().getTypeAnalysis().getType() + "' ");
+            System.out.println(" type analyse : " + order.getSamples().get(0));
+            System.out.println(" type analyse : " + order.getSamples().get(0).getAnalysis());
+            System.out.println(" type analyse : " + order.getSamples().get(0).getAnalysis().getTypeAnalysis());
+            System.out.println(" type analyse : " + order.getSamples().get(0).getAnalysis().getTypeAnalysis().getType());
+            ps = con.prepareStatement("select ID_TYPE from TYPE_ANALYSE where TYPE_ANALY = '" + order.getSamples().get(0).getAnalysis().getTypeAnalysis().getType() + "' ");
             ResultSet result = ps.executeQuery();
             while (result.next()) {
                 resultID = (result.getInt("ID_TYPE"));
